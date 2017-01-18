@@ -1,0 +1,131 @@
+<?php
+/**
+ * Provides methods to interact with tour
+ *
+ * @author YongJun
+ * @name tour
+ */
+class usertrainterests
+{
+
+	/**
+	 * Konstruktor
+	 * Initialisiert den Eventlog
+	 */
+	function __construct()
+	{
+	}
+
+	/**
+	 * Add destination to a tour
+	 *
+	 * @return bool
+	 */
+
+
+	function add($UserId,$TraIntId)
+	{
+		$UserId = intval($UserId);
+		$TraIntId =intval($TraIntId);	
+		//var_dump($wintypeid);exit;	
+		$ins1 = mysql_query("INSERT INTO user_travelinterests (`UserId`,`TravelInterestId`) VALUES('$UserId','$TraIntId')");	
+		//var_dump("INSERT INTO destination_winerytype (`DestinationId`,`WineryTypeId`) VALUES('$destid','$wintypeid')");exit;	
+		
+		if ($ins1)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	
+	function get_utinterests($userid){
+		if($userid!=null)
+		{
+	    $sel = mysql_query("select travelinterests.Name,user_travelinterests.TravelInterestId from user,travelinterests, user_travelinterests where user.Id=user_travelinterests.UserId and user_travelinterests.TravelInterestId=travelinterests.id and user.Id=$userid");
+        //var_dump("select winerytype.Name from destination,destination_winerytype, winerytype where  destination.Id=destination_winerytype.DestinationId and destination_winerytype.WineryTypeId=winerytype.wineryTypeId and destination.uid=$userid  and destination.name='$destname'");exit ;	      
+        $results = array();
+         //var_dump("select travelinterests.Name from user,travelinterests, user_travelinterests where  user.Id=user_travelinterests.UserId and user_travelinterests.TravelInterestsId=travelinterests.id and usr.Id=$userid");exit ;	 
+        while ($temp = mysql_fetch_array($sel))
+        {
+            $temp["Name"] = $temp["Name"];
+            array_push($results, $temp);
+        }
+     // var_dump($results["Name"]);exit ;	      
+        if (!empty($results))
+        {
+            return $results;
+        }
+        else
+        {
+            return false;
+        } 
+		}
+		else
+		return false;           
+	}
+	
+	/**
+	*
+	*whether guestid  esists and inset data
+	*@param int $tourid tour_invitation tourid
+	*@param int $guestid tour_invitation guestid
+	*@return success or unsuccess
+	**/
+	
+
+	/************************************************************************************************/
+
+	/**
+	 * Delete a tour
+	 *
+	 * @param int $id tour ID
+	 * @return bool
+	 */
+	function del($id)
+	{
+		$id = intval($id);
+
+		$del = mysql_query("DELETE FROM user_travelinterests WHERE id = $id");
+		//var_dump("DELETE FROM destination_winerytype WHERE Id = $id");exit;
+		if ($del)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	function delbeforeadd($desId)
+	{
+		$desId = intval($desId);
+		$sel=mysql_query("DELETE FROM user_travelinterests WHERE UserId = $desId");
+		//var_dump("select Id FROM destination_winerytype WHERE DestinationId = $desId");exit;
+	    $affect = mysql_affected_rows();
+		if($affect>0){
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
+	function get_userstinterests(array $users)
+	{
+		$userstinterests=array();
+		foreach($users as $id)
+		{
+			$sql="select TravelInterestId from user_travelinterests where UserId=$id[0]";
+			$q = mysql_query($sql);
+			while($r = mysql_fetch_array($q))
+			$userstinterests[$id[0]][]=$r;
+		}
+		return $userstinterests;
+	}
+}
+
+	
+
+?>

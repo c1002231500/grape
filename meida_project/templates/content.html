@@ -1,0 +1,122 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>記事詳細----shanghaitimes</title>
+<link rel="stylesheet" type="text/css" href="<{$public}>Public/css/style.css"/>
+<style rel="stylesheet" type="text/css" >
+#svip a{
+	 background: url(<{$public}>images/companyon.jpg)  no-repeat;
+	padding:21px 192px;
+}
+#svip  a:hover{
+	 background: url(<{$public}>images/companyoff.jpg)  no-repeat;
+	padding:21px 192px;
+}
+</style>
+</head>
+
+<body>
+<div id="con">
+    <div id="content" style="background: #d7d7d7">
+
+        <div style="width: 1038px;margin:0 auto; background: url(<{$public}>images/bs.jpg) repeat-y">
+    	<div id="center"  style="background: #ffffff">
+            <div id="head" style="width:1004px; height: 250px;padding-left: 4px;">
+                <{include file="head.html"}>
+            </div>
+        	<!--左侧-->
+        	<div id="left">
+            	<!--第一个内容-->
+            	<div class="w100 marginbottom">
+                    <div class="w100 leftCenterImg">
+                    	<div class="context" style="border: 1px #ebebeb solid;padding-bottom: 20px;">
+                            <div style="width: 660px; text-align: center;padding-top: 10px;">
+                                  <div style="width: 600px; text-align: left;padding:10px 0px 10px 40px;">
+                                      <font style="font-size: 11px;">サービス&nbsp;＞<{if $title neq ''}>&nbsp;<{$title}>&nbsp;＞<{/if}>&nbsp; <{$text[0].n_title}></font></div>
+                                 <div style="margin: 0 auto; width: 600px; border-bottom: 1px #ebebeb dotted"></div>
+                                <br/>
+                                <h1 style="padding: 0px 20px; line-height: 25px;">
+                                    <{$text[0].n_title}>
+                                </h1>
+                                <div style="margin: 0 auto; width: 600px; border-bottom: 1px #ebebeb solid"></div>
+                            </div>
+
+                            <h5><{$text[0].n_starttime}></h5>
+						<{if $text[0].n_remake neq 2}>
+	  							<{if $level eq 1 || $level eq 2}>
+		                            <div id="details" style="height:110px">
+		                                <{if $text[0].n_bigpicture neq ''}>
+		                                    <img style="float: left;" src="<{$ipath}><{$text[0].n_bigpicture}>" alt="<{$list[sec1].n_pictitle}>" title="<{$list[0].n_pictitle}>" width="100">
+		                                <{else}>
+		                                	<{if $text[0].n_smpicture neq ''}>
+		                                    <img style="float: left;width:100px" src="<{$ipath}><{$text[0].n_smpicture}>">
+		                                    <{else}>
+		                                       <img style="float: left;width:100px"  src="include/Public/Brand/<{$text[0].b_logo}>" style="float: left; " alt="<{$text[0].b_ename}>" title="<{$text[0].b_jname}>" >
+		                                    <{/if}>
+		                                <{/if}>
+		                                <div style="width: 480px;float:left;font-size:12px">
+		                                <{$text[0].n_detail}>
+		                                </div>
+		                              </div>
+		                              <br/>
+		                                <{if $level eq 2}>
+		                                <div id="text">
+		                                    <{$text[0].n_context}>
+		                                </div>
+		                                <{/if}>
+		                            <{/if}>
+							<{else}>
+								<div id="details" style="height:110px">
+	                                <{if $text[0].n_bigpicture neq ''}>
+	                                    <img style="float: left;" src="<{$ipath}><{$text[0].n_bigpicture}>" alt="<{$list[sec1].n_pictitle}>" title="<{$list[0].n_pictitle}>" width="100">
+	                                <{else}>
+	                                   	<{if $text[0].n_smpicture neq ''}>
+		                                    <img style="float: left;width:100px" src="<{$ipath}><{$text[0].n_smpicture}>">
+		                                    <{else}>
+		                                     <img style="float: left;width:100px"  src="include/Public/Brand/<{$text[0].b_logo}>" style="float: left; " alt="<{$text[0].b_ename}>" title="<{$text[0].b_jname}>" >
+		                                    <{/if}>
+	                                <{/if}>
+	                                <div style="width: 480px;float:left;font-size:12px">
+	                                <{$text[0].n_detail}>
+	                                </div>
+	                              </div>
+	                              <br/>
+	                                <div id="text">
+	                                    <{$text[0].n_context}>
+	                                </div>
+							<{/if}>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                             <{if $level neq 2}>
+                            <div id="svip" style="wdith:100%;text-align: center;">
+                            <a style="padding:21px 192px;"   href="http://www.shanghaitimes.net/index.php?action=page&return=vip"></a>  
+                            </div>
+                            <{/if}>
+                            <br/>
+                            <br/>
+                            <!--<div style="color: #8a2be2;margin-left: 20px;margin-top: 20px;"><font color="black">KEYWORD</font>: <{$text[0].n_keyword}></div>-->
+                            <div style="clear: both"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--右侧-->
+            <div id="right">
+                   <{include file="right.html"}>
+                <div style="clear:both;"></div>
+            </div>
+            <div style="clear: both;"></div>
+        </div>
+           
+         <{include file="foot.html"}>
+        <div style="clear: both;"></div>
+      </div>
+    </div>
+</div>
+</body>
+<script src="<{$public}>js/right.js">
+</script>
+</html>

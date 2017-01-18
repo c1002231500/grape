@@ -1,0 +1,66 @@
+<?php
+/**
+ * Provides methods to maninpulate the table feature
+ *
+ * @author Xiaoguang You
+ * @name feature
+ */
+class feature
+{
+
+    /**
+     * Konstruktor
+     * Initialisiert den Eventlog
+     */
+    function __construct()
+    {
+    }
+
+    /**
+     * get  features by destination type
+     *
+     * @param string $desType  type of the destination
+     */
+	function getFeatureType()
+	{
+		$ins1 = mysql_query("SELECT DISTINCT Type FROM feature ");
+		$types = array();
+        while ($type = mysql_fetch_array($ins1))
+        {
+            $type_temp = stripslashes($type["Type"]);
+            array_push($types, $type_temp);
+        }
+		
+		if($ins1)
+		{
+			return $types;
+		}	
+		else
+			return false;
+	}
+    function getFeatureByType($desType)
+    {
+		$desType = mysql_real_escape_string($desType);
+		$sql = "SELECT FeatureName FROM feature WHERE Type = '$desType'";
+        $ins1 = mysql_query($sql);
+		
+		$featureNames = array();
+        while ($featureName = mysql_fetch_array($ins1))
+        {
+            $featureName_temp = stripslashes($featureName["FeatureName"]);
+            array_push($featureNames, $featureName_temp);
+        }
+		
+        if ($ins1)
+        {
+            return $featureNames;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    
+}
+
+?>

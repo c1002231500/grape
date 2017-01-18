@@ -1,0 +1,97 @@
+﻿@charset "utf-8";
+/* CSS Document */
+body,h1,h2,h3,h4,h5,h6,p,td{margin:0;padding:0;font-size:12px;font-family:'MS Mincho'; color:#555555; }
+ul,ol,dl,li,dt,dd{list-style-type:none; margin:0;padding:0;}
+a{ text-decoration:none; color:#555555;}
+a:hover{ text-decoration:none; color:#ff0084;}
+.clear{ clear:both; height:1px; overflow:hidden;}
+img{ border:none;}
+body{ /*background:url(../images/bg.gif) repeat-y top center;*/}
+
+
+.top{ height:auto; }
+
+.header1{width:1003px; height:27px; margin:0px auto; overflow:hidden; background:url(../images/1_cidian.jpg) repeat-x;}
+.logoin{ height:27px; width:1003px;  overflow:hidden;}
+.loginz{ float:right; line-height:27px; overflow:hidden; margin-right:10px; }
+.htitle{width:1003px; height:100px; margin:0px auto; overflow:hidden; background:url(../images/cidian/images/2.jpg) repeat-x; margin-top:8px;}
+.sousuo{width:1003px; height:32px; margin:0px auto; overflow:hidden; background:url(../images/cidian/images/3.jpg) repeat-x; margin-top:8px;}
+.sousuoz{line-height:32px; overflow:hidden; }
+.daohang1{width:1003px; height:35px;  overflow:hidden; background:url(../images/cidian/images/4.jpg) repeat-x;  margin:0px auto; margin-top:8px;}
+.daohang2{width:1003px; height:36px;  overflow:hidden; background:url(../images/cidian/images/6.jpg); margin:0px auto;}
+.daohang1z{ line-height:35px; overflow:hidden; color:#FFFFFF;  margin-left:40px;}
+.daohang2z{ line-height:36px; overflow:hidden; margin-left:40px; }
+.block{width:1003px; height:261px; margin:0px auto; overflow:hidden; margin-top:8px;}
+.guanggao{ width:710px; height:259px;overflow:hidden; border:1px solid #dddddd; float:left;}
+.zuixin{width:286px; height:261px; overflow:hidden; float:left; margin-left:5px;}
+.biao1{width:286px; height:33px; overflow:hidden;}
+.zuixinn{width:284px; height:227px; overflow:hidden; border-left:1px solid #dddddd; border-right:1px solid #dddddd; border-bottom:1px solid #dddddd;}
+.shortcut{background:url(../images/cidian/images/36.jpg); width:1003px; height:71px; overflow:hidden; margin:0px auto; margin-top:8px;}
+.news{ width:1003px; height:567px; overflow:hidden; margin:0px auto; margin-top:8px;}
+.firstdiv1{overflow:hidden; margin:0px auto; margin-top:8px; float:left; width:286px; height:567px;}
+.seconddiv1{overflow:hidden; margin:0px auto; margin-top:8px; float:left; width:417px; height:567px; margin-left:7px;}
+.thirddiv1{overflow:hidden; margin:0px auto; margin-top:8px; float:left; width:286px; height:567px;margin-left:7px; }
+.frame1{width:286px; height:384px; overflow:hidden;}
+.biao2{width:286px; height:33px; overflow:hidden;}
+.qiyen{width:284px; height:350px; overflow:hidden; border-left:1px solid #dddddd; border-right:1px solid #dddddd; border-bottom:1px solid #dddddd;}
+.frame2{width:286px; height:175px; overflow:hidden; margin-top:8px;}
+.biao3{width:286px; height:33px; overflow:hidden;}
+.event{width:284px; height:133px; overflow:hidden; border-left:1px solid #dddddd; border-right:1px solid #dddddd; border-bottom:1px solid #dddddd;}
+.frame3{width:417px; height:290px; overflow:hidden;}
+.biao4{width:417px; height:33px; overflow:hidden;}
+.qianxian{width:415px; height:256px; overflow:hidden; border-left:1px solid #dddddd; border-right:1px solid #dddddd; border-bottom:1px solid #dddddd;}
+.frame4{width:417px; height:271px; overflow:hidden; margin-top:8px;}
+.biao5{width:417px; height:33px; overflow:hidden;}
+.guanggaon{width:415px; height:227px; overflow:hidden; border-left:1px solid #dddddd; border-right:1px solid #dddddd; border-bottom:1px solid #dddddd;}
+.cishu{width:286px; height:105px; overflow:hidden; background:url(../images/cidian/images/13.jpg);}
+.frame5{width:286px; height:245px; overflow:hidden; margin-top:8px;}
+.biao6{width:286px; height:33px; overflow:hidden;}
+.jiaodian{width:284px; height:211px; overflow:hidden; border-left:1px solid #dddddd; border-right:1px solid #dddddd; border-bottom:1px solid #dddddd;}
+.frame6{width:286px; height:202px; overflow:hidden; margin-top:8px;}
+.biao7{width:286px; height:33px; overflow:hidden;}
+.report{width:284px; height:159px; overflow:hidden; border-left:1px solid #dddddd; border-right:1px solid #dddddd; border-bottom:1px solid #dddddd;}
+.block1{width:1003px;height:859px; margin:0px auto; overflow:hidden; margin-top:8px;}
+.block1_left{ width:708px;height:857px; border:1px solid #dddddd; float:left;}
+.block1_left_header{width:634px;height:40px;overflow:hidden; margin-top:8px;margin:0px auto;line-height:40px; font-size:12px;}
+.block1_left_body{width:634px;height:747px;overflow:hidden;margin:0px auto;}
+.block2{width:1003px;height:1383px; margin:0px auto; overflow:hidden; margin-top:8px;}
+.block2_left{ width:708px;height:1381px; border:1px solid #dddddd; float:left;}
+.block2_left_header{width:634px;height:40px;overflow:hidden; margin-top:8px;margin:0px auto;line-height:40px; font-size:12px;}
+.block2_left_body1{width:634px;height:611px;overflow:hidden;margin:0px auto;}
+.block2_left_body2{width:634px;height:503px;overflow:hidden;margin:0px auto;}
+.block2_left_body3{width:634px;height:224px;overflow:hidden;margin:0px auto;}
+.xuxian{width:634px;height:1px;overflow:hidden;margin:0px auto; background:url(../images/cidian/5.jpg);}
+.block1_right{ width:286px;height:586px; float:right; }
+.block1_right_new{width:286px;height:261px;overflow:hidden;margin:0px auto;}
+.block1_right_new_title{width:286px;height:33px;overflow:hidden;margin:0px auto; background:url(../images/cidian/images/10.jpg);}
+.block1_right_new_news{width:284px;height:227px;overflow:hidden;margin:0px auto;border-left:1px solid #dddddd; border-right:1px solid #dddddd; border-bottom:1px solid #dddddd;}
+.block1_right_pic{width:286px;height:62px;overflow:hidden;margin:0px auto; background:url(../images/cidian/2.jpg); margin-top:8px;}
+.block1_right_jiao{width:286px;height:245px;overflow:hidden;margin:0px auto; margin-top:8px;}
+.block1_right_jiao_title{width:286px;height:33px;overflow:hidden;margin:0px auto; background:url(../images/cidian/images/16.jpg);}
+.block1_right_jiao_news{width:284px;height:211px;overflow:hidden;margin:0px auto;border-left:1px solid #dddddd; border-right:1px solid #dddddd; border-bottom:1px solid #dddddd;}
+.footer{ background:url(../images/cidian/images/37.jpg); width:1003px; height:112px; overflow:hidden; margin:0px auto; margin-top:8px;}
+.block3_left{width:1001px;height:auto; border:1px solid #dddddd;overflow:hidden;margin:0px auto;}
+.block4{width:1003px;height:82px; margin:0px auto;overflow:hidden; background:url(../images/bj.jpg);margin-top:8px;}
+.tupian1{width:410px;height:58px; float:left; margin:0px auto;overflow:hidden; margin-top:12px;}
+.tsousuo{width:553px;height:58px; float:left; margin:0px auto;overflow:hidden; margin-top:12px;margin-left:30px;}
+.tsousuo1{width:553px;height:29px; margin:0px auto;overflow:hidden;line-height:29px;}
+.tsousuo2{width:553px;height:29px; margin:0px auto;overflow:hidden;line-height:25px;}
+.block3_left_head{width:900px;height:115px;overflow:hidden;margin:0px auto;}
+.block3_left_head3{width:100px;height:100px;float:left; overflow:hidden;margin:0px auto; line-height:100px; margin-top:15px;}
+.block3_left_headzuo{width:600px;height:100px;overflow:hidden;margin:0px auto;float:left;margin-left:50px;}
+.block3_left_head1{width:600px;height:40px;overflow:hidden;margin:0px auto;line-height:50px;}
+.block3_left_head2{width:600px;height:40px;overflow:hidden;margin:0px auto;line-height:50px;}
+.block3_left_jianjie{width:600px;height:auto;overflow:hidden;margin:0px auto;}
+.block3_left_keyword{width:600px;height:51px;overflow:hidden;margin:0px auto;line-height:51px;font-size:12px;color:#333333;}
+.block3_left_news{width:600px;height:220px;overflow:hidden;margin:0px auto;line-height:51px;font-size:12px;color:#333333;}
+.block3{width:1003px;height:auto; margin:0px auto; overflow:hidden; margin-top:8px;}
+.block5{width:1003px; margin:0px auto;overflow:hidden; border:1px solid #dddddd; margin-top:8px;}
+.xianshi1{width:1003px; margin:0px auto;overflow:hidden;}
+.xianshi1_pic{width:300px; height:auto;  float:left;}
+.xianshi1_wenzi{width:240px; height:auto;}
+.xianshi1_pic_zi{width:300px; height:auto; text-align:center; margin-top:20px; font-size:12px; color:#000;}
+.xianshi1_xinxi{width:600px; height:auto; float:left; margin-top:20px;}
+.xianshi2{width:1003px; height:auto; margin:0px auto;overflow:hidden; border:1px solid #dddddd; margin-top:8px;}
+.xianshi2_keyword{width:300px; height:auto; text-align:center; margin-top:20px; font-size:12px; color:#000;float:left;}
+.xianshi2_news{width:700px; height:auto; float:left; margin-top:20px;}
+.xianshi3{width:1003px; height:auto; margin:0px auto;overflow:hidden; margin-top:8px; clear:both;}

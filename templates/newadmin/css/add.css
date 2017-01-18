@@ -1,0 +1,9 @@
+@charset "utf-8";
+/* CSS Document */
+.table_new{width:798px;height:auto; background:#f5f5f5;border:1px solid #d6d6d6;overflow:hidden; margin-bottom:20px;}
+.table_new img{ border:none;}
+.addcountry{width:798px;height:500px;border:1px solid #d6d6d6;background:#f5f5f5;}
+.addtype{width:798px;height:100px;border:1px solid #d6d6d6;background:#f5f5f5;}
+.addtype1{width:798px;height:300px;border:1px solid #d6d6d6;background:#f5f5f5;}
+.addJs{width:798px;height:800px;border:1px solid #d6d6d6;background:#f5f5f5;}
+.addHotkeyword{width:798px;height:100px;border:1px solid #d6d6d6;background:#f5f5f5;}

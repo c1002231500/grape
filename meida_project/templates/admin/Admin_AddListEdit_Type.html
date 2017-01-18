@@ -1,0 +1,152 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link href="<{$public}>regiester/style.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="<{$public}>js/jquery.js"></script>
+<!--必需引用：JS文件-->
+
+<title>添加大类</title>
+<style>
+#lt tr{
+	border-bottom:1px solid #d6e9eb;
+}
+</style>
+</head>
+<body style="text-align: left;padding-left:10px;">
+<form id="menut" action="/admin.php?action=add_style" method="post">
+<div style="color:red; height:30px;margin-top:20px;"><strong>添加<font color="blue"> <{$clsname}> </font> 的小类 </strong></div>
+&nbsp;&nbsp;&nbsp;
+类别名：<input id="t_name" name="t_name" style="width: 250px; font-weight: bold;"  type="text"><br/><br/>
+<div style="padding-left:25px;">状态：
+<input name="t_status" type="radio" value="1" checked="checked">显示
+<input name="class_status" type="radio" value="2" >不显示 </div>&nbsp;&nbsp;
+<input type="hidden" name="action" value="add_style"/>
+ <input type="hidden" name="classid" id="classid" value="<{$clsid}>">
+    <input type="hidden" name="classname" id="classname" value="<{$clsname}>">
+<div style="padding-left:30px;"><input name="sub" id="sub"  value=" 提 交 "  type="submit"></div>
+</form>
+<br/>
+<table id="lt" width="98%" height="60" cellpadding="1"
+	cellspacing="1" bordercolor="#B9C2E1" bgcolor="#FFFFFF">
+	<tr>
+		<td width="100px" height="24" align="center" valign="middle"
+			bordercolor="#D6E9EB" bgcolor="#73A0D2">编号</td>
+		<td width="400px" align="center" valign="middle" bordercolor="#D6E9EB"
+			bgcolor="#73A0D2">类别名</td>
+		<td width="150px" align="center" valign="middle" bordercolor="#D6E9EB"
+			bgcolor="#73A0D2">状态</td>
+		<td colspan="2" align="center" valign="middle" bordercolor="#D6E9EB"
+			bgcolor="#73A0D2">操作</td>
+	</tr>
+
+	<{section name=sec1 loop=$cs}>
+	<tr onmousemove='this.style.backgroundColor="#E2E9ED"'
+		onmouseout='this.style.backgroundColor="#ffffff"'>
+		<td height="31" align="center" valign="middle" bordercolor="#D6E9EB"><{$cs[sec1].t_id}></td>
+		<td align="center" valign="middle" bordercolor="#D6E9EB">
+			<div id="edit_<{$cs[sec1].t_id}>_dis_name"><{$cs[sec1].t_name}></div>
+			<div id="edit_<{$cs[sec1].t_id}>_show_name" style="display: none">
+			<input type="text" id="class_text_<{$cs[sec1].t_id}>" value=<{$cs[sec1].t_name}>></div>
+		</td>
+		<td align="center" valign="middle" bordercolor="#D6E9EB">
+		<div id="edit_<{$cs[sec1].t_id}>_dis_edit">
+		    <{if $cs[sec1].t_status eq 1}>显示<{else}>不显示<{/if}></div>
+			<div id="edit_<{$cs[sec1].t_id}>_show_edit" style="display: none">
+			<select id="edit_<{$cs[sec1].t_id}>_static">
+			<option value="<{$cs[sec1].t_status}>">
+            <{if $cs[sec1].t_status eq 1}>显示 (now)<{else}>不显示 (now)<{/if}></option>
+			<option value="1">显示 </option>
+			<option value="2">不显示</option>
+			</select>
+		</div>
+        </td>
+		<td width="5%" align="center" valign="middle" bordercolor="#D6E9EB">
+		<div id="edit_<{$cs[sec1].t_id}>_dis_tedit"><a
+			href="javascript:edit_show('edit_<{$cs[sec1].t_id}>_show','edit_<{$cs[sec1].t_id}>_dis')">编辑</a>
+		</div>
+		<div id="edit_<{$cs[sec1].t_id}>_show_tedit" style="display: none"><input
+			type="submit" value="确定" class="regular-button"
+			onClick="javascript:sub_edit('<{$cs[sec1].t_id}>','class_text_<{$cs[sec1].t_id}>','edit_<{$cs[sec1].t_id}>_static')">
+		</div>
+		</td>
+		<td width="6%" align="center" valign="middle" bordercolor="#D6E9EB">
+		<div id="edit_<{$cs[sec1].t_id}>_dis_reset"><a
+			href="javascript:class_del(<{$cs[sec1].t_id}>)">删除</a></div>
+		<div id="edit_<{$cs[sec1].t_id}>_show_reset" style="display: none"><input
+			type="reset" class="regular-button"
+			onClick="javascript:edit_dis('edit_<{$cs[sec1].t_id}>_show','edit_<{$cs[sec1].t_id}>_dis')"
+			value="取消"></div>
+		</td>
+	</tr>
+	<{/section}>
+
+</table>
+<br/>
+<div style="width: 100%; text-align: left; padding-left: 30px"><{$page}></div>
+
+
+<script>
+function edit_show(show_id,dis_id)
+{
+	document.getElementById(show_id+"_name").style.display='';
+	document.getElementById(dis_id+"_name").style.display='none';
+
+	document.getElementById(show_id+"_edit").style.display='';
+	document.getElementById(dis_id+"_edit").style.display='none';
+
+	document.getElementById(show_id+"_tedit").style.display='';
+	document.getElementById(dis_id+"_tedit").style.display='none';
+
+	document.getElementById(show_id+"_reset").style.display='';
+	document.getElementById(dis_id+"_reset").style.display='none';
+}
+
+function edit_dis(show_id,dis_id)
+{
+
+	document.getElementById(show_id+"_name").style.display='none';
+	document.getElementById(dis_id+"_name").style.display='';
+
+	document.getElementById(show_id+"_edit").style.display='none';
+	document.getElementById(dis_id+"_edit").style.display='';
+
+	document.getElementById(show_id+"_tedit").style.display='none';
+	document.getElementById(dis_id+"_tedit").style.display='';
+
+	document.getElementById(show_id+"_reset").style.display='none';
+	document.getElementById(dis_id+"_reset").style.display='';
+}
+
+function sub_edit(show_id,class_name,class_edit)
+{
+	var t_id=show_id;
+	var t_name=document.getElementById(class_name).value;
+	var t_edit=document.getElementById(class_edit).value;
+    $.ajax({
+       type: "POST",
+       url: "/admin.php",
+       data: "id="+t_id+"&action=upstyle&name="+t_name+"&static="+t_edit,
+       success: function(msg){
+         window.location.reload();
+       }
+    });
+}
+
+function class_del(class_id)
+{
+	if (confirm("确定要删除该数据？删除后数据并无法恢复！"))
+	{
+	$.ajax({
+       type: "POST",
+       url: "/admin.php",
+       data: "id="+class_id+"&action=delstyle",
+       success: function(msg){
+         window.location.reload();
+       }
+    });
+	}
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,237 @@
+<?php
+/**
+ * Provides methods to interact with specails
+ *
+ * @author Yongjun
+ * @name specails
+ */
+class specails
+{
+
+    function __construct()
+    {
+		
+    }
+
+     /**
+     * Add specailss
+     * @param int    $userid   User ID
+     * @param string $comment  Content of the specails
+     * @return int specails ID
+     */
+	 
+    function addFromForm($data){
+		
+		$sql = "INSERT INTO  industry_specails set ";
+		$sql.= "`desId`=".intval($data["desId"]).",";
+		$sql.= "`sep_type`='".mysql_real_escape_string($data["sep_type"])."',";
+		$sql.= "`sep_name`='".mysql_real_escape_string($data["sep_name"])."',";
+		$sql.= "`sep_description`='".mysql_real_escape_string($data["sep_description"])."',";
+		$sql.= "`sep_regular_price`='".($data["sep_regular_price"])."',";
+		$sql.= "`sep_pass_price`='".($data["sep_pass_price"])."',";
+		$sql.= "`sep_start_date`='".($data["sep_start_date"])."',";
+		$sql.= "`sep_end_date`='".($data["sep_end_date"])."',";
+		$sql.= "`sep_add_time`='".time()."'";
+
+        $ins1 = mysql_query($sql);
+		//exit;
+        if ($ins1)
+        {
+            $insid = mysql_insert_id();
+			
+			if($data["des_url"]!=""){
+				$sql = "update destination set WebSiteUrl='".$data["des_url"]."' where Id=".intval($data["desId"]);
+				mysql_query($sql);
+			}
+            return $insid;
+        }
+        else
+        {
+            return false;
+        }
+	}
+    
+	function getSpecialList($cond){
+		
+		if(isset($cond["page_size"])){
+			$pagesize = $cond["page_size"];
+		}else{
+			$pagesize = 10;
+		}
+		
+		$where = "1=1";
+		
+		if(isset($cond["uid"])){
+			$where.=" AND s.desId IN (select Id from destination where uid=".intval($cond["uid"]).")";
+		}
+		
+		if(isset($cond["member_uid"])){
+			$where.=" AND s.Id IN (select specialId from user_specials where userId=".intval($cond["member_uid"]).")";
+		}
+		
+		if(isset($cond["desId"])){
+			$where.=" AND s.desId =".intval($cond["desId"]);
+		}
+	
+		if(isset($cond["state"]) && $cond["state"]!="ALL"){
+			$where.=" AND s.desId IN (select Id from destination where StateId =".intval($cond["state"]).")";
+		}
+		
+		if(isset($cond["desType"]) && $cond["desType"]!="ALL"){
+			$where.=" AND s.desId IN (select Id from destination where `type` ='".mysql_real_escape_string($cond["desType"])."')";
+		}
+		
+		if(isset($cond["sidlist"])){
+			//filter string unknow
+			$t = explode(",",$cond["sidlist"]);
+			$sidlist = "0";
+			for($i=0;$i<count($t);$i++){
+				$sidlist.=",".intval($t[$i]);
+			}
+			$where.=" AND s.Id in (".$sidlist.")";
+		}
+		
+		if(isset($cond["tourid"]))
+		{
+			$where.=" and s.desId in (select DestId from tour2dest where TourId=".$cond["tourid"].")";
+		}
+		
+        $sel = mysql_query("SELECT count(*) from industry_specails s where ".$where);
+		//echo "SELECT count(*) from industry_specails s where ".$where;exit;
+         
+		$num = mysql_fetch_row($sel);
+
+        $num = $num[0];
+         
+        SmartyPaginate::connect();
+        // set items per page
+        SmartyPaginate::setLimit($pagesize);
+        SmartyPaginate::setTotal($num);
+
+        $start = SmartyPaginate::getCurrentIndex();
+        $lim = SmartyPaginate::getLimit();
+		
+        $sel2 = mysql_query("SELECT YEAR(s.sep_start_date) as sy,MONTH(s.sep_start_date) as sm,DAY(s.sep_start_date) as sd,YEAR(s.sep_end_date) as ey,MONTH(s.sep_end_date) as em,DAY(s.sep_end_date) as ed,s.*,s.Id as sid,d.* from industry_specails s,destination d where ".$where." AND s.desId=d.Id order by s.Id desc limit $start,$lim");
+		
+
+        $mList= array();
+	 	while ($m_temp = mysql_fetch_array($sel2))
+        {	
+        	$m_temp["sep_start_date"]=$m_temp["sm"]."/".$m_temp["sd"]."/".$m_temp["sy"];
+        	$m_temp["sep_end_date"]=$m_temp["em"]."/".$m_temp["ed"]."/".$m_temp["ey"];
+			if($m_temp["sep_pass_price"]>0 && $m_temp["sep_regular_price"]>0){
+				$m_temp["sep_savings"] = floor(($m_temp["sep_regular_price"]-$m_temp["sep_pass_price"])/$m_temp["sep_regular_price"]*100);
+			}else{
+				$m_temp["sep_savings"] = "-";
+			}
+			$m_temp["name"]=stripslashes($m_temp["name"]);
+			$m_temp["name"]=htmlentities($m_temp["name"]);
+			$m_temp["sep_name"]=stripslashes($m_temp["sep_name"]);
+			$m_temp["sep_name"]=htmlentities($m_temp["sep_name"]);
+			$m_temp["sep_description"]=stripslashes($m_temp["sep_description"]);
+			$m_temp["sep_description"]=htmlentities($m_temp["sep_description"]);
+			if(!isset($m_temp["logoImageFileLocation"])||!file_exists($m_temp["logoImageFileLocation"]))
+				$m_temp["logoImageFileLocation"]="./templates/images/missing_logo1.jpg";
+            array_push($mList, $m_temp);
+        }
+       
+		if (!empty($mList))
+        {
+           return $mList;
+        }
+        else
+        {
+        	return false;
+        }
+	}
+	
+	
+	
+    /**
+     *  Delete a specails from table specails.
+     *
+     * @param int $specailsid specails ID
+     * @return bool
+     */
+    function removeSpcial($specailsid)
+    {
+        $specailsid = intval($specailsid);
+       	
+		//check the owner for security reasons.
+		$sql = "select d.uid from industry_specails s,destination d where s.desId=d.Id and s.Id=".$specailsid;
+		
+		$q = mysql_query($sql);
+		$r = mysql_fetch_array($q);
+
+		if($r["uid"]==$_SESSION["userid"]){
+        	$flag = mysql_query("delete from industry_specails where Id=$specailsid");
+
+			if ($flag)
+			{
+				
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+		return false;
+    }
+	
+	function removeMemberSpcial($specailsid)
+    {
+        $specailsid = intval($specailsid);
+       	
+
+        $flag = mysql_query("delete from user_specials where userId=".$_SESSION["userid"]." and specialId=".$specailsid);
+
+		if ($flag)
+		{
+			
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+
+    }
+	
+    function addSpecial2SpecialList($spId,$uid)
+    {
+    	$sql="insert into user_specials set userId=$uid,specialId=$spId,addTime=".time();
+    	$q = mysql_query($sql);
+		return $q;
+    }
+    
+    
+    
+    /* edited by cathering 2009.8.4 */
+  function delete_specials($sid)
+  {
+	$sid=intval($sid);
+	$res1="delete from user_specials where specialId=$sid";
+	$result1=mysql_query($res1);
+	$res2="delete from industry_specails where Id=$sid";
+	$result2=mysql_query($res2);
+	return mysql_affected_rows();
+  }
+/**/
+  
+  function get_specials($sid)
+  {
+  	$sid=intval($sid);
+  	$res=mysql_query("select * from industry_specails where Id=$sid");
+  	$res=mysql_fetch_array($res);
+    $result=array();
+    $result["Special_name"]=$res["sep_name"];
+    $result["Special_description"]=$res["sep_description"];
+    $result["regular_price"]=$res["sep_regular_price"];
+    $result["pass_price"]=$res["sep_pass_price"];
+    $result["start_date"]=$res["sep_start_date"];
+    $result["end_date"]=$res["sep_end_date"];
+    return $result;
+  }
+}
+?>

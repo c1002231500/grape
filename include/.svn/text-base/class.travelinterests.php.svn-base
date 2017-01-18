@@ -1,0 +1,49 @@
+<?php
+/**
+ * Provides methods to interact with winepass
+ *
+ * @author Yongjun
+ * @name winepass
+ */
+class travelinterests
+{
+
+    /**
+     * Konstruktor
+     * Initialisiert den Eventlog
+     */
+    function __construct()
+    {
+    }
+
+     /**
+     * Add winepasss
+     * @param int    $userid   User ID
+     * @param string $comment  Content of the winepass
+     * @return int winepass ID
+     */
+	function getalltypes(){
+	    $sel = mysql_query("select id, Name  from travelinterests");
+        //var_dump($row);exit ;	      
+        $results = array();
+        while ($temp = mysql_fetch_array($sel))
+        {
+            $temp["Name"] = $temp["Name"];
+            $temp["id"] = $temp["id"];
+            array_push($results, $temp);
+        }
+     // var_dump($results[]["id"]);exit ;	      
+        if (!empty($results))
+        {
+            return $results;
+        }
+        else
+        {
+            return false;
+        }
+        
+       
+	}
+
+}
+?>

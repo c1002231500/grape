@@ -1,0 +1,44 @@
+<?php
+class index
+{
+	function gettourList()
+	{
+		$sel2 = mysql_query("SELECT tour.*,user.LogonAlias,user.LastName,user.FirstName FROM `tour`,`user`where user.id=tour.Userid  group by id ORDER BY  id limit 0,14");
+		$tours = array();
+		while ($tour = mysql_fetch_array($sel2))
+		{
+			$getState = self::GetState($tour["userId"]);
+			$tour["state"]= $getState[0][0];
+			array_push($tours, $tour);
+		}
+		if (!empty($tours))
+		{
+			$tours["Name"]=stripslashes($tours["Name"]);
+			$tours["Name"]=htmlentities($tours["Name"]);
+			return $tours;
+		}
+		else
+		{
+			return false;
+		}
+		
+	}
+	function GetState($uid)
+	{
+		$sel =mysql_query("SELECT state FROM destination where uid='$uid' group by state limit 0,1");
+		$tours =array();
+	    while($tour=mysql_fetch_array($sel))
+	    {
+	    	array_push($tours,$tour);
+	    }
+	    if(!empty($tours))
+	    {
+	    	return $tours;
+	    }
+	    else
+	    {
+	    	return false;
+	    }
+	}
+}
+?>

@@ -1,0 +1,256 @@
+<?php
+/**
+ * Provides methods to interact with reviews
+ *
+ * @author YongJun
+ * @name reviews
+ */
+class reviews
+{
+
+    /**
+     * Konstruktor
+     * Initialisiert den Eventlog
+     */
+    function __construct()
+    {
+    }
+
+    /**
+     * Creates a reviews
+     *
+     */
+    function add($content, $rate, $userid, $desid, $type='D')
+    {
+        $content = mysql_real_escape_string($content);
+        $rate = intval($rate);
+        $userid = intval($userid);
+		$desid = intval($desid);
+		$type = mysql_real_escape_string($type);
+		$result=mysql_query("select count(*) from review where UserId=$userid and DestinationId=$desid");
+		$result=mysql_fetch_array($result);
+		$num=$result[0];
+		//var_dump($num);
+		if($num==0)
+		{
+		    $ins1 = mysql_query("INSERT INTO review (`UserId`,`DestinationId`,`Rating`,`Comment`,`type`,sendTime) VALUES ('$userid','$desid','$rate','$content','$type',".time().")");
+		    if ($ins1)
+		   {$sql = "select count(*) as nb, sum(Rating) as sco from review where DestinationId=$desid";
+			$q = mysql_query($sql);
+			
+			$res = mysql_fetch_array($q);
+			$avr = round($res["sco"]/$res["nb"]);
+			mysql_query("update destination set rate=$avr where Id=$desid");
+		   	return $insid;}
+		    else
+           {
+            return false;
+           }
+		}
+		else
+		{mysql_query("update review set `Rating`='$rate',`Comment`='$content',`sendTime`=".time()." where UserId=$userid and DestinationId=$desid");}
+		$sql = "select count(*) as nb, sum(Rating) as sco from review where DestinationId=$desid";
+			$q = mysql_query($sql);
+			
+			$res = mysql_fetch_array($q);
+			$avr = round($res["sco"]/$res["nb"]);
+			mysql_query("update destination set rate=$avr where Id=$desid");
+       /* if ($ins1)
+        {
+            $insid = mysql_insert_id();
+			
+			$sql = "select count(*) as nb, sum(Rating) as sco from review where DestinationId=$desid";
+			$q = mysql_query($sql);
+			
+			$res = mysql_fetch_array($q);
+			$avr = round($res["sco"]/$res["nb"]);
+			mysql_query("update destination set rate=$avr where Id=$desid");
+			
+            return $insid;
+        }
+        else
+        {
+            return false;
+        }*/
+    }
+	
+	
+
+    /**
+     * Edits a reviews
+     *
+     * @return bool
+     */
+    function edit($content, $rate, $reviewId)
+    {
+        $content = mysql_real_escape_string($content);
+        $rate = intval($rate);
+        $userid = intval($userid);
+		$desid = intval($desid);
+		$type = mysql_real_escape_string($type);
+		$reviewId = intval($reviewId);
+
+
+       $upd = mysql_query("UPDATE review set `Rating`='$rate',`Comment`='$content' where Id=$reviewId");
+
+        if ($upd)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    /**
+     * Delete a review
+     *
+     * @param int $id review ID
+     * @return bool
+     */
+    function del($id)
+    {
+        $id = intval($id);
+
+        $del = mysql_query("DELETE FROM review WHERE ID = $id");
+        if ($del)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    /**
+     * Get a Review Detail
+     *
+     * @param int $id Review ID
+     * @return array $review
+     */
+    function getReview($id)
+    {
+        $id = intval($id);
+
+		$review = array();
+        $sel = mysql_query("SELECT * FROM review WHERE ID = $id");
+        $review = mysql_fetch_array($sel);
+        $review["Comment"]=stripslashes($review["Comment"]);
+        $review["Comment"]=htmlentities($review["Comment"]);
+        return $review;
+    }
+
+    /**
+     * Returns review
+     *
+     * @param int $lim Limit
+     * @return array $reviews
+     */
+    function getReviewsList($lim = 10,$uid=0,$desId="")
+    {
+        $lim = intval($lim);
+		$uid = intval($uid);
+		$condition = " where 1=1 ";
+		
+		//userid is required, if uid is 0. then no list.
+		if($uid>0){
+			$condition.= " and r.UserId=".$uid;
+		}
+		
+		if($desId!=""){
+			if($condition==""){
+				$condition.= " and r.DestinationId in (".$desId.")";
+			}else{
+				$condition.= " and r.DestinationId in (".$desId.")";
+			}
+		}
+		
+        $sel = mysql_query("SELECT COUNT(*) FROM `review` r ".$condition);
+        $num = mysql_fetch_row($sel);
+        $num = $num[0];
+        SmartyPaginate::connect();
+        // set items per page
+        SmartyPaginate::setLimit($lim);
+        SmartyPaginate::setTotal($num);
+
+        $start = SmartyPaginate::getCurrentIndex();
+        $lim = SmartyPaginate::getLimit();
+
+        $sel2 = mysql_query("SELECT r.*,u.LogonAlias FROM `review` r, user u".$condition." and r.UserId=u.Id ORDER BY sendTime DESC LIMIT $start,$lim");
+        $reviews = array();
+        while ($review = mysql_fetch_array($sel2))
+        {
+        	$review["Comment"]=stripslashes($review["Comment"]);
+        	$review["Comment"]=htmlentities($review["Comment"]);
+        	$review["LogonAlias"]=stripslashes($review["LogonAlias"]);
+        	$review["LogonAlias"]=htmlentities($review["LogonAlias"]);
+            array_push($reviews, $review);
+        }
+
+        if (!empty($reviews))
+        {
+            return $reviews;
+        }
+        else
+        {
+            return false;
+        }
+    }
+	
+	 function getGetawayGuestReviewsList($lim = 10,$uid=0)
+    {
+        $lim = intval($lim);
+		$uid = intval($uid);
+		$condition = " where 1=1 ";
+		
+		//userid is required, if uid is 0. then no list.
+		if($uid>0){
+			$condition.= " and (r.UserId=g.costomer_userId and g.host_userId=".$uid." or ".$uid."=g.costomer_userId and g.host_userId=r.UserId) AND status=2";
+		}
+		
+
+        $sel = mysql_query("SELECT COUNT(*) FROM `review` r, getaway_guest g ".$condition);
+        $num = mysql_fetch_row($sel);
+        $num = $num[0];
+        SmartyPaginate::connect();
+        // set items per page
+        SmartyPaginate::setLimit($lim);
+        SmartyPaginate::setTotal($num);
+
+        $start = SmartyPaginate::getCurrentIndex();
+        $lim = SmartyPaginate::getLimit();
+
+        $sel2 = mysql_query("SELECT r.*,u.LogonAlias FROM `review` r, user u, getaway_guest g ".$condition." and r.UserId=u.Id ORDER BY Id DESC LIMIT $start,$lim");
+
+        $reviews = array();
+        while ($review = mysql_fetch_array($sel2))
+        {
+        	$review["Comment"]=stripslashes($review["Comment"]);
+        	$review["Comment"]=htmlentities($review["Comment"]);
+        	$review["LogonAlias"]=stripslashes($review["LogonAlias"]);
+        	$review["LogonAlias"]=htmlentities($review["LogonAlias"]);
+            array_push($reviews, $review);
+        }
+
+        if (!empty($reviews))
+        {
+            return $reviews;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    
+    function getTotalNum($desid)
+    {
+    	$desid = intval($desid);
+    	$sel=mysql_query("select count(*) from review where DestinationId=$desid");
+    	$r=mysql_fetch_array($sel);
+    	return $r[0];
+    }
+}
+
+?>

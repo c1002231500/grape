@@ -1,0 +1,131 @@
+<?php
+/**
+ * Provides methods to interact with winepass
+ *
+ * @author Yongjun
+ * @name winepass
+ */
+class winepass
+{
+
+    /**
+     * Konstruktor
+     * Initialisiert den Eventlog
+     */
+    function __construct()
+    {
+    }
+
+     /**
+     * Add winepasss
+     * @param int    $userid   User ID
+     * @param string $comment  Content of the winepass
+     * @return int winepass ID
+     */
+    function addWinePass($userid,$fromdate,$enddate,$cost,$paymenttime)
+    {
+        $userid = intval($userid);
+       
+        $ins1 = mysql_query("INSERT INTO winepass (`userId`,`beginTime`,`endTime`,`cost`,`winepass_status`,`payment_time`) VALUES 
+												('$userid',$fromdate,'$enddate','$cost','1','$paymenttime')");
+												
+												echo "INSERT INTO winepass (`userId`,`beginTime`,`endTime`,`cost`,`winepass_status`,`payment_time`) VALUES 
+												('$userid',$fromdate,'$enddate','$cost','1','$paymenttime')";
+		
+        if ($ins1)
+        {
+            $insid = mysql_insert_id();
+            return $insid;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+	/**
+     * List winepasss
+
+     */
+	function listWinePass($userid,$pagesize=10){
+
+        $sel = mysql_query("SELECT count(*) from winepass where userId=$userid"); 
+		$num = mysql_fetch_row($sel);
+        $num = $num[0];
+     
+        SmartyPaginate::connect();
+        SmartyPaginate::setLimit($pagesize);
+        SmartyPaginate::setTotal($num);
+
+        $start = SmartyPaginate::getCurrentIndex();
+        $lim = SmartyPaginate::getLimit();
+		
+        $sel2 = mysql_query("SELECT * from winepass where userId=$userid order by Id limit $start,$lim");
+
+	
+
+		$mList= array();
+	    while ($m_temp = mysql_fetch_array($sel2))
+        {
+	
+        	$m_temp["beginTime"] = date("Y-m-d",$m_temp["beginTime"]);
+			$m_temp["endTime"] = date("Y-m-d",$m_temp["endTime"]);
+			$m_temp["payment_time"] = date("Y-m-d",$m_temp["payment_time"]);
+			$m_temp["winepass_status"] = $m_temp["winepass_status"]==0?"Pending":"Passed";
+            array_push($mList, $m_temp);
+        }
+       
+		if (!empty($mList))
+        {
+           return $mList;
+        }
+        else
+        {
+        	return false;
+        }
+	}
+	
+	function listAllWinePass($pagesize=10){
+
+        $sel = mysql_query("SELECT count(*) from winepass"); 
+		$num = mysql_fetch_row($sel);
+        $num = $num[0];
+     
+        SmartyPaginate::connect();
+        SmartyPaginate::setLimit($pagesize);
+        SmartyPaginate::setTotal($num);
+
+        $start = SmartyPaginate::getCurrentIndex();
+        $lim = SmartyPaginate::getLimit();
+		
+        $sel2 = mysql_query("SELECT w.*,u.LogonAlias,u.ImageFileLocation from winepass w join user u on w.userId=u.Id order by u.LogonAlias limit $start,$lim");
+
+	
+
+		$mList= array();
+	    while ($m_temp = mysql_fetch_array($sel2))
+        {
+	
+        	$m_temp["beginTime"] = date("Y-m-d",$m_temp["beginTime"]);
+			$m_temp["endTime"] = date("Y-m-d",$m_temp["endTime"]);
+			$m_temp["payment_time"] = date("Y-m-d",$m_temp["payment_time"]);
+			$m_temp["winepass_status"] = $m_temp["winepass_status"]==0?"Pending":"Passed";
+			$m_temp["LogonAlias"]=stripslashes($m_temp["LogonAlias"]);
+			$m_temp["LogonAlias"]=htmlentities($m_temp["LogonAlias"]);
+			if(!isset($m_temp["ImageFileLocation"])||!file_exists($m_temp["ImageFileLocation"]))
+            $m_temp["ImageFileLocation"] = "./templates/images/user.gif";
+            array_push($mList, $m_temp);
+        }
+       
+		if (!empty($mList))
+        {
+           return $mList;
+        }
+        else
+        {
+        	return false;
+        }
+	}
+
+}
+?>

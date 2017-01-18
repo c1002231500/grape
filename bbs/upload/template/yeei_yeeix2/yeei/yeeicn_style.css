@@ -1,0 +1,82 @@
+/*--------------------------------------
+YEEIX2.0
+适用版本：Discuz!x2.0
+此模板为YEEI晴春原创制作，禁止用于商业用途，以及修改版发布。
+本模板需保留尾部版权字样，删除将无法享受YEEI.CN的免费技术支持
+
+本站提供模板免费急救服务，Discuz和Yeei下载的模板均可提问
+http://www.yeei.cn
+--------------------------------------*/
+
+li{ list-style:none}
+a:hover{ color:#0557B4}
+body {background: url(img/bg.gif) repeat-x 0 24px;}
+#toptb{ background:#F5F7F8; width:100%; border-bottom:1px solid #fff}
+#hd .wp { padding:0px 0 0; }
+#hd h2 { padding: 6px 20px 5px 0; float: left; }
+#um {padding-top:6px;}
+#nv { overflow: hidden; padding-left:0px; height: 34px;background:#51ADD8 url(img/nv.gif) repeat-x 0 0!important;font-family:'Hiragino Sans GB','Microsoft YaHei','宋体',Helvetica,Arial,sans-serif!important;}
+#nv .nv_l {overflow: hidden; width:6px; height:34px;background: url(img/nv_li.gif) no-repeat 0 0; float:left}
+#nv .nv_r {overflow: hidden; width:6px; height:34px;background: url(img/nv_li.gif) no-repeat -7px 0; float:right}
+#nv li { float: left; padding-right: 1px;height:34px!important;background: url(img/nv_r.gif) no-repeat 100% 5px; line-height: 34px;font-weight: 700; font-size: 14px; }
+.ie_all #nv li { line-height: 36px; }
+.ie6 #nv li { line-height: 34px; }
+#nv li a { float: left; padding: 0 20px; height: 34px!important; }
+
+#nv li a:hover { background:none; color:#F2F4A8}
+#nv li.hover a:hover, #nv li.hover a { background:none}
+#nv li.a {margin-left:0px; padding-right:0px; background: url(img/nv_a.gif) no-repeat 0 2px;}
+#nv li.a a{ background: url(img/nv_a.gif) no-repeat right -34px; color:#555}
+#nv li.a:hover {background: url(img/nv_a.gif) no-repeat 0 2px!important;}
+.a_mu{ background:#fff; border:1px solid #E5EDF2; border-top:none; margin-bottom:1px}
+
+#nv li.a a:hover{background: url(img/nv_a.gif) no-repeat right -34px; color:#555}
+#mu ul { background: url(img/mu_bg.png) no-repeat 0 100%; line-height: 22px; z-index: 2; font-size: 12px; }
+#qmenu {background: url(img/qmenu.png) no-repeat 0 0;}
+#qmenu.a { position: relative; z-index: 302; background-position: 0 -30px; }
+#ft {border:none; height:40px}
+#ft .foot_s{ float:left; text-align:center;width:100%; border-top:3px solid #eee; padding-top:10px}
+#ft .bqsy{ font-size:11px}
+
+#pt {margin-bottom:0px;height:30px;margin:8px auto;overflow:hidden;padding:0 10px 0 7px;border: 1px solid #E5E5E5;line-height:30px;line-height:32px\9;_line-height:30px;background:#F9F9F9 url(img/bsi_bg.gif) repeat-x 0 -43px;color:#444;}
+#pt .z a, #pt em {float: left;height:30px!important; color:#444}
+#pt .z em { width:20px!important; background: url(img/pt.gif) no-repeat 40% 0px!important; line-height: 200px!important; overflow: hidden; }
+
+.fg{clear: both;float:left;width:980px;height:0px;overflow:hidden}
+
+
+.move-span { background:none;}
+.yeei_sw{padding:0; margin-top:5px;border:1px solid #E5E5E5}
+.yeei_sw1{height:107px; overflow:hidden;border-bottom:1px solid #D9D9D9;}
+.yeei_sw1l{ margin-right:320px;_margin-right:323px;padding:10px 10px 0 15px;background:#fff url(img/yeei/show_1_bg.gif) repeat-x 0 0px;position: relative}
+.yeei_sw1l .hot{background:url(img/yeei/new.png) no-repeat right 0;position: absolute;right:0px;top:1px; width:48px; height:47px;_background:none}
+.yeei_sw1l .m { margin-top:0px; padding-right:5px;*padding-right:0px}
+.yeei_sw1l .m img{ border:1px solid #E0E0E0; background:#fff; padding:1px}
+.yeei_sw1l dt{ font-size:16px; padding-bottom:3px; padding-top:1px;font-family:'Hiragino Sans GB','Microsoft YaHei','宋体',Helvetica,Arial,sans-serif;}
+.yeei_sw1l dd{ color:#666;margin-bottom:5px}
+.yeei_sw1l .b{ color:#888;}
+.yeei_sw1l .b a{ color:#77828E; margin-right:6px}
+.yeei_sw1r{float:right;height:98px; width:313px;_width:316px; overflow:hidden; padding-left:7px; padding-top:8px;background:url(img/yeei/show_2_bg.gif) no-repeat 0 0;}
+.yeei_sw1r .chart{ background:none;width:300px; padding-bottom:10px; padding-left:6px;background: url(img/yeei/bottom_b.gif) repeat-x 0 bottom;}
+.yeei_sw1r .yeei_wb{ padding-left:7px; padding-top:2px;}
+.yeei_sw1r a{cursor: pointer;}
+.yeei_sw1r a:hover{text-decoration: none;}
+.yeei_wb dt { height:19px;overflow:hidden;padding-bottom:9px;font-family:'宋体',Helvetica,Arial,sans-serif; font-weight: 700;background:url(img/yeei/wb.gif) no-repeat -54px 4px; padding-left:17px}
+.yeei_wb .n { float: left; color:#666; width:220px; overflow:hidden; background:#FFFFF0; border:1px solid #EDD180; height:23px; line-height:23px; padding:0 6px;}
+.yeei_wb .n b{ color:#F08800; font-weight:none}
+.yeei_wb .m { float: left; margin:0px; height:54px; width:54px; margin-right:7px;}
+.yeei_wb .m img{ border:1px solid #85898C; padding:1px;}
+.yeei_wb span{float:left; margin-top:2px;margin-right:10px; font-size:14px}
+.yeei_wb .ting{width:66px;height:19px;display: block;background:url(img/yeei/wb.gif) no-repeat 0 bottom; float:left}
+.yeei_sw2{height:195px;overflow:hidden;}
+.yeei_sw2l{margin-right:318px;height:195px;border-right:1px solid #D9D9D9}
+.yeei_sw2r{ float:right;width:313px; overflow:hidden; padding-left:5px; padding-top:5px;}
+.yeei_sw2l .title{background: url(img/yeei/tab_bg.gif) repeat-x 0 0; height:40px;}
+.yeei_sw2l .titletext{font-size:12px;font-weight:normal;}
+.yeei_sw2l .tb a{padding:0px; background: url(img/yeei/tab_a.gif) no-repeat 0 -40px!important; margin-right:5px; color:#444; border:none;text-align:center;width:85px; height:40px}
+.yeei_sw2l .tb-c{ padding:10px; border:none}
+.yeei_sw2l .tb .a a {background:url(img/yeei/tab_a.gif) no-repeat 0 0!important;font-weight: 700; color:#333;}
+.yeei_sw2l .module ul li{width:50%;*width:49%;border-bottom:1px dotted #ddd; float:left; margin-bottom:3px; padding:0 0px 3px 0; }
+.yeei_sw2l .module ul li span{background:url(img/yeei/li.gif) no-repeat 5px 6px; padding-left:15px;}
+.yeei_sw2l .module ul li em{ font-size:11px; margin-right:10px;}
+.yeei_sw2l .module ul li a:hover{color:#225F8F;text-decoration: none;}

@@ -1,0 +1,440 @@
+
+<?php
+/**
+ * Provides methods to manipulate user messages
+ *
+ * @author Li Kuangda
+ * @name message
+ */
+class message
+{
+
+    /**
+     * Konstruktor
+     * Initialisiert den Eventlog
+     */
+    function __construct()
+    {
+    }
+
+    /**
+     * Add messages
+     * @param int    $userid   User ID
+     * @param string $comment  Content of the Message
+     * @return int Message ID
+     */
+    function addMess($userid,$subject, $comment)
+    {
+        $userid = intval($userid);
+        $comment = mysql_real_escape_string($comment);
+        //$postdate = mysql_real_escape_string($postdate);
+		
+		$sql = "INSERT INTO message (`UserId`,`Comment`,`PostDate`,`Subject`) VALUES ($userid,'$comment',NOW(),'$subject')";
+        $ins1 = mysql_query($sql);
+		//exit;
+        if ($ins1)
+        {
+            $insid = mysql_insert_id();
+			//echo $insid;
+            return $insid;
+        }
+        else
+        {
+            return false;
+        }
+    }
+   /**
+     * Add to message2user
+     * @param int    $userid   User ID
+     * @param string $comment  Content of the Message
+     * @return int Message ID
+     */
+    function addMess2User($messid,$userid)
+    {
+        $userid = mysql_real_escape_string($userid);
+        $messid = mysql_real_escape_string($messid);
+        //$postdate = mysql_real_escape_string($postdate);
+		
+		$sql = "INSERT INTO message2user (`MessageId`,`UserId`,`Isread`) VALUES ('$messid','$userid','0')";
+        $ins1 = mysql_query($sql);
+		//echo $sql."<br>";
+        if ($ins1)
+        {
+            $insid = mysql_insert_id();
+            return $insid;
+        }
+        else
+        {
+            return false;
+        }
+    }
+/**
+     * List messages where message id between m and n.
+     *
+     * @param int $userid User ID
+     * @return array Deleted Messages List for user where userid equals $userid
+     */
+	function listDelMess_inbox($userid){
+		
+		$userid = mysql_real_escape_string($userid);
+				
+      
+	$sel = mysql_query("SELECT MessId FROM userdelmess WHERE UserId=$userid");
+
+	$delString="0";
+	while($delMessList = mysql_fetch_array($sel)){
+		    
+        	$delString=$delString.",".$delMessList[0];
+        }
+     
+        
+        if (!empty($delString))
+        {
+        
+           return $delString;
+        }
+        else
+        {
+        	return false;
+        }
+	}
+/**
+     * List sent messages where message id between m and n.
+     *
+     * @param int $userid User ID
+     * @return array Deleted Messages List for user where userid equals $userid
+     */
+	function listDelMess_sent($userid){
+		
+	$userid = mysql_real_escape_string($userid);
+				
+      
+	$sel = mysql_query("SELECT MessId FROM userdelsentmess WHERE UserId=$userid");
+	
+	$delString = "0";
+	while($delMessList = mysql_fetch_array($sel)){
+		
+		$delString.=",".$delMessList[0];
+	
+	}
+     
+        
+        if (!empty($delString))
+        {
+        
+           return $delString;
+        }
+        else
+        {
+        	return false;
+        }
+	}
+	/**
+     * List messages where message id starts from $s lenth $l and not in $deleted.
+     *
+     * @param int $s Where message id starts from
+     * @param int $l Length
+     * @return array Message List
+     */
+	function listMess($s,$l,$deleted){
+		
+		$s = mysql_real_escape_string($s);
+		$l = mysql_real_escape_string($l);
+		$s = (int) $s-1;
+		$l = (int) $l;
+		
+      if($deleted==''){$deleted='0';}
+       $sel = mysql_query("SELECT count(*) from message where Id not in ($deleted)"); 
+$num = mysql_fetch_row($sel);
+        $num = $num[0];
+       SmartyPaginate::connect();
+        // set items per page
+        SmartyPaginate::setLimit($l);
+        SmartyPaginate::setTotal($num);
+
+        $start = SmartyPaginate::getCurrentIndex();
+        $lim = SmartyPaginate::getLimit();
+		
+        $sel2 = mysql_query("SELECT * from message where Id not in ($deleted) order by Id limit $start,$lim");
+ 
+		$mList= array();
+	 while ($m_temp = mysql_fetch_array($sel2))
+        {
+			$m_temp["Comment"]=stripslashes($m_temp["Comment"]);
+			$m_temp["Comment"]=htmlentities($m_temp["Comment"]);
+        	$m_temp["Subject"]=stripslashes($m_temp["Subject"]);
+        	$m_temp["Subject"]=htmlentities($m_temp["Subject"]);
+            array_push($mList, $m_temp);
+        }
+       
+		if (!empty($mList))
+        {
+           return $mList;
+        }
+        else
+        {
+        	return false;
+        }
+		//$mList = mysql_fetch_array($sel);
+        //return $mList;
+	}
+/**
+     * List inbox messages 
+     *
+     * @param int $s Where message id starts from
+     * @param int $l Length
+     * @return array Message List
+     */
+	function listMess_inbox($userid,$page_size,$deleted){
+
+	  $userid = (int) $userid;
+		
+      if($deleted==''){$deleted='0';}
+      $sel_messid = mysql_query("SELECT MessageId from message2user where UserId = $userid"); 
+ 
+
+	  $myMsgIds = "0";
+      while ($m_temp = mysql_fetch_array($sel_messid)){
+      	$myMsgIds.=",".$m_temp[0];
+      }
+       $sel = mysql_query("SELECT count(*) from message where Id not in ($deleted) AND Id in ($myMsgIds)"); 
+
+	   $num = mysql_fetch_row($sel);
+       $num = $num[0];
+       SmartyPaginate::connect();
+        // set items per page
+        SmartyPaginate::setLimit($page_size);
+        SmartyPaginate::setTotal($num);
+
+        $start = SmartyPaginate::getCurrentIndex();
+        $lim = SmartyPaginate::getLimit();
+		
+        $sel2 = mysql_query("SELECT message.*,message2user.Isread from message Join message2user On message.Id=message2user.MessageId where message.Id not in ($deleted) AND message.Id in ($myMsgIds) AND message2user.UserId='$userid' order by Id limit $start,$lim");
+ //echo    "SELECT * from message where Id not in ($deleted) order by Id limit $start,$lim";
+ //exit;
+		
+        //$sel3 = mysql_query("SELECT isread from message2user where MessageId not in ($deleted) AND MessageId in ($myMsgIds) AND UserId='$userid' order by MessageId limit $start,$lim");
+
+		$mList= array();
+	   while ($m_temp = mysql_fetch_array($sel2))
+        {
+			$m_temp["Comment"]=stripslashes($m_temp["Comment"]);
+			$m_temp["Comment"]=htmlentities($m_temp["Comment"]);
+        	$m_temp["Subject"]=stripslashes($m_temp["Subject"]);
+        	$m_temp["Subject"]=htmlentities($m_temp["Subject"]);
+            array_push($mList, $m_temp);
+        }
+       
+		if (!empty($mList))
+        {
+           return $mList;
+        }
+        else
+        {
+        	return false;
+        }
+		//$mList = mysql_fetch_array($sel);
+        //return $mList;
+	}
+/**
+     * List inbox messages 
+     *
+     * @param int $s Where message id starts from
+     * @param int $l Length
+     * @return array Message List
+     */
+	function listMess_sent($userid,$s,$l,$deleted,$deleteduser){
+		
+		$s = mysql_real_escape_string($s);
+		$l = mysql_real_escape_string($l);
+		$s = (int) $s-1;
+		$l = (int) $l;
+		
+      if($deleted==''){$deleted='0';}
+	  if($deleteduser==''){$deleteduser='0';}
+      
+       $sel = mysql_query("SELECT count(*) FROM message m join message2user u on m.Id=u.MessageId
+         WHERE (Id not in ($deleted) OR u.UserId not in ($deleteduser)) AND m.UserId=$userid"); 
+
+		$num = mysql_fetch_row($sel);
+        $num = $num[0];
+       SmartyPaginate::connect();
+        // set items per page
+        SmartyPaginate::setLimit($l);
+        SmartyPaginate::setTotal($num);
+
+        $start = SmartyPaginate::getCurrentIndex();
+        $lim = SmartyPaginate::getLimit();
+		//SELECT m.*, u.UserId sendUserId from message m, message2user u where  m.UserId=57 and m.Id=u.MessageId
+//        $sel2 = mysql_query("SELECT * from message where Id not in ($deleted)&& UserId=$userid order by Id limit $start,$lim");
+         $sql = "SELECT m.*, u.Isread, u.UserId sendUserId FROM message m join message2user u on m.Id=u.MessageId
+         WHERE (Id not in ($deleted) OR u.UserId not in ($deleteduser)) AND m.UserId=$userid order by Id limit $start,$lim";
+		$sel2 = mysql_query($sql);
+
+	
+
+		$mList= array();
+	 while ($m_temp = mysql_fetch_array($sel2))
+        {
+			$m_temp["Comment"]=stripslashes($m_temp["Comment"]);
+			$m_temp["Comment"]=htmlentities($m_temp["Comment"]);
+        	$m_temp["Subject"]=stripslashes($m_temp["Subject"]);
+        	$m_temp["Subject"]=htmlentities($m_temp["Subject"]);
+            array_push($mList, $m_temp);
+        }
+       
+		if (!empty($mList))
+        {
+           return $mList;
+        }
+        else
+        {
+        	return false;
+        }
+		//$mList = mysql_fetch_array($sel);
+        //return $mList;
+	}
+    /**
+     * Insert one row in userdelmess table, Delete a message from the view of a certain user.
+     *
+     * @param int $userid User ID
+     * @param int $messageid Message ID
+     * @return bool
+     */
+    function delMessForUserView($userid, $messageid)
+    {
+        $userid = mysql_real_escape_string($userid);
+        $messageid = mysql_real_escape_string($messageid);
+       	
+
+        $ins1 = mysql_query("INSERT INTO userdelmess (`UserId`,`MessId`) VALUES ('$userid','$messageid')");
+		//echo "INSERT INTO userdelmess (`UserId`,`MessId`) VALUES ('$userid','$messageid')";
+		//exit;
+		if ($ins1)
+        {
+            
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+ /**
+     * Insert one row in userdelmess table, Delete a sent message from the view of a certain user.
+     *
+     * @param int $userid User ID
+     * @param int $messageid Message ID
+     * @return bool
+     */
+    function delSentMessForUserView($userid, $messageid, $touserid)
+    {
+        $userid = mysql_real_escape_string($userid);
+        $messageid = mysql_real_escape_string($messageid);
+       	$touserid = mysql_real_escape_string($touserid);
+
+        $ins1 = mysql_query("INSERT INTO userdelsentmess (`UserId`,`MessId`,`toUserId`) VALUES ('$userid','$messageid','$touserid')");
+		//echo "INSERT INTO userdelmess (`UserId`,`MessId`) VALUES ('$userid','$messageid')";
+		//exit;
+		if ($ins1)
+        {
+            
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    
+    function GetMessage($messageid)
+    {
+    	$result=mysql_query("select * from message where Id='$messageid' LIMIT 1");
+		$message = mysql_fetch_array($result);
+		if (!empty($message))
+		{
+			//$message["Comment"]=stripslashes($message["Comment"]);
+			//$message["Comment"]=htmlentities($message["Comment"]);
+			$patternts = array("/\n\r?/");
+			$replacements = array("<br />");
+			$message["Comment"] = preg_replace($patternts, $replacements, $message["Comment"]);
+        	$message["Subject"]=stripslashes($message["Subject"]);
+			
+        	$message["Subject"]=htmlentities($message["Subject"]);
+			return $message;
+		}
+		else
+		{
+			return false;
+		}
+    }
+    /**
+     * update one certain message content
+     *
+     * @param int $messid Id of Message
+     * @param string $comment New Content of Message
+     * @param DateTime $updatedate Date of Updating
+     * @return bool
+     */
+    
+    function updateMess($messid, $comment,$updatedate)
+    {
+        $messid = mysql_real_escape_string($messid);
+    	$comment = mysql_real_escape_string($comment);
+    	$updatedate = mysql_real_escape_string($updatedate);
+        
+       
+
+        $upd = mysql_query("UPDATE message SET comment='$comment',LastUpdDate='$updatedate' WHERE ID = $messid");
+        if ($upd)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    function setRead($messid, $userid)
+    {
+    	$messid = mysql_real_escape_string($messid);
+    	$userid = mysql_real_escape_string($userid);
+		$upd = mysql_query("UPDATE message2user SET Isread=1 WHERE MessageID = $messid AND UserId = $userid");
+    	if ($upd)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }  
+
+	function listDelMessUser_sent($userid){
+		
+	$userid = mysql_real_escape_string($userid);
+				
+      
+	$sel = mysql_query("SELECT toUserId FROM userdelsentmess WHERE UserId=$userid");
+	
+	$delString = "0";
+	while($delMessList = mysql_fetch_array($sel)){
+		
+		$delString.=",".$delMessList[0];
+	
+	}
+     
+        
+        if (!empty($delString))
+        {
+        
+           return $delString;
+        }
+        else
+        {
+        	return false;
+        }
+	}
+}
+?>

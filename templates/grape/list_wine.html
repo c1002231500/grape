@@ -1,0 +1,82 @@
+<{include file="grape/header.html"}>    	
+<link type="text/css" rel="stylesheet" href="templates/grape/css/list_wine.css">  
+
+        <div class="top">
+        	<div class="sp1"> 商品介绍 Products</div>
+            <div class="sp2"> 首页>产品介绍>Wine CLUB系列1</div>
+        </div>
+		<div class="left">
+        	<img src="templates/grape/images/left.jpg" width="160" height="292" />
+        </div>
+        
+        <div class="right">
+        	<div class="sou"> 
+            <form action="/index.php" method="get">
+              <input type="hidden" value="list_wine" id="action" name="action"/>                        
+             
+			 <select name="year" id="year" class="s1">
+              	 <option value="">选择产地</option>
+				<{section name=sec1 loop=$flist}>
+					<option value="<{$flist[sec1].w_country}>"><{$flist[sec1].w_country}></option>	
+                <{/section}>
+              </select>
+			  
+			  <select name="year" id="year" class="s1">
+              	<option value=""> 选择年代</option>	
+				<script type="text/javascript">
+					var i=1980
+					for (i=1980;i<=2012;i++)
+					{
+					document.write("<option value=" + i +">" + i + "</option");
+					document.write("<br />");
+					}
+				</script>
+              </select>
+			
+			<select name="year" id="year" class="s1">
+              	<option value=""> 选择色种</option>	
+				<option value="1">红</option>
+				<option value="2">白</option>
+              </select>
+
+			
+            <input type="submit" class="s2"  value=""/>            
+            </form>	
+            </div>
+            
+			<div class="tab">
+			<{section name=sec1 loop=$flist}>
+            	<div class="wine">
+								<{if $flist[sec1].w_pic neq '' }><img src="include/Public/Wine/<{$flist[sec1].w_pic}>" width="165" height="154" style="margin-bottom:10px;" />
+                                <{elseif $flist[sec1].w_pic eq ''}><img src="include/Public/Wine/none.jpg" width="165" height="154" style="margin-bottom:10px;" />
+                                <{/if}>                 
+					<div class="desc">
+                    	<a href="/index.php?wid=<{$flist[sec1].w_id}>&action=wine_detial"><{$flist[sec1].w_chname}></a><br>
+                        <span><{$flist[sec1].w_price}></span>
+                        <p><{$flist[sec1].w_country}><img src="templates/grape/images/flag.jpg" width="16" height="11" /> 年代<{substr str=$flist[sec1].w_year end=4}> 
+						
+						<{if $flist[sec1].w_color eq '1' }><img src="templates/grape/images/red1.jpg" width="15" height="15" />
+                        <{elseif $flist[sec1].w_color eq '2'}><img src="templates/grape/images/white.jpg" width="15" height="15" />
+                        <{/if}>
+						
+					</div>
+                </div>
+                <{/section}>
+			
+                <div class="wine">
+                	<img src="templates/grape/images/tabwine.jpg" width="165" height="154" style="margin-bottom:10px;"/>
+                    <div class="desc">
+                    	<a href="#">拉昂城堡干红葡萄酒</a><br>
+                        <span>￥59</span>
+                        <p>产地：<img src="templates/grape/images/flag.jpg" width="16" height="11" /> 年代：1989　<img src="templates/grape/images/red1.jpg" width="15" height="15" /></p>
+                    </div>
+                </div>
+				
+            </div>
+        </div>
+      <{include file="grape/footer.html"}>    	
+</div>
+</center>
+</body>
+</html>
+

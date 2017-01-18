@@ -1,0 +1,364 @@
+<?php 
+  class adminsettings
+{
+  function __construct()
+	{
+	}
+	/*function isNameExists($name)
+	{
+		$res = mysql_query("select Name from adminsettings where Name=$name");
+		$row=mysql_fetch_array($res);
+		if($row[0])
+		{return false;}
+		else
+		{return true;}
+	}
+	*/
+  function add($name, $value)
+  {
+  	//if(isNameExists($name))
+  	//{
+  		$result = mysql_query("update adminsettings set `Name`='$name',`Value`='$value' where `Name`='$name'");
+  		return ture;
+  	//}
+  	//else
+  	//{
+  		//$result=mysql_query("insert into adminsettings (`Name`,`Value`) values('$name','$value')");
+  	
+			//if ($result)
+			//{
+				//$insid = mysql_insert_id();
+				//return $insid;
+				//return true;
+			//}
+			//else
+			//{
+				//return false;
+			//}
+  	//}
+  	
+  }
+  /*
+  function getSettings()
+  {
+  	$res=mysql_query("select Value from adminsettings");
+  	$settings=mysql_fetch_array($res);
+  	return $this->fillSettings($settings);
+  }
+  function fillSettings($settings)
+  {
+  	if(!empty($settings))
+  	{
+			if (isset($settings[0]))
+			{
+				$settings[0] = stripslashes($setting[0]);
+			}
+  	        if (isset($settings[1]))
+			{
+				$settings[1] = stripslashes($setting[1]);
+			}
+  	        if (isset($settings[2]))
+			{
+				$settings[2] = stripslashes($setting[2]);
+			}
+  	        if (isset($settings[3]))
+			{
+				$settings[3] = stripslashes($setting[3]);
+			}
+  	        if (isset($settings[4]))
+			{
+				$settings[4] = stripslashes($setting[4]);
+			}
+			
+  	}
+  }
+  */
+  /* edit it by cathering 2009.7.7 */
+  function editadminsettings($name,$value)
+  { $res=mysql_query("select count(*) from adminsettings where `Name`='$name'");
+    $res=mysql_fetch_array($res);
+    $num=$res[0];
+    //var_dump($num);
+    if($num==0)
+    {
+    	$results=mysql_query("insert into adminsettings (`Name`,`Value`) values ('$name','$value')");
+    	if(mysql_insert_id($results))
+    	  return ture;
+    	else
+    	  return false;
+    }
+     else
+     {
+  	
+  	  $result = mysql_query("update adminsettings set `Name`='$name',`Value`='$value' where `Name`='$name'");
+  	  return ture;
+    }
+ }
+ function getHomePage()
+ {
+ 	$res1=mysql_query("select Value from adminsettings where `Name`='Infor_title'");
+ 	$res1=mysql_fetch_array($res1);
+ 	$res2=mysql_query("select Value from adminsettings where `Name`='Infor_content'");
+ 	$res2=mysql_fetch_array($res2);
+ 	$res3=mysql_query("select Value from adminsettings where `Name`='Infor_link'");
+ 	$res3=mysql_fetch_array($res3);
+    if (isset($res3["Value"]))
+			{
+				if($res3["Value"]=="");
+				else
+				$res3["Value"] = strtoupper(substr($res3["Value"],0,4))=="HTTP"?stripslashes($res3["Value"]):"http://".stripslashes($res3["Value"]);
+				//$res3["Value"]=htmlentities($res3["Value"]);
+			}
+ 	$res4=mysql_query("select Value from adminsettings where `Name`='Philanthropy_title'");
+ 	$res4=mysql_fetch_array($res4);
+ 	$res5=mysql_query("select Value from adminsettings where `Name`='Philanthropy_content'");
+ 	$res5=mysql_fetch_array($res5);
+ 	$res6=mysql_query("select Value from adminsettings where `Name`='Philanthropy_image'");
+ 	$res6=mysql_fetch_array($res6);
+ 	$res7=mysql_query("select Value from adminsettings where `Name`='Philanthropy_link1'");
+ 	$res7=mysql_fetch_array($res7);
+    if (isset($res7["Value"]))
+			{
+				if($res7["Value"]=="");
+				else
+				$res7["Value"] = strtoupper(substr($res7["Value"],0,4))=="HTTP"?stripslashes($res7["Value"]):"http://".stripslashes($res7["Value"]);
+				//$res7["Value"]=htmlentities($res7["Value"]);
+			}
+ 	$res8=mysql_query("select Value from adminsettings where `Name`='Philanthropy_link2'");
+ 	$res8=mysql_fetch_array($res8);
+    if (isset($res8["Value"]))
+			{
+				if($res8["Value"]=="");
+				else
+				$res8["Value"] = strtoupper(substr($res8["Value"],0,4))=="HTTP"?stripslashes($res8["Value"]):"http://".stripslashes($res8["Value"]);
+				//$res8["Value"]=htmlentities($res8["Value"]);
+			}
+ 	$res9=mysql_query("select Value from adminsettings where `Name`='Story1_title'");
+ 	$res9=mysql_fetch_array($res9);
+ 	$res10=mysql_query("select Value from adminsettings where `Name`='Story1_intro'");
+ 	$res10=mysql_fetch_array($res10);
+ 	$res11=mysql_query("select Value from adminsettings where `Name`='Story1_image'");
+ 	$res11=mysql_fetch_array($res11);
+ 	$res12=mysql_query("select Value from adminsettings where `Name`='Story1_link'");
+ 	$res12=mysql_fetch_array($res12);
+    if (isset($res12["Value"]))
+			{
+				if($res12["Value"]=="");
+				else
+				$res12["Value"] = strtoupper(substr($res12["Value"],0,4))=="HTTP"?stripslashes($res12["Value"]):"http://".stripslashes($res12["Value"]);
+				//$res12["Value"]=htmlentities($res12["Value"]);
+			}
+ 	$res13=mysql_query("select Value from adminsettings where `Name`='Story2_title'");
+ 	$res13=mysql_fetch_array($res13);
+ 	$res14=mysql_query("select Value from adminsettings where `Name`='Story2_intro'");
+ 	$res14=mysql_fetch_array($res14);
+ 	$res15=mysql_query("select Value from adminsettings where `Name`='Story2_image'");
+ 	$res15=mysql_fetch_array($res15);
+ 	$res16=mysql_query("select Value from adminsettings where `Name`='Story2_link'");
+ 	$res16=mysql_fetch_array($res16);
+    if (isset($res16["Value"]))
+			{
+				if($res16["Value"]=="");
+				else
+				$res16["Value"] = strtoupper(substr($res16["Value"],0,4))=="HTTP"?stripslashes($res16["Value"]):"http://".stripslashes($res16["Value"]);
+				//$res16["Value"]=htmlentities($res16["Value"]);
+			}
+ 	$result=array("Infor_title"=>$res1["Value"],"Infor_content"=>$res2["Value"],"Infor_link"=>$res3["Value"],
+ 	              "Philanthropy_title"=>$res4["Value"],"Philanthropy_content"=>$res5["Value"],"Philanthropy_image"=>$res6["Value"],"Philanthropy_link1"=>$res7["Value"],"Philanthropy_link2"=>$res8["Value"],
+ 	              "Story1_title"=>$res9["Value"],"Story1_intro"=>$res10["Value"],"Story1_image"=>$res11["Value"],"Story1_link"=>$res12["Value"],
+ 	              "Story2_title"=>$res13["Value"],"Story2_intro"=>$res14["Value"],"Story2_image"=>$res15["Value"],"Story2_link"=>$res16["Value"],);
+ 	return $result;
+ }
+ 
+ /* edit it by cathering 2009.7.8 */
+function getLoglink()
+{
+	$res1=mysql_query("select Value from adminsettings where `Name`='Log_link1'");
+ 	$res1=mysql_fetch_array($res1);
+    if (isset($res1["Value"]))
+			{
+				if($res1["Value"]=="");
+				else
+				$res1["Value"] = strtoupper(substr($res1["Value"],0,4))=="HTTP"?stripslashes($res1["Value"]):"http://".stripslashes($res1["Value"]);
+				//$res1["Value"]=htmlentities($res1["Value"]);
+			}
+ 	$res2=mysql_query("select Value from adminsettings where `Name`='Log_link2'");
+ 	$res2=mysql_fetch_array($res2);
+    if (isset($res2["Value"]))
+			{
+				if($res2["Value"]=="");
+				else
+				$res2["Value"] = strtoupper(substr($res2["Value"],0,4))=="HTTP"?stripslashes($res2["Value"]):"http://".stripslashes($res2["Value"]);
+				//$res2["Value"]=htmlentities($res2["Value"]);
+			}
+ 	$res3=mysql_query("select Value from adminsettings where `Name`='Log_link3'");
+ 	$res3=mysql_fetch_array($res3);
+    if (isset($res3["Value"]))
+			{
+				if($res3["Value"]=="");
+				else
+				$res3["Value"] = strtoupper(substr($res3["Value"],0,4))=="HTTP"?stripslashes($res3["Value"]):"http://".stripslashes($res3["Value"]);
+				//$res3["Value"]=htmlentities($res3["Value"]);
+			}
+ 	$res4=mysql_query("select Value from adminsettings where `Name`='Log_link4'");
+ 	$res4=mysql_fetch_array($res4);
+    if (isset($res4["Value"]))
+			{
+				if($res4["Value"]=="");
+				else
+				$res4["Value"] = strtoupper(substr($res4["Value"],0,4))=="HTTP"?stripslashes($res4["Value"]):"http://".stripslashes($res4["Value"]);
+				//$res4["Value"]=htmlentities($res4["Value"]);
+			}
+ 	$res5=mysql_query("select Value from adminsettings where `Name`='Log_link5'");
+ 	$res5=mysql_fetch_array($res5);
+    if (isset($res5["Value"]))
+			{
+				if($res5["Value"]=="");
+				else
+				$res5["Value"] = strtoupper(substr($res5["Value"],0,4))=="HTTP"?stripslashes($res5["Value"]):"http://".stripslashes($res5["Value"]);
+				//$res5["Value"]=htmlentities($res5["Value"]);
+			}
+ 	$res6=mysql_query("select Value from adminsettings where `Name`='Log_link6'");
+ 	$res6=mysql_fetch_array($res6);
+    if (isset($res6["Value"]))
+			{
+				if($res6["Value"]=="");
+				else
+				$res6["Value"] = strtoupper(substr($res6["Value"],0,4))=="HTTP"?stripslashes($res6["Value"]):"http://".stripslashes($res6["Value"]);
+				//$res6["Value"]=htmlentities($res6["Value"]);
+			}
+ 	$res7=mysql_query("select Value from adminsettings where `Name`='Log_link7'");
+ 	$res7=mysql_fetch_array($res7);
+    if (isset($res7["Value"]))
+			{
+				if($res7["Value"]=="");
+				else
+				$res7["Value"] = strtoupper(substr($res7["Value"],0,4))=="HTTP"?stripslashes($res7["Value"]):"http://".stripslashes($res7["Value"]);
+				//$res7["Value"]=htmlentities($res7["Value"]);
+			}
+ 	$res8=mysql_query("select Value from adminsettings where `Name`='Log_link8'");
+ 	$res8=mysql_fetch_array($res8);
+    if (isset($res8["Value"]))
+			{
+				if($res8["Value"]=="");
+				else
+				$res8["Value"] = strtoupper(substr($res8["Value"],0,4))=="HTTP"?stripslashes($res8["Value"]):"http://".stripslashes($res8["Value"]);
+				//$res8["Value"]=htmlentities($res8["Value"]);
+			}
+ 	$res9=mysql_query("select Value from adminsettings where `Name`='Log_link9'");
+ 	$res9=mysql_fetch_array($res9);
+    if (isset($res9["Value"]))
+			{
+				if($res9["Value"]=="");
+				else
+				$res9["Value"] = strtoupper(substr($res9["Value"],0,4))=="HTTP"?stripslashes($res9["Value"]):"http://".stripslashes($res9["Value"]);
+				//$res9["Value"]=htmlentities($res9["Value"]);
+			}
+ 	$res10=mysql_query("select Value from adminsettings where `Name`='Log_link10'");
+ 	$res10=mysql_fetch_array($res10);
+    if (isset($res10["Value"]))
+			{
+				if($res10["Value"]=="");
+				else
+				$res10["Value"] = strtoupper(substr($res10["Value"],0,4))=="HTTP"?stripslashes($res10["Value"]):"http://".stripslashes($res10["Value"]);
+				//$res10["Value"]=htmlentities($res10["Value"]);
+			}
+ 	$result=array("Log_link1"=>$res1["Value"],"Log_link2"=>$res2["Value"],"Log_link3"=>$res3["Value"],"Log_link4"=>$res4["Value"],"Log_link5"=>$res5["Value"],
+ 	              "Log_link6"=>$res6["Value"],"Log_link7"=>$res7["Value"],"Log_link8"=>$res8["Value"],"Log_link9"=>$res9["Value"],"Log_link10"=>$res10["Value"]
+ 	             );
+ 	return $result;
+}
+function getLogImage()
+{
+	$res1=mysql_query("select Value from adminsettings where `Name`='Log_image1'");
+ 	$res1=mysql_fetch_array($res1);
+ 	$res2=mysql_query("select Value from adminsettings where `Name`='Log_image2'");
+ 	$res2=mysql_fetch_array($res2);
+ 	$res3=mysql_query("select Value from adminsettings where `Name`='Log_image3'");
+ 	$res3=mysql_fetch_array($res3);
+ 	$res4=mysql_query("select Value from adminsettings where `Name`='Log_image4'");
+ 	$res4=mysql_fetch_array($res4);
+ 	$res5=mysql_query("select Value from adminsettings where `Name`='Log_image5'");
+ 	$res5=mysql_fetch_array($res5);
+ 	$res6=mysql_query("select Value from adminsettings where `Name`='Log_image6'");
+ 	$res6=mysql_fetch_array($res6);
+ 	$res7=mysql_query("select Value from adminsettings where `Name`='Log_image7'");
+ 	$res7=mysql_fetch_array($res7);
+ 	$res8=mysql_query("select Value from adminsettings where `Name`='Log_image8'");
+ 	$res8=mysql_fetch_array($res8);
+ 	$res9=mysql_query("select Value from adminsettings where `Name`='Log_image9'");
+ 	$res9=mysql_fetch_array($res9);
+ 	$res10=mysql_query("select Value from adminsettings where `Name`='Log_image10'");
+ 	$res10=mysql_fetch_array($res10);
+ 	$result=array("Log_image1"=>$res1["Value"],"Log_image2"=>$res2["Value"],"Log_image3"=>$res3["Value"],"Log_image4"=>$res4["Value"],"Log_image5"=>$res5["Value"],
+ 	              "Log_image6"=>$res6["Value"],"Log_image7"=>$res7["Value"],"Log_image8"=>$res8["Value"],"Log_image9"=>$res9["Value"],"Log_image10"=>$res10["Value"]
+ 	             );
+ 	return $result;
+}
+
+   function getSettings()
+  {
+  	$res=mysql_query("select Value from adminsettings");
+	$lists =array();
+  	while ($destinations = mysql_fetch_array($res))
+  		{
+			array_push($lists, $destinations);
+		}
+		return $lists;
+  }
+
+ /* editd by cathering 2009.7.27 */
+ function getMainImageLink()
+ {
+ 	$res1=mysql_query("select Value from adminsettings where `Name`='MainImage1_link'");
+ 	$res1=mysql_fetch_array($res1);
+    if (isset($res1["Value"]))
+			{
+				if($res1["Value"]=="");
+				else
+				$res1["Value"] = strtoupper(substr($res1["Value"],0,4))=="HTTP"?stripslashes($res1["Value"]):"http://".stripslashes($res1["Value"]);
+				//$res1["Value"]=htmlentities($res1["Value"]);
+			}
+ 	$res2=mysql_query("select Value from adminsettings where `Name`='MainImage2_link'");
+ 	$res2=mysql_fetch_array($res2);
+    if (isset($res2["Value"]))
+			{
+				if($res2["Value"]=="");
+				else
+				$res2["Value"] = strtoupper(substr($res2["Value"],0,4))=="HTTP"?stripslashes($res2["Value"]):"http://".stripslashes($res2["Value"]);
+				//$res2["Value"]=htmlentities($res2["Value"]);
+			}
+ 	$res3=mysql_query("select Value from adminsettings where `Name`='MainImage3_link'");
+ 	$res3=mysql_fetch_array($res3);
+    if (isset($res3["Value"]))
+			{
+				if($res3["Value"]=="");
+				else
+				$res3["Value"] = strtoupper(substr($res3["Value"],0,4))=="HTTP"?stripslashes($res3["Value"]):"http://".stripslashes($res3["Value"]);
+				//$res3["Value"]=htmlentities($res3["Value"]);
+			}
+ 	$res4=mysql_query("select Value from adminsettings where `Name`='MainImage4_link'");
+ 	$res4=mysql_fetch_array($res4);
+    if (isset($res4["Value"]))
+			{
+				if($res4["Value"]=="");
+				else
+				$res4["Value"] = strtoupper(substr($res4["Value"],0,4))=="HTTP"?stripslashes($res4["Value"]):"http://".stripslashes($res4["Value"]);
+				//$res4["Value"]=htmlentities($res4["Value"]);
+			}
+ 	$res5=mysql_query("select Value from adminsettings where `Name`='MainImage5_link'");
+ 	$res5=mysql_fetch_array($res5);
+    if (isset($res5["Value"]))
+			{
+				if($res5["Value"]=="");
+				else
+				$res5["Value"] = strtoupper(substr($res5["Value"],0,4))=="HTTP"?stripslashes($res5["Value"]):"http://".stripslashes($res5["Value"]);
+				//$res5["Value"]=htmlentities($res5["Value"]);
+			}
+ 	$result=array("MainImage1_link"=>$res1["Value"],"MainImage2_link"=>$res2["Value"],"MainImage3_link"=>$res3["Value"],"MainImage4_link"=>$res4["Value"],"MainImage5_link"=>$res5["Value"]);
+    return $result;
+ }
+  /* end */
+}
+
+?>

@@ -1,0 +1,473 @@
+<?php
+/**
+ * Provides methods to interact with favorite
+ *
+ * @author Li kuangda
+ * @name favorite
+ */
+class favorite
+{
+
+    /**
+     * Konstruktor
+     * Initialisiert den Eventlog
+     */
+    function __construct()
+    {
+    }
+
+     /**
+     * Add favorites
+     * @param int    $userid   User ID
+     * @param string $comment  Content of the favorite
+     * @return int favorite ID
+     */
+    function isDestIdExist($destid,$userid)
+    {   
+    	$userid=intval($userid);
+    	$destid=intval($destid);
+        $sql=mysql_query("select count(*) from favorite where DestinationId=$destid and UserId=$userid");
+        $res=mysql_fetch_array($sql);
+        $num=$res[0];
+        //var_dump($num);
+        if($num==0)
+        {return 1;}
+        else
+        {return 0;}
+        
+    }
+    function addFavor($userid,$addeddate,$destid)
+    {
+        $userid = mysql_real_escape_string($userid);
+        $destid = mysql_real_escape_string($destid);
+        //$postdate = mysql_real_escape_string($postdate);
+        $ins1 = mysql_query("INSERT INTO favorite (`UserId`,`AddedDate`,`DestinationId`) VALUES ('$userid',$addeddate,'$destid')");
+        
+        $sel=mysql_query("select count(*) from favorite where DestinationId='$destid'");
+		$fansnum=mysql_fetch_array($sel);
+		$insfans=mysql_query("update destination set fansNum='$fansnum[0]' where Id='$destid'");
+        if ($ins1)
+        {
+            $insid = mysql_insert_id();
+            $sel2=mysql_query("select distinct i.Id from industry_specails i,destination d where d.Id=$destid and d.Id=i.desId");
+			while($r = mysql_fetch_array($sel2))
+			{
+            	$sql=mysql_query("insert into user_specials set userId=$userid,specialId=".$r["Id"].",addTime=".time());
+				$q = mysql_query($sql);
+			}
+            return $insid;
+        }
+        else
+        {
+            return false;
+        }
+   		//$sel=mysql_query("select fansNum from destination where Id='$destid'");//read out fansNum
+		//$fansnum=mysql_fetch_array($sel);
+		/*fansNum plus 1/ Need to consider the transaction collistion here!*/
+		/*if(!empty($fansnum[0])){
+			//echo "$fansnum[0]";
+			$fansnum[0]=$fansnum[0]+1;
+			$insfans=mysql_query("update destination set fansNum='$fansnum[0]' where Id='$destid'");
+		
+		}
+		*/
+        //$ins1 = mysql_query("INSERT INTO favorite (`UserId`,`AddedDate`,`DestinationId`) VALUES ('$userid',$addeddate,'$destid')");
+		
+		
+      /*if ($ins1)
+        {
+            $insid = mysql_insert_id();
+            return $insid;
+        }
+        else
+        {
+            return false;
+        }
+        */
+    }
+/**
+     * List favorites where favorite id between m and n.
+     *
+     * @param int $userid User ID
+     * @return array Deleted favorites List for user where userid equals $userid
+     */
+	function listDelFavor($userid){
+		
+		$userid = mysql_real_escape_string($userid);
+				
+      
+	$sel = mysql_query("SELECT FavoriteId FROM userdelfavor WHERE UserId=$userid");
+	$delMessList = mysql_fetch_array($sel);
+	$delString=$delMessList[0];
+	while($delMessList = mysql_fetch_array($sel)){
+		    
+        	$delString=$delString.",".$delMessList[0];
+        }
+     
+        
+        if (!empty($delString))
+        {
+        
+           return $delString;
+        }
+        else
+        {
+        	return false;
+        }
+	}
+	/**
+     * List favorites where  id starts from $s lenth $l and not in $deleted.
+     *@param int $userid user id
+     * @param int $s Where id starts from
+     * @param int $l Length
+     * @return array Favorite List
+     */
+	function listFavor($userid,$s,$l){
+		
+		$s = mysql_real_escape_string($s);
+		$l = mysql_real_escape_string($l);
+		$s = (int) $s-1;
+		$l = (int) $l;
+		
+        $sel = mysql_query("SELECT count(*) from favorite where UserId=$userid"); 
+$num = mysql_fetch_row($sel);
+//echo "SELECT count(*) from favorite where FavoriteId not in ($deleted) order by FavoriteId limit $s,$l";
+        $num = $num[0];
+     
+       SmartyPaginate::connect();
+        // set items per page
+        SmartyPaginate::setLimit($l);
+        SmartyPaginate::setTotal($num);
+
+        $start = SmartyPaginate::getCurrentIndex();
+        $lim = SmartyPaginate::getLimit();
+		
+        $sel2 = mysql_query("SELECT * from favorite where UserId=$userid order by FavoriteId limit $start,$lim");
+ //echo    "SELECT * from favorite where Id not in ($deleted) order by Id limit $start,$lim";
+ //exit;
+	
+
+		$mList= array();
+	 while ($m_temp = mysql_fetch_array($sel2))
+        {
+	
+        	
+            array_push($mList, $m_temp);
+        }
+       
+		if (!empty($mList))
+        {
+           return $mList;
+        }
+        else
+        {
+        	return false;
+        }
+		//$mList = mysql_fetch_array($sel);
+        //return $mList;
+	}
+
+
+	function listGuestawayFavor($userid,$pagesize){
+		
+		$pagesize = intval($pagesize);
+		$uid = intval($userid);
+		
+		$condition = " where f.DestinationId=d.Id";
+		
+		if($uid>0){
+			$condition.= " and (f.UserId=g.costomer_userId and g.host_userId=".$uid." or ".$uid."=g.costomer_userId and g.host_userId=f.UserId) AND status=2";
+		}
+		
+        $sel = mysql_query("SELECT count(distinct(DestinationId)) from favorite f, destination d, getaway_guest g ".$condition); 
+		$res = mysql_fetch_row($sel);
+        $num = ($res[0]);
+     
+        SmartyPaginate::connect();
+        // set items per page
+        SmartyPaginate::setLimit($pagesize);
+        SmartyPaginate::setTotal($num);
+
+        $start = SmartyPaginate::getCurrentIndex();
+        $lim = SmartyPaginate::getLimit();
+		
+        $sel2 = mysql_query("SELECT distinct d.* from favorite f,destination d,getaway_guest g ".$condition."  limit $start,$lim");
+ 
+	
+
+		$mList= array();
+	    while ($m_temp = mysql_fetch_array($sel2))
+        {
+        	if(!isset($m_temp["logoImageFileLocation"])||!file_exists($m_temp["logoImageFileLocation"]))
+            $m_temp["logoImageFileLocation"] = "./templates/images/missing_logo1.jpg";
+			$m_temp["name"]=stripslashes($m_temp["name"]);
+			$m_temp["name"]=htmlentities($m_temp["name"]);
+        	$m_temp["description"]=stripslashes($m_temp["description"]);
+        	$m_temp["description"]=htmlentities($m_temp["description"]);
+        	$featurelist=array();
+			$sql3 = "select FeatureId from destination_feature where DestinationId=".$m_temp["Id"];
+			$q = mysql_query($sql3);
+			while($r = mysql_fetch_array($q))
+			array_push($featurelist,$r);
+			$m_temp["featureIds"]=$featurelist;
+            array_push($mList, $m_temp);
+        }
+       
+		if (!empty($mList))
+        {
+           return $mList;
+        }
+        else
+        {
+        	return false;
+        }
+	}
+/**
+     * List favorites where  fansNum>1 in destination table.
+     *
+     * @param int $s Where id starts from
+     * @param int $l Length
+     * @return array Favorite List
+     */
+	/*function listMemberFavor($pagesize){
+		
+		$pagesize = intval($pagesize);
+		
+        $sel = mysql_query("SELECT count(*) from destination where fansNum>0"); 
+         
+		$num = mysql_fetch_row($sel);
+
+        $num = $num[0];
+         
+       SmartyPaginate::connect();
+        // set items per page
+        SmartyPaginate::setLimit($pagesize);
+        SmartyPaginate::setTotal($num);
+
+        $start = SmartyPaginate::getCurrentIndex();
+        $lim = SmartyPaginate::getLimit();
+		
+        $sel2 = mysql_query("SELECT * from destination where fansNum>0 order by fansNum desc limit $start,$lim");
+
+        $mList= array();
+	 	while ($m_temp = mysql_fetch_array($sel2))
+        {
+        	$featurelist=array();
+        	if (isset($m_temp["logoImageFileLocation"]))
+			{
+				$m_temp["logoImageFileLocation"] = stripslashes($m_temp["logoImageFileLocation"]);
+				if(!file_exists($m_temp["logoImageFileLocation"]))
+				{
+					$m_temp["logoImageFileLocation"] = "./templates/images/missing_logo1.jpg";
+				}				
+			}
+			else
+			$m_temp["logoImageFileLocation"] = "./templates/images/missing_logo1.jpg";
+			$tid=$m_temp['Id'];
+			$sel3 = mysql_query("SELECT FeatureId from destination_feature where DestinationId=$tid");
+			while($r = mysql_fetch_array($sel3))
+			array_push($featurelist,$r);
+			$m_temp["feature"]=$featurelist;
+            array_push($mList, $m_temp);
+        }
+       
+		if (!empty($mList))
+        {
+           return $mList;
+        }
+        else
+        {
+        	return false;
+        }
+		//$mList = mysql_fetch_array($sel);
+        //return $mList;
+	}*/
+	
+	
+	
+    /**
+     *  Delete a favorite from table favorite.
+     *
+     * @param int $userid User ID
+     * @param int $favoriteid favorite ID
+     * @return bool
+     */
+    function delFavor($userid, $favoriteid)
+    {
+        $userid = mysql_real_escape_string($userid);
+        $favoriteid = mysql_real_escape_string($favoriteid);
+       	
+		$sel0=mysql_query("select DestinationId from favorite where FavoriteId=$favoriteid");
+		$destid=mysql_fetch_array($sel0);
+        $flag = mysql_query("delete from favorite where UserId=$userid and FavoriteId=$favoriteid");
+		//echo "delete from favorite where UserId=$userid and FavoriteId=$favoriteid";
+		//exit;
+		$sel=mysql_query("select count(*) from favorite where DestinationId='$destid[0]'");
+		$fansnum=mysql_fetch_array($sel);
+		$insfans=mysql_query("update destination set fansNum='$fansnum[0]' where Id='$destid[0]'");
+		if ($flag)
+        {
+            
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    function getFan($destid,$page_size)
+    {
+    	$destid = mysql_real_escape_string($destid);
+    	$sel = mysql_query("SELECT count(*) from favorite where DestinationId=$destid"); 
+        $num = mysql_fetch_row($sel);
+        $num =$num[0];
+		SmartyPaginate::connect();
+         //set items per page
+         //var_dump($sel);exit;
+        SmartyPaginate::setLimit($page_size);
+        SmartyPaginate::setTotal($num);
+   		$start = SmartyPaginate::getCurrentIndex();
+		$lim_condition = " LIMIT $start,$page_size";
+    	$fan=array();   	
+    	$sql="select UserId from favorite f join user u on f.UserId=u.Id where DestinationId=$destid ORDER BY u.LogonAlias".$lim_condition;
+    	$q = mysql_query($sql);
+		while($r = mysql_fetch_array($q))
+		array_push($fan,$r);
+		return $fan;
+    }
+	function getFanByIndustry($userid,$page_size)
+    {
+    	$userid = mysql_real_escape_string($userid);
+    	$sel = mysql_query("SELECT count(f.UserId) from favorite f join destination d on f.DestinationId=d.Id where d.uid=$userid"); 
+        $num = mysql_fetch_row($sel);
+        $num =$num[0];
+		SmartyPaginate::connect();
+         //set items per page
+         //var_dump($sel);exit;
+        SmartyPaginate::setLimit($page_size);
+        SmartyPaginate::setTotal($num);
+   		$start = SmartyPaginate::getCurrentIndex();
+		$lim_condition = " LIMIT $start,$page_size";
+    	$fan=array();   	
+    	$sql="SELECT f.UserId from favorite f join destination d on f.DestinationId=d.Id where d.uid=$userid ORDER BY d.name".$lim_condition;
+    	$q = mysql_query($sql);
+		while($r = mysql_fetch_array($q))
+		array_push($fan,$r);
+		return $fan;
+    }
+	function getTotalNum($destid)
+    {
+    	$destid = mysql_real_escape_string($destid);
+    	$sel = mysql_query("SELECT count(*) from favorite where DestinationId=$destid"); 
+        $num = mysql_fetch_row($sel);
+        $num =$num[0];
+		return $num;
+    }
+/*    function getTopState()
+    {
+    	//$sel = mysql_query("SELECT count(distinct state) from destination"); 
+        //$num = mysql_fetch_row($sel);
+        //$num =$num[0];
+		//SmartyPaginate::connect();
+         //set items per page
+         //var_dump($sel);exit;
+        //SmartyPaginate::setLimit($page_size);
+        //SmartyPaginate::setTotal($num);
+   		//$start = SmartyPaginate::getCurrentIndex();
+		//$lim_condition = " LIMIT $start,$page_size";
+    	$topstate=array();
+    	$sql="SELECT state,sum(fansNum) as num FROM destination d group by state order by sum(fansNum) desc";//.$lim_condition;
+    	$q = mysql_query($sql);
+		while($r = mysql_fetch_array($q))
+		array_push($topstate,$r);
+		return $topstate;
+    }*/
+	function listMemberFavor($pagesize,$state,$type){
+		$state = mysql_real_escape_string($state);
+		$pagesize = intval($pagesize);
+		if($state=="all")
+		{
+			if(isset($type)&&$type!="all")
+	        $sel = mysql_query("SELECT count(*) from destination where fansNum>0 and type='$type'"); 
+	        else
+	        $sel = mysql_query("SELECT count(*) from destination where fansNum>0");  
+			$num = mysql_fetch_row($sel);
+	
+	        $num = $num[0];
+		}
+		else
+		{
+			if(isset($type)&&$type!="all")
+			$sel = mysql_query("SELECT count(*) from destination where fansNum>0 and state='$state' and type='$type'"); 
+         	else
+         	$sel = mysql_query("SELECT count(*) from destination where fansNum>0 and state='$state'"); 
+			$num = mysql_fetch_row($sel);
+	
+	        $num = $num[0];
+		}
+         
+       SmartyPaginate::connect();
+        // set items per page
+        SmartyPaginate::setLimit($pagesize);
+        SmartyPaginate::setTotal($num);
+
+        $start = SmartyPaginate::getCurrentIndex();
+        
+        $lim = SmartyPaginate::getLimit();
+		if($state=="all")
+		{
+		if(isset($type)&&$type!="all")
+        $sel2 = mysql_query("SELECT * from destination where fansNum>0 and type='$type' order by fansNum desc limit $start,$lim");
+		else
+		$sel2 = mysql_query("SELECT * from destination where fansNum>0 order by fansNum desc limit $start,$lim");
+		}
+        else
+        {
+        if(isset($type)&&$type!="all")	
+        $sel2 = mysql_query("SELECT * from destination where fansNum>0 and state='$state' and type='$type' order by fansNum desc limit $start,$lim");
+        else
+		$sel2 = mysql_query("SELECT * from destination where fansNum>0 and state='$state' order by fansNum desc limit $start,$lim");
+        }
+		
+        $mList= array();
+	 	while ($m_temp = mysql_fetch_array($sel2))
+        {
+        	$featurelist=array();
+        	if (isset($m_temp["logoImageFileLocation"]))
+			{
+				$m_temp["logoImageFileLocation"] = stripslashes($m_temp["logoImageFileLocation"]);
+				if(!file_exists($m_temp["logoImageFileLocation"]))
+				{
+					$m_temp["logoImageFileLocation"] = "./templates/images/missing_logo1.jpg";
+				}				
+			}
+			else
+			$m_temp["logoImageFileLocation"] = "./templates/images/missing_logo1.jpg";
+			$tid=$m_temp['Id'];
+			$sel3 = mysql_query("SELECT FeatureId from destination_feature where DestinationId=$tid");
+			while($r = mysql_fetch_array($sel3))
+			{$ins2 = mysql_query("SELECT FeatureName FROM feature WHERE FeatureId='$r[FeatureId]'");
+						$featureName = mysql_fetch_array($ins2);
+			$featureName = $featureName["FeatureName"];
+			$r["FeatureName"] = $featureName;
+			array_push($featurelist,$r);
+			}
+			$m_temp["feature"]=$featurelist;
+			$m_temp["name"]=stripslashes($m_temp["name"]);
+			$m_temp["name"]=htmlentities($m_temp["name"]);
+            array_push($mList, $m_temp);
+        }
+       
+		if (!empty($mList))
+        {
+           return $mList;
+        }
+        else
+        {
+        	return false;
+        }
+		//$mList = mysql_fetch_array($sel);
+        //return $mList;
+	}
+}
+?>

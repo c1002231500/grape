@@ -1,0 +1,49 @@
+<?php
+/**
+ * Provides methods to interact with winepass
+ *
+ * @author Yongjun
+ * @name winepass
+ */
+class winerytype
+{
+
+    /**
+     * Konstruktor
+     * Initialisiert den Eventlog
+     */
+    function __construct()
+    {
+    }
+
+     /**
+     * Add winepasss
+     * @param int    $userid   User ID
+     * @param string $comment  Content of the winepass
+     * @return int winepass ID
+     */
+	function getall_winerytype(){
+	    $sel = mysql_query("select Name ,wineryTypeId from winerytype");
+        //var_dump($row);exit ;	      
+        $allwtypes = array();
+        while ($temp = mysql_fetch_array($sel))
+        {
+            $temp["Name"] = $temp["Name"];
+            $temp["wineryTypeId"] = $temp["wineryTypeId"];
+            array_push($allwtypes, $temp);
+        }
+       //var_dump($allwtypes);exit ;	      
+        if (!empty($allwtypes))
+        {
+            return $allwtypes;
+        }
+        else
+        {
+            return false;
+        }
+        
+       
+	}
+
+}
+?>

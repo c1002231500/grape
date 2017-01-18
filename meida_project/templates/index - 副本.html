@@ -1,0 +1,223 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>新闻首页</title>
+<link rel="stylesheet" type="text/css" href="<{$public}>Public/css/style.css"/>
+    <style type="text/css">
+       h3 {
+    font-size: 140%;
+    font-weight: bold;
+    line-height: 1.3;
+    margin-bottom: 5px;
+       }
+        .odd {
+              background-color: #F1F1F1; /* pale yellow for odd rows */
+
+            }
+            .even {
+
+               background-color: #ffffff; /* pale blue for even rows */
+            }
+
+
+ul,li{ list-style-type:none;}
+#contop{ width:290px; height:500px; margin:10px auto; position:relative; border:1px #666 solid; background-color:#FFFFFF;
+overflow:hidden;}
+#contop ul{ position:absolute; top:0; left:0; padding:0;}
+#contop ul li{ width:290;   border-bottom:1px #333333 dotted; padding:20px 0; }
+#contop ul li a{ float:left;   border:1px #333333 solid; padding:2px;}
+#contop ul li p{ margin-left:68px;line-height:1.5;   padding:10px;}
+-->
+    </style>
+</head>
+
+<body>
+<div id="con">
+    <div id="content" style="background: #d7d7d7">
+        <div style="width: 1036px;margin:0 auto; background: url(<{$public}>images/bs.jpg) repeat-y">
+    	<div id="center"  style="background: #ffffff">
+            <div id="head" style="width:1004px; height: 290px;padding-left: 4px;">
+                <{include file="head.html"}>
+            </div>
+        	<!--左侧-->
+        	<div id="left">
+            	<!--第一个内容-->
+            	<div class="w100 marginbottom">
+                    <div class="w100 leftCenterImg">
+                    	<div class="context">
+                            <div id="lleft">
+                                <{section name=sec1 loop=$list}>
+                                <{if  $list[sec1].n_smpicture neq 'AD&SP'}>
+                                   <div style="width:300px;padding: 10px 0px 10px; border-bottom: 1px #999999 solid">
+                                       <{if $list[sec1].n_smpicture neq ''}>
+                                       <img  src="<{$ipath}><{$list[sec1].n_smpicture}>" style="float: left; " alt="<{$list[sec1].n_pictitle}>" title="<{$list[sec1].n_pictitle}>" width="50">
+                                       <{else}>
+                                       <img style="float: left;" src="<{$ipath}><{$list[sec1].n_bigpicture}>" alt="<{$list[sec1].n_pictitle}>" title="<{$list[sec1].n_pictitle}>" width="300">
+                                       <{/if}>
+                                        <{if $list[sec1].n_smpicture eq ''}>
+                                       <div style="width: 300px;float: left;padding-top: 10px;"><h3 style="font-size: 140%;"><{$list[sec1].n_title}></h3></div>
+                                       <{else}>
+                                        <font style="font-size: 14px;" color="black"><h3 style="font-size: 140%;"><{$list[sec1].n_title}></h3></font><br/>
+                                       <{/if}>
+                                       <font color="#666666" size="1"> <{$list[sec1].n_systime|date_format:"%Y/%m/%d"}></font>
+                                       <br>
+                                       <font color="#333333"  style="font-size: 14px;"> <{$list[sec1].n_detail}></font>
+                                   </div>
+                                <{/if}>
+                                <{/section}>
+
+                            </div>
+                            <div id="lright">
+                                <{section name=sec1 loop=$flist}>
+                                <{if  $flist[sec1].n_smpicture neq 'AD&SP'}>
+                                   <div style="width:300px;padding: 10px 0px 10px; border-bottom: 1px #999999 solid">
+                                       <{if $flist[sec1].n_smpicture neq ''}>
+                                       <img  src="<{$ipath}><{$flist[sec1].n_smpicture}>" alt="<{$flist[sec1].n_pictitle}>" title="<{$flist[sec1].n_pictitle}>" width="50">
+                                       <{else}>
+                                       <img style="float: left;" src="<{$ipath}><{$flist[sec1].n_bigpicture}>" alt="<{$flist[sec1].n_pictitle}>" title="<{$flist[sec1].n_pictitle}>" width="300">
+                                       <{/if}>
+                                        <{if $flist[sec1].n_smpicture eq ''}>
+                                       <div style="width: 300px;float: left;padding-top: 10px;"><h3 style="font-size: 140%;"><{$flist[sec1].n_title}></h3></div>
+                                       <{else}>
+                                        <font style="font-size: 14px;" color="black"><h3 style="font-size: 140%;"><{$flist[sec1].n_title}></h3></font><br/>
+                                       <{/if}>
+                                       <font color="#666666" size="1"> <{$flist[sec1].n_systime|date_format:"%Y/%m/%d"}></font>
+                                       <br>
+                                       <font color="#333333"  style="font-size: 14px;"> <{$flist[sec1].n_detail}></font>
+
+                                   </div>
+                                <{/if}>
+                                <{/section}>
+                            </div>
+                            <div style="clear: both"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--右侧-->
+            <div id="right">
+                <!--虚线-->
+                <div class="w100" id="rightrow">
+	                <!--渐变-->
+                	<div id="context">
+                        <div class="title">
+                           <h4>AD&SP 広告モニタリング</h4>
+                        </div>
+                          <table width="290" cellspacing="0">
+                             <{section name=sec1 loop=$ad}>
+                            <tr>
+                                 <td width="14"></td>
+                                <td width="56"  height="60">
+                                      <{if $ad[sec1].n_smpicture neq ''}>
+                                       <img  src="<{$ipath}><{$ad[sec1].n_smpicture}>" alt="<{$ad[sec1].n_pictitle}>" title="<{$ad[sec1].n_pictitle}>" width="50">
+                                       <{else}>
+                                       <img style="float: left;" src="<{$ipath}><{$ad[sec1].n_bigpicture}>" alt="<{$ad[sec1].n_pictitle}>" title="<{$ad[sec1].n_pictitle}>" width="50">
+                                       <{/if}>
+                                </td>
+                                <td width="171"><{$ad[sec1].n_title}></td>
+                            </tr>
+                            <{/section}>
+                         </table>
+                        <br/>
+                    </div>
+                	<div id="context1">
+                       <div class="title">
+                            <h4>HOT 記事ランキング</h4>
+                        </div>
+                        <div style="width: 290px">
+                            
+                        </div>
+
+                        <div id="contop">
+                           <ul style="width: 290px;">
+                               <{section name=sec1 loop=$count}>
+                                <li>
+                                    <div style="float: left; width: 30px; text-align: center;">
+                                        <{if $count[sec1].0 lt 4}>
+                                         <img src="<{$public}>images/<{$count[sec1].0}>.jpg">
+                                        <{else}>
+                                        <{$count[sec1].0}>
+                                        <{/if}>
+                                     </div>
+                                    <a href="#">
+                                       <{if $count[sec1].n_smpicture neq ''}>
+                                       <img  src="<{$ipath}><{$count[sec1].n_smpicture}>" alt="<{$count[sec1].n_pictitle}>" title="<{$count[sec1].n_pictitle}>" width="50">
+                                       <{else}>
+                                       <img style="float: left;" src="<{$ipath}><{$count[sec1].n_bigpicture}>" alt="<{$count[sec1].n_pictitle}>" title="<{$count[sec1].n_pictitle}>" width="50">
+                                       <{/if}>
+                                   </a>
+                                    <div style="width: 180px; float: left;margin-left: 10px;">
+                                     <{$count[sec1].n_title}>
+                                     </div>
+                                    <div style="clear: both;"></div>
+                                </li>
+                                <{/section}>
+                           </ul>
+                        </div>
+<!--
+                        <table id="hacker" width="290" cellspacing="0">
+                             <{section name=sec1 loop=$count}>
+                            <tr>
+                               
+                                <td width="34"  height="60" style="text-align: center;">
+                                    <{if $count[sec1].0 lt 4}>
+                                     <img src="<{$public}>images/<{$count[sec1].0}>.jpg">
+                                    <{else}>
+                                    <{$count[sec1].0}>
+                                    <{/if}>
+                                </td>
+                                <td width="56">
+                                      <{if $count[sec1].n_smpicture neq ''}>
+                                       <img  src="<{$ipath}><{$count[sec1].n_smpicture}>" alt="<{$count[sec1].n_pictitle}>" title="<{$count[sec1].n_pictitle}>" width="50">
+                                       <{else}>
+                                       <img style="float: left;" src="<{$ipath}><{$count[sec1].n_bigpicture}>" alt="<{$count[sec1].n_pictitle}>" title="<{$count[sec1].n_pictitle}>" width="50">
+                                       <{/if}>
+                                </td>
+                                <td width="171"><{$count[sec1].n_title}></td>
+                            </tr>
+                            <{/section}>
+                         </table>
+                         -->
+                    </div>
+                </div>
+                <div style="clear:both;"></div>
+            </div>
+            <div style="clear: both;"></div>
+        </div>
+        <div style="clear: both;"></div>
+      </div>
+    </div>
+</div>
+</body>
+<script>
+$(document).ready(function() {
+$("#contop ul li").addClass('odd');
+$('#contop ul li:even').addClass('even'); //奇偶变色，添加样式
+});
+
+$(function(){
+var scrtime;
+$("#contop").hover(function(){
+clearInterval(scrtime);
+
+},function(){
+
+scrtime = setInterval(function(){
+var $ul = $("#contop ul");
+var liHeight = $ul.find("li:last").height();
+$ul.animate({marginTop : liHeight+40 +"px"},1000,function(){
+
+$ul.find("li:last").prependTo($ul)
+$ul.find("li:first").hide();
+$ul.css({marginTop:0});
+$ul.find("li:first").fadeIn(1000);
+});
+},3000);
+
+}).trigger("mouseleave");
+
+
+});
+</script>
+</html>

@@ -1,0 +1,190 @@
+<?php
+/**
+ * Provides methods to interact with users
+ *
+ * @author YongJun
+ * @name user
+ */
+class gateawayguest
+{
+
+    /**
+     * Konstruktor
+     * Initialisiert den Eventlog
+     */
+    function __construct()
+    {
+    }
+
+    /**
+     * Creates a user
+     *
+     * @param string $name Name of the member
+     * @param string $email Email Address of the member
+     * @param int $company Company ID of the member (unused)
+     * @param string $pass Password
+     * @param string $locale Localisation
+     * @return int $insid ID of the newly created member
+     */
+    function add($houserId, $couserId)
+    {
+        $alias = mysql_real_escape_string($houserId);
+        $email = mysql_real_escape_string($couserId);
+        $res=mysql_query("select count(*) from getaway_guest where (host_userId=$houserId and costomer_userId=$couserId) OR (costomer_userId=$houserId and host_userId=$couserId)");
+        $res=mysql_fetch_array($res);
+        $num=$res[0];
+        //var_dump($num);
+        if($num==0)
+        {
+         $ins1 = mysql_query("INSERT INTO getaway_guest (`host_userId`,`costomer_userId`) VALUES ('$houserId','$couserId')");
+		/*
+		echo "INSERT INTO user (`LogonAlias`,`Email`,`Password`,`SecurityQuestion`,`SecurtiyAnswer`,`UserType`) VALUES ('$alias','$email','$pass','$question','$answer','$usertype')";exit;
+		exit;
+		*/
+          if ($ins1)
+          {
+            $insid = mysql_insert_id();
+            return $insid;
+          }
+          else
+          {
+            return 0;
+          }
+        }
+        else {
+			$ins1 = mysql_query("UPDATE getaway_guest SET status=2 WHERE ((host_userId=$houserId and costomer_userId=$couserId) OR (costomer_userId=$houserId and host_userId=$couserId)) AND status=1");
+		}
+        return 11;
+    }
+	
+
+
+    function edit($Id, $houserId, $couserId)
+    {
+        $houserId = mysql_real_escape_string($houserId);
+        $couserId = mysql_real_escape_string($couserId);
+        $Id = (int) $Id;
+       // $company = (int) $company;
+
+
+        $upd = mysql_query("UPDATE getaway_guest SET host_userId='$houserId',costomer_userId='$couserId' WHERE ID = $Id");
+
+        if ($upd)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    /**
+     * Change a password
+     *
+     * @param int $id Eindeutige Mitgliedsnummer
+     * @param string $oldpass Altes Passwort
+     * @param string $newpass Neues Passwort
+     * @param string $repeatpass Repetition of the new password
+     * @return bool
+     */
+   
+
+    /**
+     * Change a password as admin
+     *
+     * @param int $id User ID
+     * @param string $newpass New passwort
+     * @param string $repeatpass Repetition of the new password
+     * @return bool
+     */
+   
+    /**
+     * Delete a user
+     *
+     * @param int $id User ID
+     * @return bool
+     */
+    function del($Id)
+    {
+        $Id = (int) $Id;
+
+        $del = mysql_query("DELETE FROM getaway_guest WHERE Id = $Id");
+        //var_dump("DELETE FROM gateaway_guest WHERE Id = $Id");exit;
+        if ($del)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+	function chkGetawayGuestExists($hostId,$guestId){
+		$hostId = intval($hostId);
+		$guestId = intval($guestId);
+		$chk = mysql_query("select status from getaway_guest where host_userId='$hostId' AND costomer_userId='$guestId'");
+		$chk1 =mysql_query("select status from getaway_guest where costomer_userId='$hostId' AND host_userId='$guestId'");
+		
+		$chk1 = mysql_fetch_row($chk1);
+		$chk1 = $chk1[0];
+		if($chk1==1) return 4;
+		if($chk1==2) return 2;
+		$chk = mysql_fetch_row($chk);
+        $uid = $chk[0];
+		if($chk[0] && $chk[0]==1)
+			return 1;
+		if($chk[0] && $chk[0]==2)
+			return 2;
+		if($chk[0] && $chk[0]==3)
+			return 3;
+		return 0;
+		
+	}
+    function updateGuestStatus($hostId,$guestId,$status){
+		$hostId = intval($hostId);
+		$guestId = intval($guestId);
+		$chk = mysql_query("UPDATE getaway_guest SET status='$status' WHERE host_userId = $hostId  AND costomer_userId = $guestId");
+		if($chk)
+			return true;
+		else
+			return false;
+	}  
+	function decline($hostId,$guestId){
+		$hostId = intval($hostId);
+		$guestId = intval($guestId);
+		$chk = mysql_query("DELETE FROM getaway_guest  WHERE host_userId = $hostId  AND costomer_userId = $guestId");
+		if($chk)
+			return true;
+		else
+			return false;
+	}  
+	function getAllGetawayguests($uid)
+	{
+		$uid=intval($uid);
+		$sel = mysql_query("SELECT distinct user.* FROM `getaway_guest`,`user` where (host_userId=$uid and costomer_userId=user.Id or host_userId=user.Id and costomer_userId=$uid) AND status=2 ORDER BY LogonAlias");
+		$getawayguests = array();
+        while ($getawayguest = mysql_fetch_array($sel))
+            array_push($getawayguests, $getawayguest);
+        if (!empty($getawayguests))
+            return $getawayguests;
+        else
+            return false;
+	}
+	function delgetawayguest($cid,$hid)
+	{
+		$cid = intval($cid);
+		$hid = intval($hid);
+		$del = mysql_query("DELETE FROM getaway_guest WHERE costomer_userId = $cid and host_userId = $hid or costomer_userId = $hid and host_userId = $cid");
+        if ($del)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+	}
+}
+
+?>

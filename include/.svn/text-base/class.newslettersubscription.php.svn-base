@@ -1,0 +1,28 @@
+<?php
+class newslettersubscription
+{
+	function __construct()
+    {
+    }
+    
+    function add($email,$name)
+    {
+    	$sql0 = "SELECT * from newslettersubscriptions where EmailAddress='$email'";
+    	$ins0 = mysql_query($sql0);
+    	if(mysql_num_rows($ins0)==0)
+    	{
+    	$sql = "INSERT INTO newslettersubscriptions (`EmailAddress`,`Name`) VALUES ('$email','$name')";
+        $ins1 = mysql_query($sql);
+        if ($ins1)
+        {
+            $insid = mysql_insert_id();
+            return $insid;
+        }
+        else
+        {
+            return false;
+        }
+    	}
+    }
+}
+?>

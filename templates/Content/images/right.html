@@ -1,0 +1,60 @@
+ <!--虚线-->
+                <div class="w100" id="rightrow">
+	                <!--渐变-->
+                	<div id="context">
+                        <div class="title">
+                           <h4 style="font-size: 14px;">Report</h4>
+                    </div>
+                          <div id="contop">
+                           <ul style="width: 280px;">
+                               <{section name=sec1 loop=$ad}>
+                                <li style="padding-left: 10px">
+                                    <a href="#">
+                                       <{if $ad[sec1].n_smpicture neq ''}>
+                                       <img  src="<{$ipath}><{$ad[sec1].n_smpicture}>"  width="50">
+                                       <{else}>
+                                       <img style="float: left;" src="<{$ipath}><{$ad[sec1].n_bigpicture}>" alt="<{$ad[sec1].n_pictitle}>" title="<{$ad[sec1].n_pictitle}>" width="50">
+                                       <{/if}>
+                                   </a>
+                                    <div style="width: 180px; float: left;margin-left: 10px;font-size:14px; ">
+                                     <h4><a href="" style="color: #000000;border: 0px;"> <{$ad[sec1].n_title}></a></h4>
+                                     </div>
+                                    <div style="clear: both;"></div>
+                                </li>
+                                <{/section}>
+                           </ul>
+                        </div>
+                        <br/>
+                    </div>
+                	<div id="context1"  style="height: 900px">
+                       <div class="title">
+                            <h4 style="font-size: 14px;">HOT 記事ランキング</h4>
+                        </div>
+                        <div style="width: 290px">
+                            
+                        </div>
+
+                         <div id="contop1" style="height: 960px; background: #f9f9f9">
+                           <ul style="width: 290px;">
+                               <{section name=sec1 loop=$count}>
+                                <li>
+                                    <div style="float: left; width: 40px; text-align: center;">
+                                         <img src="<{$public}>images/0<{$count[sec1].0}>.gif">
+                                     </div>
+                                    <a href="#">
+                                       <{if $count[sec1].n_smpicture neq ''}>
+                                       <img  src="<{$ipath}><{$count[sec1].n_smpicture}>" width="50">
+                                       <{else}>
+                                       <img style="float: left;" src="<{$ipath}><{$count[sec1].n_bigpicture}>" alt="<{$count[sec1].n_pictitle}>" title="<{$count[sec1].n_pictitle}>" width="50">
+                                       <{/if}>
+                                   </a>
+                                    <div style="width: 180px; float: left;margin-left: 10px; font-size: 14px;">
+                                     <h4><{substr str= $count[sec1].n_title end=40}></h4>
+                                     </div>
+                                    <div style="clear: both;"></div>
+                                </li>
+                                <{/section}>
+                           </ul>
+                        </div>
+                    </div>
+                </div>

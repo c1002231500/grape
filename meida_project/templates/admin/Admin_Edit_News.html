@@ -1,0 +1,288 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<link href="/templates/Content/regiester/style.css" rel="stylesheet"
+	type="text/css">
+<script type="text/javascript" src="<{$calendar}>jquery-1.4.3.js"></script>
+<script type="text/javascript" src="<{$calendar}>Js/calendar.js"></script>
+<link type="text/css" rel="stylesheet"
+	href="<{$calendar}>Css/calendar.css" />
+<title>新闻编辑</title>
+</head>
+<body style="text-align: left">
+<br />
+<br />
+
+<form id="news" action="/admin.php" method="post"
+	enctype="multipart/form-data">
+<table class="cont-tab" width="800px" style="table-layout: fixed;"
+	cellpadding="0" cellspacing="0">
+	<tbody>
+		<tr>
+			<td class="td1">新闻标题：<span class="nes">*</span></td>
+			<td class="td2"><input id="n_title" name="n_title"
+				class="inp ipt-normal" style="width: 450px; font-weight: bold;"
+				value="<{$news[0].n_title}>" type="text">&nbsp;&nbsp;是否推荐<input
+				type="checkbox" id="n_command"<{if $news[0].n_recommend eq
+			1}> checked <{/if}> name="n_command" value="1"></td>
+		</tr>
+		<tr>
+			<td class="td1">发布时间：<span class="nes">*</span></td>
+			<td class="td2"><input id="n_starttime" name="n_starttime"
+				class="inp ipt-normal" style="width: 250px; font-weight: bold;"
+				type="text" value="<{$news[0].n_starttime}>"
+				onClick="displayCalendar(this, 'yyyy-mm-dd hh:ii', this, true, '');">
+			</td>
+		</tr>
+		<tr>
+			<td class="td1">26字母：<span class="nes">*</span></td>
+			<td class="td2">
+			<div style="float: left; width: 150px"><input
+				onclick="chooseOne('A');" name="word" id="word" type="radio"  <{if $news[0].n_word eq 'A'}>
+			checked <{/if}> value="A">A</div>
+			<div style="float: left; width: 150px"><input
+				onclick="chooseOne('B');" name="word" id="word" type="radio"  <{if $news[0].n_word eq 'B'}>
+			checked <{/if}> value="B">B</div>
+			<div style="float: left; width: 150px"><input
+				onclick="chooseOne('C');" name="word" id="word" type="radio"
+				value="C"  <{if $news[0].n_word eq 'C'}> checked <{/if}>>C</div>
+			<div style="float: left; width: 150px"><input
+				onclick="chooseOne('D');" name="word" id="word" type="radio"
+				value="D" <{if $news[0].n_word eq 'D'}> checked <{/if}>>D</div>
+			<div style="float: left; width: 150px"><input
+				onclick="chooseOne('E');" name="word" id="word" type="radio"
+				value="E" <{if $news[0].n_word eq 'E'}> checked <{/if}>>E</div>
+			<div style="float: left; width: 150px"><input
+				onclick="chooseOne('F');" name="word" id="word" type="radio"
+				value="F" <{if $news[0].n_word eq 'F'}> checked <{/if}>>F</div>
+			<div style="float: left; width: 150px"><input
+				onclick="chooseOne('G');" name="word" id="word" type="radio"
+				value="G" <{if $news[0].n_word eq 'G'}> checked <{/if}>>G</div>
+			<div style="float: left; width: 150px"><input
+				onclick="chooseOne('H');" name="word" id="word" type="radio"
+				value="H" <{if $news[0].n_word eq 'H'}> checked <{/if}>>H</div>
+			<div style="float: left; width: 150px"><input
+				onclick="chooseOne('I');" name="word" id="word" type="radio"
+				value="I" <{if $news[0].n_word eq 'I'}> checked <{/if}>>I</div>
+			<div style="float: left; width: 150px"><input
+				onclick="chooseOne('J');" name="word" id="word" type="radio"
+				value="J" <{if $news[0].n_word eq 'J'}> checked <{/if}>>J</div>
+			<div style="float: left; width: 150px"><input
+				onclick="chooseOne('K');" name="word" id="word" type="radio"
+				value="K" <{if $news[0].n_word eq 'K'}> checked <{/if}>>K</div>
+			<div style="float: left; width: 150px"><input
+				onclick="chooseOne('L');" name="word" id="word" type="radio"
+				value="L" <{if $news[0].n_word eq 'L'}> checked <{/if}>>L</div>
+			<div style="float: left; width: 150px"><input
+				onclick="chooseOne('M');" name="word" id="word" type="radio"
+				value="M" <{if $news[0].n_word eq 'M'}> checked <{/if}>>M</div>
+			<div style="float: left; width: 150px"><input
+				onclick="chooseOne('N');" name="word" id="word" type="radio"
+				value="N" <{if $news[0].n_word eq 'N'}> checked <{/if}>>N</div>
+			<div style="float: left; width: 150px"><input
+				onclick="chooseOne('O');" name="word" id="word" type="radio"
+				value="O" <{if $news[0].n_word eq 'O'}> checked <{/if}>>O</div>
+			<div style="float: left; width: 150px"><input
+				onclick="chooseOne('P');" name="word" id="word" type="radio"
+				value="P" <{if $news[0].n_word eq 'P'}> checked <{/if}>>P</div>
+			<div style="float: left; width: 150px"><input
+				onclick="chooseOne('Q');" name="word" id="word" type="radio"
+				value="Q" <{if $news[0].n_word eq 'Q'}> checked <{/if}>>Q</div>
+			<div style="float: left; width: 150px"><input
+				onclick="chooseOne('R');" name="word" id="word" type="radio"
+				value="R" <{if $news[0].n_word eq 'R'}> checked <{/if}>>R</div>
+			<div style="float: left; width: 150px"><input
+				onclick="chooseOne('S');" name="word" id="word" type="radio"
+				value="S" <{if $news[0].n_word eq 'S'}> checked <{/if}>>S</div>
+			<div style="float: left; width: 150px"><input
+				onclick="chooseOne('T');" name="word" id="word" type="radio"
+				value="T" <{if $news[0].n_word eq 'T'}> checked <{/if}>>T</div>
+			<div style="float: left; width: 150px"><input
+				onclick="chooseOne('U');" name="word" id="word" type="radio"
+				value="U" <{if $news[0].n_word eq 'U'}> checked <{/if}>>U</div>
+			<div style="float: left; width: 150px"><input
+				onclick="chooseOne('V');" name="word" id="word" type="radio"
+				value="V" <{if $news[0].n_word eq 'V'}> checked <{/if}>>V</div>
+			<div style="float: left; width: 150px"><input
+				onclick="chooseOne('W');" name="word" id="word" type="radio"
+				value="W" <{if $news[0].n_word eq 'W'}> checked <{/if}>>W</div>
+			<div style="float: left; width: 150px"><input
+				onclick="chooseOne('S');" name="word" id="word" type="radio"
+				value="S" <{if $news[0].n_word eq 'S'}> checked <{/if}>>S</div>
+			<div style="float: left; width: 150px"><input
+				onclick="chooseOne('Y');" name="word" id="word" type="radio"
+				value="Y" <{if $news[0].n_word eq 'Y'}> checked <{/if}>>Y</div>
+			<div style="float: left; width: 150px"><input
+				onclick="chooseOne('Z');" name="word" id="word" type="radio"
+				value="Z" <{if $news[0].n_word eq 'Z'}> checked <{/if}>>Z</div>
+				<input type="hidden" value="<{$news[0].n_word}>" id="hword" name="hword">
+				<input type="hidden" value="<{$news[0].n_brand}>" id="n_brand" name="n_brand">
+			</td>
+		</tr>
+		<tr>
+			<td class="td1">品牌：<span class="nes">*</span></td>
+			<td class="td2" id="brandlist" name="brandlist"></td>
+		</tr>
+		<tr>
+			<td class="td1">大类：<span class="nes">*</span></td>
+			<td class="td2"><select class="inp ipt-normal" id="n_class"
+				name="n_class" style="width: 250px; font-weight: bold;">
+				<option value="0">请选择大类</option>
+				<{section name=sec1 loop=$class}> <{if $class[sec1].c_id eq
+				$news[0].n_class}>
+				<option value="<{$class[sec1].c_id}>" selected><{$class[sec1].c_name}></option>
+				<{else}>
+				<option value="<{$class[sec1].c_id}>"><{$class[sec1].c_name}></option>
+				<{/if}> <{/section}>
+			</select></td>
+		</tr>
+		<tr>
+			<td class="td1">小类：<span class="nes">*</span></td>
+			<td class="td2" id="stype"><input type="hidden" id="bval"
+				name="bval" value="<{$news[0].n_class}>"> <input
+				type="hidden" id="sval" name="sval" value="<{$news[0].n_subclass}>">
+			<select class="inp ipt-normal" id="n_ctype" name="n_ctype"
+				style="width: 250px; font-weight: bold;">
+				<option value="0">请选择小类</option>
+			</select></td>
+		</tr>
+		<tr style="background-color: #ebebeb">
+			<td class="td1">大图片：</td>
+			<td class="td2"><input id="n_bimgs" name="n_bimgs"
+				class="inp ipt-normal" style="width: 250px; font-weight: bold;"
+				type="file"> <{if $news[0].n_bigpicture neq ''}> <img
+				src="include/Public/Upload/<{$news[0].n_bigpicture}>" width="50"
+				height="50"> <{/if}> &nbsp;&nbsp;300*200 &nbsp;&nbsp;是否删除<input
+				type="checkbox" id="dbimg" name="dbimg" value="1"></td>
+		</tr>
+		<tr style="background-color: #ebebeb">
+			<td class="td1">大图片标题：<span class="nes">*</span></td>
+			<td class="td2"><input id="n_pictitle" name="n_pictitle"
+				class="inp ipt-normal" style="width: 450px; font-weight: bold;"
+				value="<{$news[0].n_pictitle}>" type="text"></td>
+		</tr>
+		<tr>
+			<td class="td1">小图片：</td>
+			<td class="td2"><input id="n_simgs" name="n_simgs"
+				class="inp ipt-normal" style="width: 250px; font-weight: bold;"
+				type="file"> <{if $news[0].n_smpicture neq ''}> <img
+				src="include/Public/Upload/<{$news[0].n_smpicture}>" width="50"
+				height="50"> <{/if}> &nbsp;&nbsp;50*50&nbsp;&nbsp;是否删除<input
+				type="checkbox" id="dsimg" name="dsimg" value="1"></td>
+		</tr>
+		<tr>
+			<td class="td1">城市：<span class="nes">*</span></td>
+			<td class="td2"><select id="n_country" name="n_country"
+				class="inp ipt-normal" style="width: 250px; font-weight: bold;">
+				<option value="<{$news[0].n_province}>"><{$news[0].n_province}>（当前）</option>
+				<option value="全国">全国</option>
+				<option value="上海">上海</option>
+				<option value="北京">北京</option>
+				<option value="重慶">重慶</option>
+				<option value="広州">広州</option>
+				<option value="天津">天津</option>
+				<option value="华北">华北</option>
+				<option value="华南">华南</option>
+				<option value="华东">华东</option>
+				<option value="华中">华中</option>
+				<option value="东北">东北</option>
+				<option value="西北">西北</option>
+				<option value="西南">西南</option>
+				<option value="新疆">新疆</option>
+				<option value="香港">香港</option>
+				<option value="海外">海外</option>
+				<option value="日本">日本</option>
+			</select></td>
+		</tr>
+		<tr>
+			<td class="td1">keyword：<span class="nes">*</span></td>
+			<td class="td2"><input id="n_keyword" name="n_keyword"
+				class="inp ipt-normal" style="width: 500px; font-weight: bold;"
+				type="text" value="<{$news[0].n_keyword}>"></td>
+		</tr>
+		<tr>
+			<td class="td1">简介描述：<span class="nes">*</span></td>
+			<td class="td2"><textarea name="n_context" cols="27" rows="4"
+				class="inp ipt-normal" id="n_context"
+				style="height: auto; font-weight: bold;"><{$news[0].n_detail}></textarea></td>
+		</tr>
+		<tr>
+			<td class="td1">显示位置：<span class="nes">*</span></td>
+			<td class="td2"><input type="radio" name="site"
+				style="margin-bottom: 20px;"<{if $news[0].n_site eq 'A'}>
+			checked <{/if}> value="A">企業動向<br />
+			<input type="radio" name="site"<{if $news[0].n_site eq 'B'}>
+			checked <{/if}> value="B">業界最前線<br />
+			<input type="radio" name="site"<{if $news[0].n_site eq 'C'}>
+			checked <{/if}> value="C">広告・販促<br />
+			<input type="radio" name="site" style="margin-bottom: 20px;"<{if
+			$news[0].n_site eq 'D'}> checked <{/if}> value="D">マクロ<br />
+			<input type="radio" name="site"<{if $news[0].n_site eq
+			'E'}> checked <{/if}> value="E" >レポート <br />
+		
+			</td>
+		</tr>
+
+		<tr>
+			<td class="td1" style="vertical-align: top">详细内容：<span
+				class="nes">*</span></td>
+			<td class="td2"><{$fck}></td>
+		</tr>
+		<tr>
+			<td class="td1" style="vertical-align: top">只有会员查看：<span
+				class="nes">*</span></td>
+			<td class="td2"><input type="radio" name="member" value="1"<{if
+			$news[0].n_remake eq 1}> checked <{/if}> >是 &nbsp;&nbsp;&nbsp; <input
+				type="radio" name="member" value="2"<{if $news[0].n_remake
+			neq 1}> checked <{/if}> >否</td>
+		</tr>
+		<tr>
+			<td class="td1">状态：<span class="nes">*</span></td>
+			<td class="td2"><select id="n_status" name="n_status"
+				class="inp ipt-normal" style="width: 250px; font-weight: bold;">
+				<option value="1"><{if $news[0].n_status eq 1}>开启<{else}>停用<{/if}></option>
+				<option value="1">开启</option>
+				<option value="2">停用</option>
+			</select></td>
+		</tr>
+		<tr>
+			<td class="td1">&nbsp;</td>
+			<td class="td2"><input
+				style="background-position: -249px -219px" name="sub" id="sub"
+				class="btn-submit" value="" title="提交" type="submit"></td>
+		</tr>
+	</tbody>
+</table>
+<input type="hidden" name="n_id" id="n_id" value="<{$news[0].n_id}>">
+<input type="hidden" name="action" id="action" value="updateNews" /></form>
+<script type="text/javascript">
+	function chooseOne(word) {
+		$("#brandlist").html('');
+		$.ajax({
+			type : "POST",
+			url : "/admin.php",
+			data : "action=getBrandList&_p=" + word+"&ts="+$("#n_brand").val(),
+			success : function(msg) {
+				$("#brandlist").html(msg);
+			}
+		});
+	}
+	
+
+	$(document).ready(
+			function() {
+				chooseOne($("#hword").val());
+
+				$("#stype").load(
+						"/admin.php?action=loadType&cid=" + $("#bval").val()
+								+ "&sid=" + $("#sval").val());
+			});
+</script>
+<script type="text/javascript" src="<{$public}>js/select.js">
+	
+</script>
+
+</body>
+</html>

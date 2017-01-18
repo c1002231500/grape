@@ -1,0 +1,866 @@
+<?php
+/**
+ * Provides methods to set/get destinations
+ *
+ * @author CJ
+ * @name destination
+ */
+class destination
+{
+	/**
+	 *
+	 * @return unknown_type
+	 */
+	function __construct()
+	{
+	}
+
+	/**
+	 *
+	 * @param $isinclude
+	 * @param $uid
+	 * @param $type
+	 * @param $name
+	 * @param $address
+	 * @param $state
+	 * @param $zip
+	 * @param $contact
+	 * @param $email
+	 * @param $phone
+	 * @param $offer
+	 * @param $description
+	 * @param $privacywinepass
+	 * @param $privacylearnmore
+	 * @param $privacyinformed
+	 * @return unknown_type
+	 */
+	function add($isinclude,$uid,$type,$name,$address,$state,$zip,$contact,$email,$phone,$offerArr,$description,$privacywinepass,$privacylearnmore,$privacyinformed,$city,$latlng
+	,$WebUrl = "",$isActive=0,$desId,$logoImageFileLocation,$mainImage1FileLocation,$mainImage2FileLocation,$mainImage3FileLocation,$mainImage4FileLocation,$mainImage5FileLocation,
+	$wintpyeArr,$stateId,$latitude,$longitude)
+	{
+		// updated by youxiaoguang 2009-07-01
+		$CreateDate=date("Y-m-d H:i:s", time()); 
+		//end of the update
+		$deswintype=new destwintype();
+		$deswintype->delbeforeadd($desId);
+		$type = mysql_real_escape_string($type);
+		$name = mysql_real_escape_string($name);
+		$address = mysql_real_escape_string($address);
+		$state = mysql_real_escape_string($state);
+		$zip = mysql_real_escape_string($zip);
+		$contact = mysql_real_escape_string($contact);
+		$email = mysql_real_escape_string($email);
+		$phone = mysql_real_escape_string($phone);
+		$weburl = mysql_real_escape_string($WebUrl);
+		//add the code by YouXiaoguang 2009-06-24 for get the offer array.
+		$destination_feature = $offerArr;
+		$latitude=mysql_real_escape_string($latitude);
+		$longitude=mysql_real_escape_string($longitude);
+		//end fo the code by You Xiaoguang
+		$offer="";
+		if(is_array($offerArr)){
+			foreach($offerArr as $value)
+			{
+				$offer.=mysql_real_escape_string($value)."|";
+			}
+		}
+		$description = mysql_real_escape_string($description);
+		$privacywinepass = mysql_real_escape_string($privacywinepass);
+		// update by youxiaoguang 2009-07-10
+		if ($privacywinepass =="")
+			$privacywinepass = "0";
+		//end of update...
+		$privacylearnmore = mysql_real_escape_string($privacylearnmore);
+		$privacyinformed = mysql_real_escape_string($privacyinformed);
+		if($desId>0)
+		{   /*update by youxiaoguang add one colum date*/
+			$result = mysql_query("update destination set
+									`isinclude`='$isinclude',
+							  		 `type`='$type',
+									 `name`='$name',
+									 `address`='$address',
+									 `state`='$state',
+									 `zip`='$zip',
+									 `contact`='$contact',
+									 `email`='$email',
+									 `phone`='$phone',
+									 `offer`='$offer',
+									 `description`='$description',
+									 `privacywinepass`= '$privacywinepass',
+									 `privacylearnmore`='$privacylearnmore',
+									 `privacyinformed`='$privacyinformed',
+									 `city`='$city',
+									 `latlng`='$latlng',
+									 `WebSiteUrl`='$weburl',
+									 `logoImageFileLocation`='$logoImageFileLocation',
+									 `mainImage1FileLocation`='$mainImage1FileLocation',
+									 `mainImage2FileLocation`='$mainImage2FileLocation',
+									 `mainImage3FileLocation`='$mainImage3FileLocation',
+									 `mainImage4FileLocation`='$mainImage4FileLocation',
+									 `mainImage5FileLocation`='$mainImage5FileLocation',
+									 `IsActive`='$isActive',
+									 `StateId`='$stateId',
+									 `Latitude`='$latitude',
+									 `Longitude`='$longitude',
+									 `date`=now()    
+									  where Id=$desId");
+			//code added by YouXiaoguang 2009-06-24, this code is
+			//to add the destination-feature info to the table destination_feature...
+			$desId = intval($desId);
+			$res1 = mysql_query("DELETE FROM destination_feature WHERE `DestinationId` =  '$desId'");
+			if(is_array($destination_feature)){
+				foreach($destination_feature as $value)
+				{
+						
+					$featureId = mysql_query("select FeatureId from feature where `Type`='$type'
+												AND  `FeatureName`='$value'");		
+					$featureId = mysql_fetch_array($featureId);
+					$featureId = intval($featureId["FeatureId"]);
+					if($featureId>0)
+					{
+						$res2 = mysql_query("INSERT INTO destination_feature
+											(`DestinationId`,
+								  			 `FeatureId`) VALUES 
+											 ('$desId','$featureId')");
+					}
+				}
+			}
+			// the end of code added by xiaoguang 2009-06-24
+			if(is_array($wintpyeArr)){
+				foreach($wintpyeArr as $value)
+				{
+					if($desId>0)
+					{
+						$deswintype->adddest_wintype($desId,$value);
+					}
+				}
+			}
+			return $desId;
+				
+		}
+		else
+		{ /*update by youxiaoguang add two colum date and CreateDate*/
+			$result = mysql_query("INSERT INTO destination
+									(`isinclude`,
+							  		 `uid`,
+							  		 `type`,
+									 `name`,
+									 `address`,
+									 `state`,
+									 `zip`,
+									 `contact`,
+									 `email`,
+									 `phone`,
+									 `offer`,
+									 `description`,
+									 `privacywinepass`,
+									 `privacylearnmore`,
+									 `privacyinformed`,`city`,`latlng`,`WebSiteUrl`,`IsActive`,`logoImageFileLocation`,`mainImage1FileLocation`,`mainImage2FileLocation`,
+									 `mainImage3FileLocation`,`mainImage4FileLocation`,`mainImage5FileLocation`,`StateId`,
+									 `Latitude`,`Longitude`,`date`,`CreateDate`) VALUES 
+									 ('$isinclude','$uid','$type','$name','$address','$state','$zip',
+									 '$contact','$email','$phone','$offer','$description',
+									 '$privacywinepass','$privacylearnmore','$privacyinformed',
+									 '$city','$latlng','$weburl','$isActive','$logoImageFileLocation',
+									 '$mainImage1FileLocation','$mainImage2FileLocation','$mainImage3FileLocation',
+									 '$mainImage4FileLocation','$mainImage5FileLocation','$stateId',
+									 '$latitude','$longitude',now(),now())");
+			//code added by YouXiaoguang 2009-06-24, this code is
+			//to add the destination-feature info to the table destination_feature...
+
+			$desId = intval(mysql_insert_id());
+			if(is_array($destination_feature)){
+				foreach($destination_feature as $value)
+				{
+					$featureId = mysql_query("select FeatureId from feature where `Type`='$type'
+												AND  `FeatureName`='$value'");
+					
+					$featureId = mysql_fetch_array($featureId);
+					$featureId = intval($featureId["FeatureId"]);
+					if($featureId>0)
+					{
+						$res2 = mysql_query("INSERT INTO destination_feature
+											(`DestinationId`,
+								  			 `FeatureId`) VALUES 
+											 ('$desId','$featureId')");
+					}
+				}
+			}
+			// the end of code added by xiaoguang 2009-06-24
+
+			if ($result)
+			{
+				//$insid = mysql_insert_id();
+				if(is_array($wintpyeArr)){
+					foreach($wintpyeArr as $value)
+					{
+							$deswintype->adddest_wintype($desId,$value);
+					}
+				}
+				return $desId;
+			}
+			else
+			{
+				return false;
+			}
+		}
+	}
+
+	function del($uid,$desId,$userType=""){
+		$deswintype=new destwintype();
+		$deswintype->delbeforeadd($desId);
+		$this->delDestRelatives($desId);
+		if($userType=="Admin")
+			$res = mysql_query("delete from destination where Id=$desId");
+		else
+			$res = mysql_query("delete from destination where uid=$uid and Id=$desId");
+		$affect = mysql_affected_rows();
+		if($affect>0){
+			return true;
+		}else{
+			return false;
+		}
+	}
+	function delDestRelatives($desId){
+		$res = mysql_query("delete from destination_feature where DestinationId=$desId");
+		$res = mysql_query("delete from destination_winerytype where DestinationId=$desId");
+		$res = mysql_query("delete from favorite where DestinationId=$desId");
+		$res = mysql_query("delete from industry_specails where desId=$desId");
+		$res = mysql_query("delete from review where DestinationId=$desId");
+		$res = mysql_query("delete from tour2dest where DestId=$desId");
+		return true;
+	}
+	function getDesNameByDesId($desid){
+		$result=mysql_query("select name,email from destination where Id='$desid' LIMIT 1");
+		$destination = mysql_fetch_array($result);
+		if (!empty($destination))
+		{
+			return $destination;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	function fillDestination($destination)
+	{
+		if (!empty($destination))
+		{
+			/*`isinclude`,
+			 `uid`,
+			 `type`,
+			 `name`,
+			 `address`,
+			 `state`,
+			 `zip`,
+			 `contact`,
+			 `email`,
+			 `phone`,
+			 `offer`,
+			 `description`,
+			 `privacywinepass`,
+			 `privacylearnmore`,
+			 `privacyinformed`
+			 `city`*/
+			$destination["name"] = stripslashes($destination["name"]);
+			$destination["name"]=htmlentities($destination["name"]);
+			if (isset($destination["isinclude"]))
+			{
+				$destination["isinclude"] = stripslashes($destination["isinclude"]);
+				$destination["isinclude"]=htmlentities($destination["isinclude"]);
+			}
+			if (isset($destination["type"]))
+			{
+				$destination["type"] = stripslashes($destination["type"]);
+				$destination["type"]=htmlentities($destination["type"]);
+			}
+			if (isset($destination["address"]))
+			{
+				$destination["address"] = stripslashes($destination["address"]);
+				$destination["address"]=htmlentities($destination["address"]);
+			}
+			if (isset($destination["state"]))
+			{
+				$destination["state"] = stripslashes($destination["state"]);
+				$destination["state"]=htmlentities($destination["state"]);
+			}
+			if (isset($destination["zip"]))
+			{
+				$destination["zip"] = stripslashes($destination["zip"]);
+				$destination["zip"]=htmlentities($destination["zip"]);
+			}
+			if (isset($destination["contact"]))
+			{
+				$destination["contact"] = stripslashes($destination["contact"]);
+				$destination["contact"]=htmlentities($destination["contact"]);
+			}
+			if (isset($destination["email"]))
+			{
+				$destination["email"] = stripslashes($destination["email"]);
+				$destination["email"]=htmlentities($destination["email"]);
+			}
+			if (isset($destination["phone"]))
+			{
+				$destination["phone"] = stripslashes($destination["phone"]);
+				$destination["phone"]=htmlentities($destination["phone"]);
+			}
+			if (isset($destination["offer"]))
+			{
+				$strOffer = stripslashes($destination["offer"]);
+				$strOffer = htmlentities($destination["offer"]);
+				$destination["offer"] =array();
+				$destination["offer"]=explode("|",$strOffer);
+			}
+			if (isset($destination["description"]))
+			{
+				$destination["description"] = stripslashes($destination["description"]);
+				$destination["description"]=htmlentities($destination["description"]);
+			}
+			if (isset($destination["privacywinepass"]))
+			{
+				$destination["privacywinepass"] = stripslashes($destination["privacywinepass"]);
+				$destination["privacywinepass"] = htmlentities($destination["privacywinepass"]);
+			}
+			if (isset($destination["privacylearnmore"]))
+			{
+				$destination["privacylearnmore"] = stripslashes($destination["privacylearnmore"]);
+				$destination["privacylearnmore"] = htmlentities($destination["privacylearnmore"]);
+			}
+			if (isset($destination["privacyinformed"]))
+			{
+				$destination["privacyinformed"] = stripslashes($destination["privacyinformed"]);
+				$destination["privacyinformed"] = htmlentities($destination["privacyinformed"]);
+			}
+			if (isset($destination["city"]))
+			{
+				$destination["city"] = stripslashes($destination["city"]);
+				$destination["city"]=htmlentities($destination["city"]);
+			}
+			if (isset($destination["WebSiteUrl"]))
+			{
+				if($destination["WebSiteUrl"]=="");
+				else
+				$destination["WebSiteUrl"] = strtoupper(substr($destination["WebSiteUrl"],0,4))=="HTTP"?stripslashes($destination["WebSiteUrl"]):"http://".stripslashes($destination["WebSiteUrl"]);
+				$destination["WebSiteUrl"]=htmlentities($destination["WebSiteUrl"]);
+			}
+			if (isset($destination["latlng"]))
+			{
+				$destination["latlng"] = stripslashes($destination["latlng"]);
+				$destination["latlng"]=htmlentities($destination["latlng"]);
+			}
+			if (isset($destination["logoImageFileLocation"]))
+			{
+				$destination["logoImageFileLocation"] = stripslashes($destination["logoImageFileLocation"]);
+				$destination["logoImageFileLocation"] = htmlentities($destination["logoImageFileLocation"]);
+				if(!file_exists($destination["logoImageFileLocation"]))
+				{
+					$destination["logoImageFileLocation"] = "./templates/images/missing_logo1.jpg";
+				}				
+			}
+			else
+			$destination["logoImageFileLocation"] = "./templates/images/missing_logo1.jpg";
+			if (isset($destination["mainImageFileLocation"]))
+			{
+				$destination["mainImage1FileLocation"] = stripslashes($destination["mainImage1FileLocation"]);
+				$destination["mainImage1FileLocation"] = htmlentities($destination["mainImage1FileLocation"]);
+			}
+			if (isset($destination["logoImageAvailable"]))
+			{
+				$destination["logoImageAvailable"] = stripslashes($destination["logoImageAvailable"]);
+				$destination["logoImageAvailable"] = htmlentities($destination["logoImageAvailable"]);
+			}
+			$sql = "select count(Id) as cnt from industry_specails where desId=".$destination["Id"];
+			//echo $sql;
+			$q = mysql_query($sql);
+			/*if(is_array($r))
+			{$r = mysql_fetch_array($q);
+			 echo 'r='.$r;
+			}
+			*/
+			$r = mysql_fetch_array($q);
+			 //var_dump ($r);
+			$destination["special_num"] = $r["cnt"];
+			//echo 'destination["special_num"]='.$destination["special_num"];
+			$featurelist=array();
+			$sql2 = "select FeatureId from destination_feature where DestinationId=".$destination["Id"];
+			$q = mysql_query($sql2);
+			while($r = mysql_fetch_array($q))
+			{
+				$sql3 = mysql_query("SELECT FeatureName FROM feature WHERE FeatureId='$r[FeatureId]'");
+				$featureName = mysql_fetch_array($sql3);
+				$featureName = $featureName["FeatureName"];
+				$r["FeatureName"] = $featureName;
+				array_push($featurelist,$r);
+			}
+			$destination["feature"]=$featurelist;
+			
+			return $destination;
+			
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	/**
+	 *
+	 * @param $uid
+	 * @return unknown_type
+	 */
+	function getDestination($uid,$desId)
+	{
+		$desId = intval($desId);
+
+		$result=mysql_query("select * from destination where uid='$uid' and Id=$desId");
+		$destination = mysql_fetch_array($result);
+		//add code by youxiaoguang 2009-06-24
+		$featureId = mysql_query("SELECT FeatureId FROM destination_feature WHERE DestinationId='$desId'");
+		$currentFeatures = array();
+		while ($currentFeature = mysql_fetch_array($featureId))
+		{
+			$cur_temp = intval($currentFeature["FeatureId"]);
+			$featureName = mysql_query("SELECT FeatureName FROM feature WHERE `FeatureId`='$cur_temp'");
+			$featureName = mysql_fetch_array($featureName);
+			$featureName = $featureName["FeatureName"];
+			$featureName = htmlentities($featureName);
+			array_push($currentFeatures,  stripslashes($featureName));
+		}
+
+		$destination = $this->fillDestination($destination);
+		$destination["offer"] = $currentFeatures;
+		return $destination;
+		//return $this->fillDestination($destination); this line is changed to comment by youxiaoguang
+		//end of the code added by xiaoguang
+	}
+
+	function isDestIdExists($desId){
+		$res = mysql_query("select Id from destination where Id=$desId");
+		$row = mysql_fetch_array($res);
+		if($row["Id"]==0){
+			return false;
+		}else{
+			return true;
+		}
+	}
+	function isUserIdExists($destId,$userId){
+		$userId=intval($userId);
+		$destId=intval($destId);
+		$sql=mysql_query("select count(*) from destination where Id='$destId' and uid='$userId'");
+		//echo "select count(*) from destination where Id='$destId' and uid='$userId'";
+		$res=mysql_fetch_array($sql);
+		$num=$res[0];
+		//var_dump($num);
+		if($num!=0)
+		{return 0;}
+		else
+		{ return 1;}
+	}
+
+
+	function getdesId($uid)
+	{
+		$result=mysql_query("select Id from destination where uid='$uid' LIMIT 1");
+		$destination = mysql_fetch_array($result);
+		if (!empty($destination))
+		{
+			return $destination['Id'];
+		}
+		else
+		{
+			return false;
+		}
+	}
+	function getUserId($desId)
+	{
+		$result=mysql_query("select uid from destination where Id='$desId' LIMIT 1");
+		$destination = mysql_fetch_array($result);
+
+		if (!empty($destination))
+		{
+			return $destination['uid'];
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	function getDesInfoByDesId($desid){
+		$result=mysql_query("select * from destination where Id='$desid' LIMIT 1");
+		$destination = mysql_fetch_array($result);
+		$featurelist=array();
+		//$sel = mysql_query("SELECT FeatureId from destination_feature where DestinationId=$desid");
+		//while($r = mysql_fetch_array($sel))
+		//array_push($featurelist,$r);
+		//$destination["feature"]=$featurelist;
+		if (!empty($destination))
+		{
+			return $this->fillDestination($destination);
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	/**
+	 * Find Destination according to Type and Offers
+	 * @param $conditions array of condition list
+	 * @return The Destination Array
+	 */
+	function findDestination($conditions,$lim=10,$isPagination=true,$keywords="")
+	{
+		//SELECT d.* FROM destination d where d.Id in (select DestinationId from destination_feature  where FeatureId=45 and FeatureId=1)
+		$Sql = "SELECT * FROM destination d where 1=1 ";
+
+		if($conditions["type"]!=""){
+			$querySql .= " AND type = '".$conditions["type"]."'";
+		}
+		if($conditions["state"]!="" && $conditions["state"]!="all"){
+			$querySql .= " AND StateId =".$conditions["state"]." ";
+		}
+		// update by youxiaoguang 2009-07-10 for adding winepass selection
+		if($conditions["winepass"]=="0"){
+			$querySql .=" AND privacywinepass = '0' ";
+		}
+		if($conditions["winepass"]=="1"){
+			$querySql .=" AND privacywinepass = '1' ";
+		}
+		//end of code added by xiaoguang you
+		if(is_array($conditions["offers"])){
+			$offers = $conditions["offers"];
+			$index = 0;
+			foreach ($offers as $offer)
+			{
+				if($index == 0)
+				{
+					$querySql .= " AND d.Id in (select DestinationId from destination_feature  where  ";
+					$querySql .= " FeatureId=$offer ";
+				}
+				else
+				$querySql .= " OR FeatureId=$offer ";
+					
+				$index += 1;
+			}
+				
+			if($index > 0)
+			$querySql .= " ) ";
+		}
+		
+		
+
+		if($conditions["uid"]>0){
+			$querySql .= " AND uid=".$conditions["uid"];
+		}
+		
+		if(isset($conditions["minLatitude"]))
+			$querySql .= " AND Latitude >".$conditions["minLatitude"];
+			
+		if(isset($conditions["maxLatitude"]))
+			$querySql .= " AND Latitude <".$conditions["maxLatitude"];
+			
+		if(isset($conditions["minLongitude"]))
+			$querySql .= " AND Longitude >".$conditions["minLongitude"];
+			
+		if(isset($conditions["maxLongitude"]))
+			$querySql .= " AND Longitude <".$conditions["maxLongitude"];
+
+		//Keywords Query
+		$index = 0;
+		if($keywords != "")
+		{
+			$keywordArr = explode(",",$keywords);
+			$originalQuerySql = $querySql;
+			$querySql .= $this->GenerateKeyWordsSQL ("name",$keywordArr,"AND");
+			$querySql .= $this->GenerateKeyWordsSQL ("city",$keywordArr,"OR");
+			$querySql .= $this->GenerateKeyWordsSQL ("description",$keywordArr,"OR");
+			
+			if($originalQuerySql != $querySql)
+				$querySql .= " ) ";
+		}
+
+		//Pagnation
+		if($isPagination)
+		{
+			$sel = mysql_query("SELECT count(*) FROM destination where 1=1".$querySql);
+			$num = mysql_fetch_row($sel);
+			$num = $num[0];
+			SmartyPaginate::connect();
+			// set items per page
+			SmartyPaginate::setLimit($lim);
+			SmartyPaginate::setTotal($num);
+
+			$start = SmartyPaginate::getCurrentIndex();
+			$lim = SmartyPaginate::getLimit();
+
+			$result = mysql_query($Sql.$querySql." ORDER BY Id DESC LIMIT $start,$lim");
+		}
+		else
+		{
+			$sqlStr = $Sql.$querySql." ORDER BY Id";
+			$result = mysql_query($sqlStr);
+		}
+			
+		$lists = array();
+		while ($destinations = mysql_fetch_array($result))
+		{
+			$destination = $this->fillDestination($destinations);
+			array_push($lists, $destination);
+		}
+		
+	
+		if (!empty($lists))
+		{
+			return $lists;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	
+	function getFeatureByDesId($desId)
+   	 {
+		$desId = mysql_real_escape_string($desId);
+		$sql = "SELECT FeatureId FROM destination_feature WHERE DestinationId = '$desId'";
+        $ins1 = mysql_query($sql);
+		
+		$FeatureIds = array();
+		$Feature_temp = array();
+        while ($FeatureId = mysql_fetch_array($ins1))
+        {
+            $FeatureId_temp = stripslashes($FeatureId["FeatureId"]);
+            $FeatureId_temp = htmlentities($FeatureId_temp);
+			$ins2 = mysql_query("SELECT FeatureName FROM feature WHERE FeatureId='$FeatureId_temp'");
+			$ins2 = mysql_fetch_array($ins2);
+			$FeatureId_t["FeatureId"] = $FeatureId_temp;
+			$FeatureId_t["FeatureName"] = $ins2["FeatureName"];
+            array_push($FeatureIds, $FeatureId_t);
+        }
+        if ($ins1)
+        {
+            return $FeatureIds;
+        }
+        else
+        {
+            return false;
+        }
+	}
+	
+	function GenerateKeyWordsSQL ($field,$keywordArr,$AndOr)
+	{
+		$keywordSql = "";
+		$index = 0;
+		
+			foreach ($keywordArr as &$key)
+			{
+				$trimKey = trim($key);
+				if(trim($key) != "")
+				{
+					if($index == 0)
+					{
+						$firstField = $AndOr=="AND" ? "(" : "";
+						$keywordSql .= " $AndOr $firstField  $field like '%$trimKey%'  ";
+					}
+					else
+					$keywordSql .= " OR $field like '%$trimKey%' ";
+				}
+				$index += 1;
+			}
+			
+		
+		
+		return $keywordSql;
+	}
+	
+/**
+	 * Get States Info from citystate table
+	 * @param $stateId
+	 * @param $city
+	 * @return unknown_type
+	 */
+	function getStateInfo($stateId='all',$city='All')
+	{
+		$sql='select * from citystate where 1=1 ';
+		if($stateId!='all')
+		{
+			$sql.=" and StateId='$stateId' ";
+		}	
+		$result=mysql_query($sql);
+		$stateInfo =array();
+		while($row=mysql_fetch_array($result))
+		{
+			$stateInfo[$row['StateId']][$row["City"]]=$row;
+		}
+
+		return $stateInfo;
+
+	}
+	
+ 
+	function getStateAllInfo($stateId)
+	{
+		$sql="select * from citystate where  StateId='$stateId' and City='All'";
+				
+		$result=mysql_query($sql);
+		if($stateInfo=mysql_fetch_array($result))
+		{
+			return $stateInfo;
+		}
+
+		return false;
+
+	}
+	
+	function getNewDestination()
+	{
+		$destination=array();
+		$sql="SELECT * from destination where DATE(createdate)=CURDATE() order by createdate desc";
+		$q = mysql_query($sql);
+		while($r = mysql_fetch_array($q))
+		{
+			//$r["CreateDate"]=$r["ut"];
+			$r["name"]=stripslashes($r["name"]);
+			$r["name"]=htmlentities($r["name"]);
+			$r["email"]=stripslashes($r["email"]);
+			$r["email"]=htmlentities($r["email"]);
+			$r["description"]=stripslashes($r["description"]);
+			$r["description"]=htmlentities($r["description"]);
+			array_push($destination,$r);
+		}
+		return $destination;
+	}
+	function DelAllTourByUserId($userid)
+	{
+		$sqlrow=mysql_query("DELETE FROM tour2dest WHERE UserId='$userid' and TourId='0'");
+		if($sqlrow){
+			return true;
+		}else{
+			return false;
+		}
+	}
+	/* edit by cathering 2009.7.16 */
+	function getIndustryLogo($userid)
+    {   
+    	$userid=(int)$userid;
+		$res=mysql_query("select count(logoImageFileLocation) from destination where uid='$userid'");
+		$res=mysql_fetch_array($res);
+		$num=$res[0];
+		//var_dump($num);
+		$Logolist=array();
+		if($num==0)
+		{
+			return 0;
+		}
+		else
+		{
+			$result=mysql_query("select logoImageFileLocation from destination where uid='$userid'");
+			while($r=mysql_fetch_array($result))
+			{
+				array_push($Logolist,$r);
+			}
+			//var_dump($Logolist[0]["logoImageFileLocation"]);
+			return $Logolist[0]["logoImageFileLocation"];
+		}
+	}
+	
+	function getWinepassDestination($page_size)
+    {   
+    	$sel = mysql_query("SELECT count(*) from destination where privacywinepass=1"); 
+        $num = mysql_fetch_row($sel);
+        $num =$num[0];
+		SmartyPaginate::connect();
+         //set items per page
+         //var_dump($sel);exit;
+        SmartyPaginate::setLimit($page_size);
+        SmartyPaginate::setTotal($num);
+   		$start = SmartyPaginate::getCurrentIndex();
+		$lim_condition = " LIMIT $start,$page_size";
+    	$destiantion=array();   	
+    	$sql="SELECT * from destination where privacywinepass=1 order by name".$lim_condition;
+    	$q = mysql_query($sql);
+		while($r = mysql_fetch_array($q))
+		{
+			$r["name"]=stripslashes($r["name"]);
+			$r["name"]=htmlentities($r["name"]);
+			$r["description"]=stripslashes($r["description"]);
+			$r["description"]=htmlentities($r["description"]);
+			if(!isset($r["logoImageFileLocation"])||!file_exists($r["logoImageFileLocation"]))
+				$r["logoImageFileLocation"]="./templates/images/missing_logo1.jpg";
+			array_push($destiantion,$r);
+		}
+		return $destiantion;
+	}
+	
+/*editd by cathering 2009.7.18*/
+	function listallchanged_dest($pagesize=10)
+	{
+		$sel=mysql_query("SELECT count(*) FROM destination where TO_DAYS(NOW()) - TO_DAYS(date)>=7");
+		$num=mysql_fetch_array($sel);
+		$num=$num[0];
+		
+		SmartyPaginate::connect();
+        SmartyPaginate::setLimit($pagesize);
+        SmartyPaginate::setTotal($num);
+
+        $start = SmartyPaginate::getCurrentIndex();
+        $lim = SmartyPaginate::getLimit();
+        
+        $result=mysql_query("select Id, name,logoImageFileLocation ,date from destination where TO_DAYS(NOW()) - TO_DAYS(date)<=7");
+        $changeslist=array();
+        //$number=0;
+        while($res=mysql_fetch_array($result))
+        {
+        	//$changeslist[]["Id"]=$res["Id"];
+        	//$changeslist["name"]=$res["name"];
+        	//$changeslist["logoImageFileLocation"]=$res["logoImageFileLocation"];
+        	//$res["date"]=date("Y-m-d",$res["date"]);
+        	//msg($res["date"]);
+        	$res["name"]=stripslashes($res["name"]);
+        	$res["name"]=htmlentities($res["name"]);
+        	 array_push($changeslist, $res);
+        	 //$number++;
+        }
+        //msg("number=".$number);
+        //msg($changeslist["date"]);
+        if(!empty($changeslist))
+        {
+        	return $changeslist;
+        }
+        else
+        {
+        	return false;
+        }
+	}
+	
+	function adminEdit($name,$address,$state,$zip,$contact,$email,$phone,$city,$desId)
+	{
+		$result = mysql_query("update destination set
+									 `name`='$name',
+									 `address`='$address',
+									 `state`='$state',
+									 `zip`='$zip',
+									 `contact`='$contact',
+									 `email`='$email',
+									 `phone`='$phone',
+									 `city`='$city' 
+									  where Id=$desId");
+		if ($result)
+		{
+			return $desId;
+		}
+		else
+		{
+			return false;
+		}
+	}
+  }
+/**/	
+
+
+
+
+
+?>

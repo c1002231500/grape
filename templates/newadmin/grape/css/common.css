@@ -1,0 +1,34 @@
+﻿@charset "utf-8";
+/* CSS Document */
+*{
+	margin:0px;
+	padding:0px;
+}
+
+body,h1,h2,h3,h4,h5,h6,p,td,center{margin:0;padding:0;font-size:12px; font-family: "宋体";}
+ul,li,ol,dl,dt,dd{list-style-type:none;}
+a{ text-decoration:none; color:#333333; cursor:pointer;}
+a:hover{ text-decoration:none; color:#d00010;}
+.clear{ clear:both; height:1px; overflow:hidden;}
+img{ border:none;}
+
+.main{width:935px; margin:-15px auto; }
+
+.header {
+    background: url("/templates/grape/images/tbg.jpg") no-repeat scroll 0 0 transparent;
+    height: 161px;
+    margin-top:-28px;
+	margin-top:-5px \9;
+    width: 935px;
+}
+.dao{float:left;width:935px;height:37px; margin-top:124px;}
+.dao li{float:left;}
+
+
+
+.footer{ float:left;width:935px; height:95px;margin-top:-12px \9;}
+.f1{height:30px; background:#5A493F; text-align:center; overflow:hidden;}
+.con{margin-top:8px;}
+.f1 span a{ color:#FFF;font-size:13px; margin-top:0px \9; margin-top:8px;}/**/
+.foo{ text-align：center; width:935px; height:60px; line-height:22px; color:#59493f}
+

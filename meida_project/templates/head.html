@@ -1,0 +1,123 @@
+  <script src="<{$public}>js/jquery.js" type="text/javascript" language="javascript"></script>
+
+
+<link rel="stylesheet" type="text/css" href="<{$public}>Public/css/css.css"/>
+<script language="javascript">
+	function qiehuan(num){
+		for(var id = 0;id<=9;id++)
+		{
+			if(id==num)
+			{
+				document.getElementById("qh_con"+id).style.display="block";
+				document.getElementById("mynav"+id).className="nav_on";
+			}
+			else
+			{
+				document.getElementById("qh_con"+id).style.display="none";
+				document.getElementById("mynav"+id).className="";
+			}
+		}
+	}
+    <!--
+        //屏蔽js错误
+        function ResumeError() {
+        return true;
+        }
+        window.onerror = ResumeError;
+        // -->
+
+//    $.(document).ready(
+//                function(){
+//                    alert("asdfads");
+//                  //  $p=$.query.get("p");
+//                  //       alert($p);
+//                }
+//            );
+</script>
+          <style>
+              #login{
+                  padding-top:2px;
+                  padding-right: 10px;
+              }
+              #login span{
+                  padding: 10px 10px 5px;;
+                  color: #000000;
+                  font-size: 12px;
+              }
+             #menu_con a:hover{
+                color: orange;
+            }
+            #menu_con a{
+                color: #000000;
+            }
+          </style>
+        <div style=" text-align:right;height: 28px;">
+            <div id="login">
+                <{if $username eq ''}>
+                <span><a href="/index.php?action=login" style="color: #000000;">ログイン</a></span>|<span><a href="/index.php?action=login"  style="color: #000000;">新規登録</a></span>
+                <{else}>
+                <span><a href="#" style="color: #000000;">Welcome <{$username}></a></span>|<span><a href="/index.php?action=exit"  style="color: #000000;">ログアウト</a></span>
+                <{/if}>
+            </div>
+        </div>
+ <div id="logo" style="height: 120px; width: 980px;margin: 0 auto; border-top: 5px black solid;">
+<img src="<{$public}>/images/logo.jpg" alt="shanghaitimes" title="shanghaitimes">
+ </div>
+<div id=menu_out>
+<div id=menu_in>
+<div id=menu>
+<UL id=nav>
+<LI><A class=nav_on id=mynav0 onmouseover=javascript:qiehuan(0) href=""><SPAN>トップページ</SPAN></A></LI>
+<{assign var="i" value=1}>
+<{assign var="j" value=1}>
+<{assign var="z" value=1}>
+<{foreach from=$class item=item}>
+<LI class="menu_line"></LI><li><a href="/index.php?action=list&cid=<{$item.c_id}>&name=<{$item.c_name}>&p=mynav<{$z++}>" onmouseover="javascript:qiehuan(<{$i++}>)" id="mynav<{$j++}>" class="nav_off"><span><{$item.c_name}></span></a></li>
+    <{/foreach}>
+</UL>
+<div id=menu_con>
+<div id=qh_con0 style="DISPLAY: block">
+<UL>
+    <{foreach from=$top item=item key=k}>
+     <LI><a style="padding: 0px;" href="/index.php?action=list&keyword=<{$k}>"><span ><{$k}></span></A></LI><LI class=menu_line2></LI>
+    <{/foreach}>
+</UL>
+</div>
+<{assign var="z" value=1}>
+<{foreach from=$class item=item}>
+<div id=qh_con<{$z++}> style="DISPLAY: none">
+ <UL  style="width: 1000px;padding:0px;margin:0px">
+   <{foreach from=$type item=types}>
+     <{if $item.c_id eq $types.t_classid}>
+          <LI><a style="padding: 0px;" href="/index.php?action=list&sid=<{$types.t_id}>&name=<{$types.t_name}>"><span ><{$types.t_name}></span></A></LI><LI class=menu_line2></LI>
+     <{/if}>
+   <{/foreach}>
+</UL></div>
+<{/foreach}>
+<!--<div id=qh_con2 style="DISPLAY: none"><UL>-->
+  <!--<LI><a href="#"><span>栏目名称7</span></A></LI><LI class=menu_line2></LI>-->
+  <!--<LI><A href="#"><SPAN>栏目名称8</SPAN></A></LI><LI class=menu_line2></LI>-->
+  <!--<LI><A href="#"><SPAN>栏目名称9</SPAN></A></LI>-->
+<!--</UL></div> -->
+<!--<div id=qh_con3 style="DISPLAY: none"><UL>-->
+  <!--<LI><a href="#"><span>栏目名称10</span></A></LI><LI class=menu_line2></LI>-->
+  <!--<LI><A href="#"><SPAN>栏目名称11</SPAN></A></LI><LI class=menu_line2></LI>-->
+  <!--<LI><A href="#"><SPAN>栏目名称12</SPAN></A></LI>-->
+<!--</UL></div> -->
+<!--<div id=qh_con4 style="DISPLAY: none"><UL>-->
+  <!--<LI><a href="#"><span>栏目名称13</span></A></LI><LI class=menu_line2></LI>-->
+  <!--<LI><A href="#"><SPAN>栏目名称14</SPAN></A></LI><LI class=menu_line2></LI>-->
+  <!--<LI><A href="#"><SPAN>栏目名称15</SPAN></A></LI>-->
+<!--</UL></div>-->
+<!--<div id=qh_con5 style="DISPLAY: none"><UL>-->
+  <!--<LI><a href="#"><span>栏目名称16</span></A></LI><LI class=menu_line2></LI>-->
+  <!--<LI><A href="#"><SPAN>栏目名称17</SPAN></A></LI><LI class=menu_line2></LI>-->
+  <!--<LI><A href="#"><SPAN>栏目名称18</SPAN></A></LI>-->
+<!--</UL></div>-->
+<!--<div id=qh_con6 style="DISPLAY: none"><UL>-->
+  <!--<LI><a href="#"><span>栏目名称19</span></A></LI><LI class=menu_line2></LI>-->
+  <!--<LI><A href="#"><SPAN>栏目名称20</SPAN></A></LI><LI class=menu_line2></LI>-->
+  <!--<LI><A href="#"><SPAN>栏目名称21</SPAN></A></LI>-->
+<!--</UL></div>-->
+
+</div></div></div></div>

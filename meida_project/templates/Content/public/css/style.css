@@ -1,0 +1,251 @@
+/* CSS Document font-family: "メイリオ","ＭＳ Ｐゴシック","Hiragino Kaku Gothic Pro",sans-serif; */
+*{
+	margin:0px;
+	padding:0px;
+}
+body{
+ font-family: "Hiragino Kaku Gothic Pro","ヒラギノ角ゴ Pro W3","メイリオ","ＭＳ Ｐゴシック",sans-serif;
+	background:#d7d7d7;
+}
+#con,#tree,#small,#content{
+	width:1280px;
+	margin:0 auto;
+}
+
+#small{
+	height:5px;
+	background:#a97205;
+}
+
+#con{
+	margin-bottom:30px;
+}
+
+#content{
+	background:#FFF;
+}
+
+#content #center{
+	width:1008px;
+	margin:0 auto;
+}
+
+#left,#right{
+	float:left;
+    padding-bottom: 50px
+}
+
+#left{
+	width:687px;
+}
+
+.leftTopImg,.leftCenterImg,.leftBottomImg{
+	margin:0px;
+}
+
+.leftTopImg{
+	background:url(../images/top.jpg) no-repeat;
+	width:687px;
+	height:37px;
+}
+
+.leftCenterImg{
+	width:687px;
+	height:auto;
+}
+
+.leftBottomImg{
+	background:url(../images/bottom.jpg) no-repeat;
+	width:687px;
+	height:21px;
+}
+
+.leftCenterImg .context{
+	margin-left:20px;
+	width:662px;
+}
+.context #lleft,.context #lright{
+    float: left;
+}
+.context #lleft{
+    width:300px;
+    margin-right: 15px;
+    margin-left: 5px;
+}
+.context #lleft img,.context #lright img{
+    padding: 1px;
+    border: 1px #D3DBE6 solid;
+}
+.context #lright{
+     width:320px;
+}
+
+.context #lright .con{
+     width: 100%;
+     border-top: 5px black solid;
+     border-left: 1px  #D3DBE6 solid;
+     border-right: 1px  #D3DBE6 solid;
+     border-bottom: 5px #ebebeb solid;
+    padding:10px 0px 20px 15px;
+    background: #f9f9f9;
+}
+
+/*右侧css*/
+#right{
+	width:321px;
+}
+
+#rightrow{
+
+}
+
+       h3 {
+    font-size: 140%;
+    font-weight: bold;
+    line-height: 1.3;
+    margin-bottom: 5px;
+       }
+        .odd {
+           background-color: #ffffff; /* pale blue for even rows */
+            }
+            .even {
+
+                 background-color: #F1F1F1; /* pale yellow for odd rows */
+            }
+
+
+ul,li{ list-style-type:none;}
+#contop,#contop1{ width:290px; height:550px; margin:10px auto; position:relative; border:1px #D3DBE6 solid; background-color:#FFFFFF;
+overflow:hidden;}
+#contop ul,#contop1 ul{ position:absolute; top:0; left:0; padding:0;}
+#contop ul li,#contop1 ul li{ width:290;   border-bottom:1px #D3DBE6 dotted; padding:20px 0; }
+#contop ul li a,#contop1 ul li a{ float:left;   border:1px #D3DBE6 solid; padding:2px;}
+#contop ul li p{ margin-left:68px;line-height:1.5;   padding:10px;}
+#left img{margin-right:10px; margin-bottom:20px;}
+#lright img{margin-right:10px; margin-bottom:20px;}
+
+#rightrow #context,#rightrow #context1{
+    background:url(../images/link.jpg)  no-repeat;
+	width:290px;
+	margin-left:5px;
+}
+#rightrow #context .title,#rightrow #context1 .title{
+    padding: 6px 0px 6px 15px;
+    font-weight: bold;
+    color: #FFFFFF;
+    font-size: 108%;
+}
+.con{
+	width:256px;
+	padding:15px 10px;
+	color:#a97205;
+	font-size:14px;
+}
+img{
+    border: 0px;
+}
+.marginbottom{
+	margin-bottom:10px;
+}
+
+.sbgcolor{
+	background:#b9974e;
+	height:24px;
+	padding:6px 0px 0px 30px;
+	font-size:16px;
+	width:247px;
+	font-weight:bold;
+}
+.w277{
+	width:277px;
+}
+
+
+
+
+.FFF{
+	color:#FFF;
+}
+
+.w100{
+	width:100%;
+}
+
+
+#tree{
+	height:37px;
+	background:#6d450d;
+	font-size:18px;
+}
+
+ul{
+	width:950px;
+	margin:0 auto;
+	list-style:none;
+	padding-top:8px;
+}
+
+#tree ul li{
+	text-align:center;
+	color:#FFF;
+	border-right:1px #ffffff solid;
+	width:167px;
+	float:left;
+}
+
+#tree ul #nocss{
+	border:none;
+}
+
+a{
+	text-decoration:none;
+}
+
+#menu ul{
+    list-style: none;
+}
+#menu ul li{
+    float: left;
+}
+
+
+h3 a,font{
+    color: black;
+}
+#left h1 {
+    font-size: 162%;
+    font-weight: bold;
+    line-height: 1;
+    font-size: 18px;
+    color: #333333;
+    border-bottom: 0 none;
+    margin-bottom: 5px;
+    padding-bottom: 0;
+    margin: 10px 0px;
+}
+#left h5{
+    font-weight: normal;
+    font-size: 15px;
+    margin:0 auto;
+    text-align: center;
+    margin-top: 10px;
+}
+#left #details{
+    width: 600px;
+    margin: 0 auto;
+    padding-top: 15px;
+    padding-left: 20px;
+    height: 85px;
+    background: #ebebeb;
+    border: 5px 1px 1px 1px;
+    margin-top: 15px;
+    border-top: 5px #000000 solid;
+}
+
+#left #text{
+    padding: 0px 10px;
+    margin: 0 auto;
+    width: 600px;
+    text-indent: 10px;
+    margin-top: 10px;
+}

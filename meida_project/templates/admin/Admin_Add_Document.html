@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<link href="/templates/Content/regiester/style.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="<{$calendar}>jquery-1.4.3.js"></script>
+<title>系统文章</title>
+</head>
+<body style="text-align: left">
+<br/><br/>
+
+<form id="news" action="/admin.php" method="post" enctype="multipart/form-data">
+<table class="cont-tab" width="800px" style="table-layout: fixed;"
+	cellpadding="0" cellspacing="0">
+	<tbody>
+		<tr>
+			<td class="td1">文章标题：<span class="nes">*</span></td>
+			<td class="td2"><input id="d_title" name="d_title"
+				class="inp ipt-normal" style="width: 450px; font-weight: bold;"
+				 type="text"  ></td>
+		</tr>
+        <tr>
+			<td class="td1" style="vertical-align: top">文章内容：<span class="nes">*</span></td>
+			<td class="td2">
+                <{$fck}>
+			</td>
+		</tr>
+		<tr>
+			<td class="td1">状态：<span class="nes">*</span></td>
+			<td class="td2"><select id="d_status" name="n_status"
+				class="inp ipt-normal" style="width: 250px; font-weight: bold;">
+				<option value="1">开启</option>
+				<option value="2">停用</option>
+			</select></td>
+		</tr>
+		<tr>
+			<td class="td1">&nbsp;</td>
+			<td class="td2"><input
+				style="background-position: -249px -219px" name="sub" id="sub"
+				class="btn-submit" value="" title="提交" type="submit"></td>
+		</tr>
+	</tbody>
+</table>
+<input type="hidden" name="type" id="type" value="system">
+<input type="hidden" name="action" id="action" value="add_sys_doc"/>
+</form>
+
+</body>
+</html>

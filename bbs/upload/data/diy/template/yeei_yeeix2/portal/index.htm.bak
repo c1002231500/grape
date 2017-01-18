@@ -1,0 +1,423 @@
+<!--{subtemplate common/header}-->
+
+
+<!--
+YEEIX1.5免费版发布，本站原创制作，未经许可禁止出售，发布，以及乱改版权
+转载请注明 www.yeei.cn
+                                                               YEEI.CN -->
+
+
+
+
+
+
+<!--[diy=diy8]--><div id="diy8" class="area"><div id="framegmgDU1" class=" frame move-span cl frame-1"><div id="framegmgDU1_left" class="column frame-1-c"><div id="framegmgDU1_left_temp" class="move-span temp"></div><!--{block/361}--></div></div></div><!--[/diy]-->
+
+<style id="diy_style" type="text/css">#portal_block_384 { margin:0px !important;border:0px !important;}#portal_block_384 .dxb_bc { margin:0px !important;}#frameqa84d8 { margin:0px !important;border:0px !important;}#frameGcZFfn { margin:0px !important;border:0px !important;}#framekl0rkZ { margin:0px !important;border:0px !important;}#framegmgDU1 { margin:0px !important;border:0px !important;}#portal_block_361 { margin:8px 0px 0px !important;border:0px !important;}#portal_block_361 .dxb_bc { margin:0px !important;}#framejzMzBR { margin:0px !important;border:0px !important;}#portal_block_362 { margin:0px !important;border:0px !important;}#portal_block_362 .dxb_bc { margin:0px !important;}#frame7Nv82W { margin:0px !important;border:0px !important;}#portal_block_363 { margin:0px !important;border:#000000 0px !important;}#portal_block_363 .dxb_bc { margin:0px !important;}#portal_block_364 { margin:0px !important;border:0px !important;}#portal_block_364 .dxb_bc { margin:0px !important;}#portal_block_365 { margin:0px !important;border:#000000 0px !important;}#portal_block_365 .dxb_bc { margin:0px 10px !important;font-size:14px !important;}#portal_block_366 { margin:0px !important;border:#000000 0px !important;}#portal_block_366 .dxb_bc { margin:0px 10px !important;font-size:14px !important;}#frame99LR33 { margin:0px !important;border:0px !important;}#frameb2X72W { margin:0px !important;border:0px !important;}#portal_block_367 { margin:0px !important;border:0px !important;}#portal_block_367 .dxb_bc { margin:0px !important;}#frameymCNaj { margin:0px !important;border:0px !important;}#frameE8uJu7 { margin:0px !important;border:0px !important;}#portal_block_368 { margin:0px !important;border:0px !important;}#portal_block_368 .dxb_bc { margin:0px !important;}#portal_block_369 { margin:0px !important;border:0px !important;}#portal_block_369 .dxb_bc { margin:0px !important;}#frame4Dk4Sd { margin:0px !important;border:0px !important;}#portal_block_370 { margin:0px !important;border:0px !important;}#portal_block_370 .dxb_bc { margin:0px !important;}#portal_block_371 { margin:0px !important;border:#000000 0px !important;}#portal_block_371 .dxb_bc { margin:0px !important;}#frameO564pt { margin:0px !important;border:#000000 0px !important;}#portal_block_372 { margin:0px !important;border:0px !important;}#portal_block_372 .dxb_bc { margin:0px !important;}#frameocfpVG { margin:0px !important;border:0px !important;}#portal_block_373 { margin:0px !important;border:0px !important;}#portal_block_373 .dxb_bc { margin:0px !important;}#portal_block_374 { margin:0px !important;border:0px !important;}#portal_block_374 .dxb_bc { margin:0px !important;}#frame3VBm7e { margin:0px !important;border:0px !important;}#portal_block_375 { margin:0px !important;border:0px !important;}#portal_block_375 .dxb_bc { margin:0px !important;}#portal_block_376 { margin:0px !important;border:0px !important;}#portal_block_376 .dxb_bc { margin:0px !important;}#frameuBUua7 { margin:0px !important;border:#000000 0px !important;}#portal_block_377 { margin:0px !important;border:0px !important;}#portal_block_377 .dxb_bc { margin:0px !important;}#portal_block_378 { margin:0px !important;border:0px !important;}#portal_block_378 .dxb_bc { margin:0px !important;}#framehv1Bw2 { margin:0px !important;border:0px !important;}#portal_block_379 { margin:0px !important;border:0px !important;}#portal_block_379 .dxb_bc { margin:0px !important;}#portal_block_380 { margin:0px !important;border:0px !important;}#portal_block_380 .dxb_bc { margin:0px !important;}#portal_block_381 { margin:0px !important;border:0px !important;}#portal_block_381 .dxb_bc { margin:0px !important;}#frame7xnxPg { margin:0px !important;border:0px !important;}#frameknS5ee { margin:0px !important;border:0px !important;}#frame6UCNK5 { margin:0px !important;border:0px !important;}#portal_block_382 { margin:0px !important;border:0px !important;}#portal_block_382 .dxb_bc { margin:0px !important;}#portal_block_383 { margin:0px !important;border:0px !important;}#portal_block_383 .dxb_bc { margin:0px !important;}#frameqMu7uU { margin:0px !important;border:0px !important;}#frame66nBng { margin:0px !important;border:0px !important;}#framed2I4dD { margin:0px !important;border:0px !important;}#portal_block_385 { margin:0px !important;border:#000000 0px !important;}#portal_block_385 .dxb_bc { margin:0px !important;}#frameE12esK { margin:0px !important;border:0px !important;}#portal_block_386 { margin:0px !important;border:0px !important;}#portal_block_386 .dxb_bc { margin:0px !important;}#frame2hGG3a { margin:0px !important;border:0px !important;}#portal_block_387 { margin:0px !important;border:0px !important;}#portal_block_387 .dxb_bc { margin:0px !important;}#portal_block_388 { margin:0px !important;border:0px !important;}#portal_block_388 .dxb_bc { margin:0px !important;}#frame93Bw49 { margin:0px !important;border:0px !important;}#portal_block_389 { margin:0px !important;border:0px !important;}#portal_block_389 .dxb_bc { margin:0px !important;}#portal_block_390 { margin:0px !important;border:0px !important;}#portal_block_390 .dxb_bc { margin:0px !important;}#portal_block_391 { margin:0px !important;border:0px !important;}#portal_block_391 .dxb_bc { margin:0px !important;}#portal_block_392 { margin:0px !important;border:0px !important;}#portal_block_392 .dxb_bc { margin:0px !important;}#portal_block_393 { margin:0px !important;border:0px !important;}#portal_block_393 .dxb_bc { margin:0px !important;}#frame2E232X { margin:0px !important;border:0px !important;}#portal_block_395 { margin:0px !important;border:0px !important;}#portal_block_395 .dxb_bc { margin:0px !important;}</style>
+<link href="template/yeei_yeeix2/yeei/index.css" type=text/css rel=stylesheet>
+<div class="wp">
+
+<div class="index_i">
+<div class="index_ad1"><!--[diy=diy31]--><div id="diy31" class="area"></div><!--[/diy]--></div>
+<div class="index_top_r">
+
+
+
+
+<div class="index_top_r_l">
+<div class="brbtop">
+<div>
+<p></p></div></div>
+<div class="brbcontent">
+<div class="flv_hd"><!--[diy=diy4]--><div id="diy4" class="area"><div id="framejzMzBR" class=" frame move-span cl frame-1"><div id="framejzMzBR_left" class="column frame-1-c"><div id="framejzMzBR_left_temp" class="move-span temp"></div><!--{block/362}--></div></div></div><!--[/diy]--></div>
+<div class="flv_hd_b">
+<div class="flv_hd_b2">
+<div class="flv_hd_b2_nr">
+<!--[diy=diy5]--><div id="diy5" class="area"><div id="frame7Nv82W" class=" frame move-span cl frame-1"><div id="frame7Nv82W_left" class="column frame-1-c"><div id="frame7Nv82W_left_temp" class="move-span temp"></div><!--{block/364}--><!--{block/363}--></div></div></div><!--[/diy]-->
+</div>
+</div>
+</div>
+
+ </div>
+ <div class="brbbot">
+<div>
+<p></p></div></div>
+</div>
+
+
+</div>
+<div class="index_top_l">	
+<div class="brbtop">
+<div>
+<p></p></div></div>
+<div class="brbcontent">
+<h3></h3>
+<div class="index_top_l_1">	
+
+<!--[diy=diy3]--><div id="diy3" class="area"><div id="framekl0rkZ" class=" frame move-span cl frame-1"><div id="framekl0rkZ_left" class="column frame-1-c"><div id="framekl0rkZ_left_temp" class="move-span temp"></div><!--{block/390}--></div></div></div><!--[/diy]-->
+</div>
+<div class="index_top_l_2">	
+<!--[diy=diy6]--><div id="diy6" class="area"><div id="frameqa84d8" class=" frame move-span cl frame-1"><div id="frameqa84d8_left" class="column frame-1-c"><div id="frameqa84d8_left_temp" class="move-span temp"></div><!--{block/365}--></div></div></div><!--[/diy]-->
+
+</div>
+<div class="index_top_l_3">	
+<!--[diy=diy7]--><div id="diy7" class="area"><div id="frameGcZFfn" class=" frame move-span cl frame-1"><div id="frameGcZFfn_left" class="column frame-1-c"><div id="frameGcZFfn_left_temp" class="move-span temp"></div><!--{block/366}--></div></div></div><!--[/diy]-->
+
+</div></div>
+ <div class="brbbot">
+<div>
+<p></p></div></div>
+</div>
+<div class="index_top_r_r">
+<div class="index_top_r_t">
+<div class="index_top_r_t1"></div>
+<span></span>24小时热点
+<div class="index_top_r_t2"></div>
+</div>
+
+<div class="index_top_r_nr">
+	<!--[diy=diy2]--><div id="diy2" class="area"><div id="frame99LR33" class=" frame move-span cl frame-1"><div id="frame99LR33_left" class="column frame-1-c"><div id="frame99LR33_left_temp" class="move-span temp"></div><!--{block/392}--><!--{block/393}--><!--{block/391}--></div></div></div><!--[/diy]-->
+
+</div>	
+</div>
+
+
+
+</div>
+
+<div class="bbs_q">
+<div class="bbs_q_l">
+<div class="bbs_top" >
+<div class="bbs_top1" >
+</div>
+<div class="s_t_h3">社区动态</div>
+
+<div class="bbs_top2" >
+</div>
+</div>
+<div class="bbs_nr">
+<div class="bbs_nr_l">
+<div class="bbs_nr_l1">
+
+<!--[diy=diy10]--><div id="diy10" class="area"><div id="frameb2X72W" class=" frame move-span cl frame-1"><div id="frameb2X72W_left" class="column frame-1-c"><div id="frameb2X72W_left_temp" class="move-span temp"></div><!--{block/372}--><!--{block/367}--></div></div></div><!--[/diy]-->
+</div>
+<div class="bbs_nr_l2">
+<h3>今日运动榜<span>/运动场</span></h3>
+<!--[diy=diy12]--><div id="diy12" class="area"><div id="frameymCNaj" class=" frame move-span cl frame-1"><div id="frameymCNaj_left" class="column frame-1-c"><div id="frameymCNaj_left_temp" class="move-span temp"></div><!--{block/368}--></div></div></div><!--[/diy]-->
+</div>
+<div class="bbs_nr_l3">
+<!--[diy=diy11]--><div id="diy11" class="area"></div><!--[/diy]-->
+</div>
+
+</div>
+<div class="bbs_nr_r">
+<div class="bbs_nr_r1 ">
+
+<!--[diy=diy13]--><div id="diy13" class="area"><div id="frame4Dk4Sd" class=" frame move-span cl frame-1"><div id="frame4Dk4Sd_left" class="column frame-1-c"><div id="frame4Dk4Sd_left_temp" class="move-span temp"></div><!--{block/370}--><!--{block/371}--></div></div></div><!--[/diy]-->
+
+</div>
+
+
+
+
+<div class="bbs_nr_r2">
+<!--[diy=diy14]--><div id="diy14" class="area"><div id="frameO564pt" class=" frame move-span cl frame-1"><div id="frameO564pt_left" class="column frame-1-c"><div id="frameO564pt_left_temp" class="move-span temp"></div></div></div><div id="frameE8uJu7" class=" frame move-span cl frame-1"><div id="frameE8uJu7_left" class="column frame-1-c"><div id="frameE8uJu7_left_temp" class="move-span temp"></div><!--{block/369}--></div></div></div><!--[/diy]-->
+
+</div>
+
+</div>
+</div>
+
+
+</div>
+<div class="bbs_q_r">
+
+
+
+<DIV class="brbtop">
+<DIV>
+<P></P></DIV></DIV>
+<DIV class="brbcontent">
+<h3>社区新贴</h3>
+<!--[diy=diy15]--><div id="diy15" class="area"><div id="frameocfpVG" class=" frame move-span cl frame-1"><div id="frameocfpVG_left" class="column frame-1-c"><div id="frameocfpVG_left_temp" class="move-span temp"></div><!--{block/373}--><!--{block/374}--></div></div></div><!--[/diy]-->
+ </div>
+ <DIV class="brbbot">
+<DIV>
+<P></P></DIV></DIV>
+
+
+</div>
+
+
+</div>
+
+<div class="show_q">
+<div class="show_q_l">
+<div class="show_top">
+<div class="show_top1"></div>
+<div class="s_t_h3">家园推荐</div>
+
+
+<div class="s_t_h3_r2">
+<form action="home.php" method="get">
+<li class="nl"><em>性别:</em></li>
+<li style="margin-top:1px">
+<select id="gender" name="gender">
+					<option value="0">任意</option>
+					<option value="1">男</option>
+					<option value="2" selected="selected">女</option>
+				</select>
+</li>
+<li class="nl" style="margin-left:5px"><em>年龄:</em></li>
+<li>
+<input type="text" name="startage" value="18" size="1" class="yonghu" /> ~ <input type="text" name="endage" value="23" size="1" class="yonghu" />
+
+</li>
+<li><button type="submit" class="pnan"><em>查找</em></button>
+<a href="home.php?mod=spacecp&ac=search&all=yes" class="lit">高级</a>
+</li>
+	<input type="hidden" name="mod" value="spacecp" />
+	<input type="hidden" name="ac" value="search" />
+	<input type="hidden" name="searchsubmit" value="true" />
+	<input type="hidden" name="type" value="base" />
+</form>
+</div>
+</div>
+<div class="show_nr">
+<div class="show_nr_l">
+
+<div class="show_nr_ls1" >
+<!-- www.yeei.cn BY 晴春 -->
+
+<div class="nris">
+
+<div class="show_nr_l1" >
+<h3>情感日记<span>EMOTION</span></h3>
+<!--[diy=diy17]--><div id="diy17" class="area"><div id="frame3VBm7e" class=" frame move-span cl frame-1"><div id="frame3VBm7e_left" class="column frame-1-c"><div id="frame3VBm7e_left_temp" class="move-span temp"></div><!--{block/375}--><!--{block/376}--></div></div></div><!--[/diy]-->
+</div>
+<div class="show_nr_l2">
+<h3>生活助理<span>LIFE</span></h3>
+<!--[diy=diy18]--><div id="diy18" class="area"><div id="frameuBUua7" class=" frame move-span cl frame-1"><div id="frameuBUua7_left" class="column frame-1-c"><div id="frameuBUua7_left_temp" class="move-span temp"></div><!--{block/377}--><!--{block/378}--></div></div></div><!--[/diy]-->
+</div>
+</div>
+
+<!-- www.yeei.cn BY 晴春 -->
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="show_nr_r">
+<div class="show_nr_r1">
+
+<!--[diy=diy20]--><div id="diy20" class="area"><div id="framehv1Bw2" class=" frame move-span cl frame-1"><div id="framehv1Bw2_left" class="column frame-1-c"><div id="framehv1Bw2_left_temp" class="move-span temp"></div><!--{block/379}--></div></div><div id="frame7xnxPg" class=" frame move-span cl frame-1"><div id="frame7xnxPg_left" class="column frame-1-c"><div id="frame7xnxPg_left_temp" class="move-span temp"></div><!--{block/380}--></div></div></div><!--[/diy]-->
+</div>
+<div class="show_nr_r2">
+<div class="show_h3">
+<li class="dx">相册推荐</li>
+<li><a href="home.php?mod=space&uid=1&do=album&view=we">查看更多</a></li>
+
+</div>
+<!--[diy=diy21]--><div id="diy21" class="area"><div id="frameknS5ee" class=" frame move-span cl frame-1"><div id="frameknS5ee_left" class="column frame-1-c"><div id="frameknS5ee_left_temp" class="move-span temp"></div><!--{block/381}--></div></div></div><!--[/diy]-->
+</div>
+</div>
+</div>
+
+
+</div>
+<div class="show_q_r">
+
+<DIV class="brbtops">
+<span class="xq_fb"><a href="home.php?mod=space&do=doing&fchannel=xmenum">写心情</a></span>
+</DIV>
+<DIV class="brbcontent">
+<div class="show_q_r2">
+<h3></h3>
+<DIV class="scroll"><!--[diy=diy25]--><div id="diy25" class="area"><div id="frame2E232X" class=" frame move-span cl frame-1"><div id="frame2E232X_left" class="column frame-1-c"><div id="frame2E232X_left_temp" class="move-span temp"></div><!--{block/395}--></div></div></div><!--[/diy]--></DIV>
+
+</div>
+<div class="show_q_r1">
+<h3>活跃博客</h3>
+<!--[diy=diy26]--><div id="diy26" class="area"><div id="frame6UCNK5" class=" frame move-span cl frame-1"><div id="frame6UCNK5_left" class="column frame-1-c"><div id="frame6UCNK5_left_temp" class="move-span temp"></div><!--{block/382}--></div></div></div><!--[/diy]--></div>
+ </div>
+ <DIV class="brbbot">
+<DIV>
+<P></P></DIV></DIV>
+
+
+</div>
+
+
+</div>
+<div class="group_q">
+<div class="group_l">
+<div class="group_l_t">
+<div class="group_t_l"><h3>群组推荐</h3></div>
+
+<div class="group_t_r">
+<li><a href="group.php?gid=3">影音</a></li>
+<li><a href="group.php?gid=4">情感</a></li>
+<li><a href="group.php?gid=5">生活</a></li>
+<li><a href="group.php?gid=6">休闲</a></li>
+<li><a href="group.php?gid=7">游戏</a></li>
+<li><a href="group.php?gid=8">体育</a></li>
+<li style="background:none"><a href="group.php" style="color:#FF0000;">更多</a></li>
+</div>
+
+
+<div class="group_l_t1"></div>
+<div class="group_l_t2"></div></div>
+<div class="group_l_nr">
+<div class="group_l_nr1">
+<!--[diy=diy23]--><div id="diy23" class="area"><div id="frameqMu7uU" class=" frame move-span cl frame-2-1"><div id="frameqMu7uU_left" class="column frame-2-1-l"><div id="frameqMu7uU_left_temp" class="move-span temp"></div><!--{block/383}--></div><div id="frameqMu7uU_center" class="column frame-2-1-r"><div id="frameqMu7uU_center_temp" class="move-span temp"></div><!--{block/384}--></div></div></div><!--[/diy]-->
+</div>
+<div class="group_l_nr2">
+<div class="group_lh3">
+<ul id="bg">
+<LI class="selectTag" id="new2" onmouseover="this.className='selectTag';$('top2').className='';$('newuserlist2').style.display='block';$('topuserlist2').style.display='none';">热门群组</LI>
+<LI id="top2" onmouseover="this.className='selectTag';$('new2').className='';$('topuserlist2').style.display='block';$('newuserlist2').style.display='none';">最新加入</LI>
+</ul>
+</div>
+
+<div class="group_l_nr2s">
+<div class="brbtop">
+<div>
+<p></p></div></div>
+<div class="brbcontent">
+<div  id="newuserlist2" style="DISPLAY: block">
+<!--[diy=diy24]--><div id="diy24" class="area"><div id="framed2I4dD" class=" frame move-span cl frame-1"><div id="framed2I4dD_left" class="column frame-1-c"><div id="framed2I4dD_left_temp" class="move-span temp"></div><!--{block/385}--></div></div></div><!--[/diy]-->
+</div>
+<div  id="topuserlist2" style="DISPLAY: none">
+<!--[diy=diy28]--><div id="diy28" class="area"><div id="frameE12esK" class=" frame move-span cl frame-1"><div id="frameE12esK_left" class="column frame-1-c"><div id="frameE12esK_left_temp" class="move-span temp"></div><!--{block/386}--></div></div></div><!--[/diy]-->
+</div>
+ </div>
+ <div class="brbbot">
+<div>
+<p></p></div></div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+<div class="group_c">
+<div class="gr_h3"><h3>群组图文</h3></div>
+
+<div class="group_c_nr">
+<!--[diy=diy27]--><div id="diy27" class="area"><div id="frame66nBng" class=" frame move-span cl frame-1"><div id="frame66nBng_left" class="column frame-1-c"><div id="frame66nBng_left_temp" class="move-span temp"></div><!--{block/394}--></div></div></div><!--[/diy]-->
+</div>
+<div class="gr_bot"></div>
+</div>
+<div class="group_r">
+<DIV class="brbtop">
+<DIV>
+<P></P></DIV></DIV>
+<DIV class="brbcontent">
+
+<h3>更新动态</h3>
+<div class="group_r_nr">
+<!--[diy=diy29]--><div id="diy29" class="area"><div id="frame2hGG3a" class=" frame move-span cl frame-1"><div id="frame2hGG3a_left" class="column frame-1-c"><div id="frame2hGG3a_left_temp" class="move-span temp"></div><!--{block/387}--><!--{block/388}--></div></div></div><!--[/diy]-->
+
+</div>
+ </div>
+ <DIV class="brbbot">
+<DIV>
+<P></P></DIV></DIV>
+</div>
+<div class="index_ad1"><!--[diy=diy32]--><div id="diy32" class="area"></div><!--[/diy]--></div>
+
+
+</div>
+<div class="yeeiyq">
+<div class="yeeiyq_t">
+<h3>合作伙伴</h3>
+
+<div class="yeeiyq_t1"></div>
+<div class="yeeiyq_t2"></div></div>
+<DIV class="brbcontent">
+<div class="yeei_nrss">
+<!--[diy=diy30]--><div id="diy30" class="area"><div id="frame93Bw49" class=" frame move-span cl frame-1"><div id="frame93Bw49_left" class="column frame-1-c"><div id="frame93Bw49_left_temp" class="move-span temp"></div><!--{block/389}--></div></div></div><!--[/diy]-->
+</div>
+ </div>
+ <DIV class="brbbot">
+<DIV>
+<P></P></DIV></DIV>
+</div>
+</div>
+<script type="text/javascript">
+function H$(i) {return document.getElementById(i)}
+function H$$(c, p) {return p.getElementsByTagName(c)}
+var slider = function () {
+	function init (o) {
+		this.id = o.id;
+		this.at = o.auto ? o.auto : 3;
+		this.o = 0;
+		this.pos();
+	}
+	init.prototype = {
+		pos : function () {
+			clearInterval(this.__b);
+			this.o = 0;
+			var el = H$(this.id), li = H$$('li', el), l = li.length;
+			var _t = li[l-1].offsetHeight;
+			var cl = li[l-1].cloneNode(true);
+			cl.style.opacity = 0; cl.style.filter = 'alpha(opacity=0)';
+			el.insertBefore(cl, el.firstChild);
+			el.style.top = -_t + 'px';
+			this.anim();
+		},
+		anim : function () {
+			var _this = this;
+			this.__a = setInterval(function(){_this.animH()}, 20);
+		},
+		animH : function () {
+			var _t = parseInt(H$(this.id).style.top), _this = this;
+			if (_t >= -1) {
+				clearInterval(this.__a);
+				H$(this.id).style.top = 0;
+				var list = H$$('li',H$(this.id));
+				H$(this.id).removeChild(list[list.length-1]);
+				this.__c = setInterval(function(){_this.animO()}, 20);
+				//this.auto();
+			}else {
+				var __t = Math.abs(_t) - Math.ceil(Math.abs(_t)*.07);
+				H$(this.id).style.top = -__t + 'px';
+			}
+		},
+		animO : function () {
+			this.o += 2;
+			if (this.o == 100) {
+				clearInterval(this.__c);
+				H$$('li',H$(this.id))[0].style.opacity = 1;
+				H$$('li',H$(this.id))[0].style.filter = 'alpha(opacity=100)';
+				this.auto();
+			}else {
+				H$$('li',H$(this.id))[0].style.opacity = this.o/100;
+				H$$('li',H$(this.id))[0].style.filter = 'alpha(opacity='+this.o+')';
+			}
+		},
+		auto : function () {
+			var _this = this;
+			this.__b = setInterval(function(){_this.pos()}, this.at*1000);
+		}
+	}
+	return init;
+}();
+</script>
+<script type="text/javascript">
+new slider({id:'slider'})
+</script>
+<div class="fg" style="margin-bottom:10px"></div>
+
+<!--{subtemplate common/footer}-->

@@ -1,0 +1,164 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>トップページ</title>
+<link rel="stylesheet" type="text/css" href="<{$public}>Public/css/style.css"/>
+    <style type="text/css">
+h3 a,font{
+    color: black;
+}
+-->
+   #qiye img:hover{
+    background: url(<{$public}>images/head/qiyebg.jpg) no-repeat;
+   }
+    </style>
+</head>
+
+<body>
+<div id="con">
+    <div id="content" style="background: #d7d7d7">
+        <div style="width: 1038px;margin:0 auto; background: url(<{$public}>images/bs.jpg) repeat-y">
+    	<div id="center"  style="background: #ffffff">
+            <div id="head" style="width:1004px; height: 250px;padding-left: 4px;">
+                <{include file="head.html"}>
+            </div>
+        	<!--左侧-->
+        	<div id="left">
+            	<!--第一个内容-->
+            	<div class="w100 marginbottom">
+                    <div class="w100 leftCenterImg">
+                    	<div class="context">
+                            <div id="lleft">
+                                 <a id="qiye" href=""><img src="<{$public}>images/head/qiye.jpg" style="margin: 0px;padding: 0px;padding-bottom:20px;border: 0px"></a>
+                                <{section name=sec1 loop=$list}>
+                                	 <{if $list[sec1].n_bigpicture != '' || $list[sec1].n_smpicture  != ''|| $list[sec1].b_logo!=''}>
+	                                   <div style="width:300px;padding:0px 0px 10px 0px; padding-bottom:20px; margin-bottom:20px; border-bottom: 1px #E0E0E0 solid">
+	                                       <{if $list[sec1].n_bigpicture neq ''}>
+	                                      <a href="/index.php?action=content&_p=<{$list[sec1].n_id}>"> <img style="float: left;" src="<{$ipath}><{$list[sec1].n_bigpicture}>" alt="<{$list[sec1].n_pictitle}>" title="<{$list[sec1].n_pictitle}>" width="300"></a>
+	                                       <{else}>
+	                                      	  <{if $list[sec1].n_smpicture neq ''}>
+		                                   		    <a href="/index.php?action=content&_p=<{$list[sec1].n_id}>"><img  src="<{$ipath}><{$list[sec1].n_smpicture}>" style="float: left; " alt="<{$list[sec1].n_pictitle}>" title="<{$list[sec1].n_pictitle}>" width="50"></a>
+		                                       <{else}>
+		                                            <a href="/index.php?action=content&_p=<{$list[sec1].n_id}>"><img  src="include/Public/Brand/<{$list[sec1].b_logo}>" style="float: left; " alt="<{$list[sec1].b_ename}>" title="<{$list[sec1].b_jname}>" width="50"></a>
+		                                       <{/if}>
+	                                       <{/if}>
+	                                        <{if $list[sec1].n_bigpicture neq ''}>
+	                                       <div style="width: 300px;float: left;"><h3 style="font-size: 120%;"><a style="font-size: 18px" href="/index.php?action=content&_p=<{$list[sec1].n_id}>"><{$list[sec1].n_title}></a></h3></div>
+	                                       <{else}>
+	                                        <font style="font-size: 14px;" color="black"><h3 style="font-size: 120%;"><a style="font-size: 18px" href="/index.php?action=content&_p=<{$list[sec1].n_id}>"><{$list[sec1].n_title}></a></h3></font>
+	                                       <{/if}>
+	                                      <div style=" margin:10px; text-align:right;"> <font color="#666666" size="2"> <{substr str=$list[sec1].n_starttime end=10}></font></div>
+	                                       <font color="#333333"  style="font-size: 12px; line-height:1.5;font-weight: normal;"><{substr str= $list[sec1].n_detail end=80}></font>
+	                                   </div>
+                                   <{/if}>
+                                <{/section}>
+
+                            </div>
+                            <div id="lright">
+                              <img src="<{$public}>/images/head/shop.jpg" style="margin: 0px;padding: 0px;border: 0px">
+                              <div class="con" style="margin-top: 3px">
+                                <{section name=sec1 loop=$flist}>
+                               <{if $flist[sec1].n_bigpicture != '' || $flist[sec1].n_smpicture  != ''|| $flist[sec1].b_logo!=''}>
+                                   <div style="width:300px;padding: 10px 0px 10px; padding-bottom:20px; margin-bottom:20px; border-bottom: 1px #E0E0E0 solid">
+                                       <{if $flist[sec1].n_smpicture  != ''}>
+                                       <a href="/index.php?action=content&_p=<{$flist[sec1].n_id}>"><img  src="<{$ipath}><{$flist[sec1].n_smpicture}>"   src="<{$ipath}><{$dlist[sec1].n_bigpicture}>" alt="<{$dlist[sec1].n_pictitle}>" width="50" style=" float:left;"></a>
+                                       <{else}>
+                                      			 <{if $flist[sec1].n_bigpicture neq ''}>
+		                           				    <a href="/index.php?action=content&_p=<{$flist[sec1].n_id}>"><img style="float: left;" src="<{$ipath}><{$flist[sec1].n_bigpicture}>" alt="<{$flist[sec1].n_pictitle}>" title="<{$flist[sec1].n_pictitle}>" width="300"></a>
+		                                       <{else}>
+		                                            <a href="/index.php?action=content&_p=<{$flist[sec1].n_id}>"><img  src="include/Public/Brand/<{$flist[sec1].b_logo}>" style="float: left; " alt="<{$flist[sec1].b_ename}>" title="<{$flist[sec1].b_jname}>" width="50" ></a>
+		                                       <{/if}>
+                                       <{/if}>
+                                        <{if $flist[sec1].n_smpicture eq ''&& $flist[sec1].b_logo eq ''}>
+                                       <div style="width: 300px; float:left;"><h3 style="font-size: 120%;"><a style="font-size: 18px" href="/index.php?action=content&_p=<{$flist[sec1].n_id}>"><{$flist[sec1].n_title}></a></h3></div>
+                                       <{else}>
+                                        <font style="font-size: 14px;" color="black"><h3 style="font-size: 120%;"><a style="font-size: 18px" href="/index.php?action=content&_p=<{$flist[sec1].n_id}>"><{$flist[sec1].n_title}></a></h3></font>
+                                       <{/if}>
+                                     <div style="margin:10px; text-align:right;">   <font color="#666666" size="2"> <{substr str=$flist[sec1].n_starttime end=10}></font></div>
+
+                                       <font color="#333333"  style="font-size: 12px; line-height:1.5;font-weight: normal;"> <{substr str= $flist[sec1].n_detail end=80}></font>
+                                   </div>
+                                   <{/if}>
+                                <{/section}>
+                                </div>
+                                 <{if $dlist neq ''}>
+                                 <img src="<{$public}>/images/head/ad.jpg" style="margin: 10px 0px 0px;padding: 0px;border: 0px">
+                                 <div class="con" style="margin-top: 3px">
+                                 <{section name=sec1 loop=$dlist}>
+                               <{if $dlist[sec1].n_bigpicture != '' || $dlist[sec1].n_smpicture  != ''|| $dlist[sec1].b_logo!=''}>
+                                   <div style="width:300px;padding: 10px 0px 10px; padding-bottom:20px; margin-bottom:20px; border-bottom: 1px #E0E0E0 solid">
+                                       <{if $dlist[sec1].n_smpicture neq ''}>
+                                       <a href="/index.php?action=content&_p=<{$dlist[sec1].n_id}>"><img  src="<{$ipath}><{$dlist[sec1].n_smpicture}>"   src="<{$ipath}><{$dlist[sec1].n_bigpicture}>" alt="<{$dlist[sec1].n_pictitle}>" width="50" style=" float:left;"></a>
+                                       <{else}>
+                                             <{if $dlist[sec1].n_bigpicture  != ''}>
+		                           				 <a href="/index.php?action=content&_p=<{$dlist[sec1].n_id}>"><img style="float: left;" src="<{$ipath}><{$dlist[sec1].n_bigpicture}>" alt="<{$dlist[sec1].n_pictitle}>" title="<{$dlist[sec1].n_pictitle}>" width="300"></a>
+		                                       <{else}>
+		                                            <a href="/index.php?action=content&_p=<{$dlist[sec1].n_id}>"><img  src="include/Public/Brand/<{$dlist[sec1].b_logo}>" style="float: left; " alt="<{$dlist[sec1].b_ename}>" title="<{$dlist[sec1].b_jname}>" width="50" ></a>
+		                                       <{/if}>
+                                       
+                                      
+                                       <{/if}>
+                                        <{if $dlist[sec1].n_smpicture eq '' && $dlist[sec1].b_logo eq ''}>
+                                       <div style="width: 250px; float:left;"><h3 style="font-size: 18px;"><a href="/index.php?action=content&_p=<{$dlist[sec1].n_id}>" style="font-size: 18px"><{$dlist[sec1].n_title}></a></h3></div>
+                                       <{else}>
+                                        <font style="font-size: 14px;" color="black"><h3 style="font-size: 18px;"><a href="/index.php?action=content&_p=<{$dlist[sec1].n_id}>" style="font-size: 18px"><{$dlist[sec1].n_title}></a></h3></font>
+                                       <{/if}>
+                                     <div style="margin:10px; text-align:right;">   <font color="#666666" size="2"> <{substr str=$dlist[sec1].n_starttime end=10}></font></div>
+
+                                       <font color="#333333"  style="font-size: 12px; line-height:1.5;font-weight: normal;"> <{substr str= $dlist[sec1].n_detail end=80}></font>
+
+                                   </div>
+                                   <{/if}>
+                                <{/section}>
+                                </div>
+                                <{/if}>
+                                <{if $clist neq ''}>
+                               <img src="<{$public}>/images/head/site.jpg" style="margin: 10px 0px 0px;padding: 0px;border: 0px">
+                               <div class="con" style="margin-top: 3px">
+                                <{section name=sec1 loop=$clist}>
+                                <{if $clist[sec1].n_bigpicture != '' || $clist[sec1].n_smpicture  != ''|| $clist[sec1].b_logo!=''}>
+                                   <div style="width:300px;padding: 10px 0px 10px; padding-bottom:20px; margin-bottom:20px; border-bottom: 1px #E0E0E0 solid">
+                                    <{if $clist[sec1].n_smpicture neq ''}>
+                                      <a href="/index.php?action=content&_p=<{$clist[sec1].n_id}>"> <img  src="<{$ipath}><{$clist[sec1].n_smpicture}>" alt="<{$clist[sec1].n_pictitle}>" title="<{$clist[sec1].n_pictitle}>" width="50" style=" float:left;"></a>
+                                       <{else}>
+                                       		 <{if $clist[sec1].n_bigpicture  != ''}>
+                                      <a href="/index.php?action=content&_p=<{$clist[sec1].n_id}>"><img style="float: left;" src="<{$ipath}><{$clist[sec1].n_bigpicture}>" alt="<{$clist[sec1].n_pictitle}>" title="<{$clist[sec1].n_pictitle}>" width="300"></a>
+                                                  <{else}>
+		                                            <a href="/index.php?action=content&_p=<{$clist[sec1].n_id}>"><img  src="include/Public/Brand/<{$clist[sec1].b_logo}>" style="float: left; " alt="<{$clist[sec1].b_ename}>" title="<{$clist[sec1].b_jname}>" width="50" ></a>
+		                                       <{/if}>
+                                       <{/if}>
+                                         <{if $clist[sec1].n_smpicture eq ''&& $clist[sec1].b_logo eq ''}>
+                                       <div style="width: 250px; float:left; "><h3 style="font-size: 18px;"><a href="/index.php?action=content&_p=<{$clist[sec1].n_id}>" style="font-size: 18px"><{$clist[sec1].n_title}></a></h3></div>
+                                       <{else}>
+                                        <font style="font-size: 14px;" color="black"><h3 style="font-size: 18px;"><a href="/index.php?action=content&_p=<{$clist[sec1].n_id}>" style="font-size: 18px"><{$clist[sec1].n_title}></a></h3></font>
+                                       <{/if}>
+                                     <div style="margin:10px; text-align:right;">   <font color="#666666" size="2"> <{substr str=$clist[sec1].n_starttime end=10}></font></div>
+                                       <font color="#333333"  style="font-size: 12px; line-height:1.5;font-weight: normal;"> <{substr str= $clist[sec1].n_detail end=80}></font>
+                                   </div>
+                                   <{/if}>
+                                <{/section}>
+                                </div>
+                              <{/if}>
+                            </div>
+                            <div style="clear: both"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--右侧-->
+            <div id="right">
+                 <{include file="right.html"}>
+                <div style="clear:both;"></div>
+            </div>
+            <div style="clear: both;"></div>
+        </div>
+         <{include file="foot.html"}>
+        <div style="clear: both;"></div>
+      </div>
+    </div>
+</div>
+</body>
+<script src="<{$public}>js/right.js">
+</script>
+</html>

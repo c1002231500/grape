@@ -1,0 +1,55 @@
+<?php
+/**
+ * Provides methods to interact add winerrequest
+ *
+ * @author Xiaoguang You
+ * @name wineryrequest
+ */
+class wineryrequest
+{
+
+    /**
+     * Konstruktor
+     * Initialisiert den Eventlog
+     */
+    function __construct()
+    {
+    }
+
+    /**
+     * Creates a wineryrequest
+     *
+     * @param int $id id of the wineryrequest
+     * @param int $desid destiation id of the tour
+     * @param int $userid
+	 * @param int $tourid
+     * @param int $requestTime
+	 * @param string $firstName
+	 * @param string $lastName
+	 * @param int $guestsNum
+	 * @param string $notes
+	 * @param int $status 
+     */
+    function add($desid, $userid, $tourid, $requestTime, $firstName, $lastName, $guestsNum, $notes, $status)
+    {
+        $firstName = mysql_real_escape_string($firstName);
+		$lastName = mysql_real_escape_string($lastName);
+		$notes = mysql_real_escape_string($notes);
+
+		$sql = "INSERT INTO winery_request(`desid`,`userid`,`tourid`,`requestTime`,`firstName`,`lastName`,`guestsNum`,`notes`,`status`) VALUES ('$desid','$userid','$tourid','$requestTime','$firstName','$lastName','$guestsNum','$notes','$status')";
+        $ins1 = mysql_query($sql);
+	
+        if ($ins1)
+        {
+            $insid = mysql_insert_id();
+            return $insid;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    
+}
+
+?>

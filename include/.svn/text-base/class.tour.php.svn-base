@@ -1,0 +1,926 @@
+<?php
+/**
+ * Provides methods to interact with tour
+ *
+ * @author YongJun
+ * @name tour
+ */
+class tour
+{
+
+	/**
+	 * Konstruktor
+	 * Initialisiert den Eventlog
+	 */
+	function __construct()
+	{
+	}
+
+	/**
+	 * save a tour
+	 *
+	 */
+	function save($tour_name, $type, $description, $userId,$requestTime)
+	{
+		$tour_name = mysql_real_escape_string($tour_name);
+		$description = mysql_real_escape_string($description);
+		$userId = intval($userId);
+
+		$ins1 = mysql_query("INSERT INTO tour (`Name`,`Type`,`description`,`userId`,`savedTime`,`beginDateTime`) VALUES ('$tour_name','$type','$description','$userId',".time().",'$requestTime')");
+		if ($ins1)
+		{
+			$insid = mysql_insert_id();
+			$ins2 = mysql_query("update tour2dest set TourId=$insid where UserId=$userId and TourId=0");
+			if($ins2){
+				$sel=mysql_query("select distinct i.Id from industry_specails i,destination d,tour2dest td,tour t where t.Id=$insid and td.TourId=t.Id and td.DestId=d.Id and d.Id=i.desId");
+				while($r = mysql_fetch_array($sel))
+				{
+					$sql="insert into user_specials set userId=".$_SESSION["userid"].",specialId=".$r["Id"].",addTime=".time();
+    				$q = mysql_query($sql);
+				}
+				return $insid;
+			}else{
+				return false;
+			}
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	function edit($tour_name, $type, $description,$id)
+	{
+		$tour_name = mysql_real_escape_string($tour_name);
+		$description = mysql_real_escape_string($description);
+		$id = intval($id);
+
+		$ins1 = mysql_query("update tour set `Name`='$tour_name',`Type`='$type',`description`='$description' where Id=$id");
+		if ($ins1)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	/**
+	 * Add destination to a tour
+	 *
+	 * @return bool
+	 */
+	function addDestinationToTour($userid, $desid, $tourid=0)
+	{
+		$userid = intval($userid);
+		$desid = intval($desid);
+		$tourid = intval($tourid);
+
+		$sql = "select max(SeqId) as maxseq from tour2dest where UserId=$userid and TourId=0";
+		$maxSeqQuery = mysql_query($sql);
+		$maxSeqRow = mysql_fetch_array($maxSeqQuery);
+		$maxSeq = intval($maxSeqRow["maxseq"])+1;
+
+		$ins1 = mysql_query("INSERT INTO tour2dest (`UserId`,`DestId`,`SeqId`) VALUES ('$userid','$desid','$maxSeq')");
+		//echo "INSERT INTO tour2dest (`UserId`,`DestId`,`SeqId`) VALUES ('$userid','$desid','$maxSeq')";
+		//exit;
+		if ($ins1)
+		{
+			$insid = mysql_insert_id();
+			return $insid;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	/**
+	 * Check a destination is in a tour
+	 * if exist return true!
+	 * @return bool
+	 */
+	function chkDesIsInTour($userid,$desid,$tourid){
+		$userid = intval($userid);
+		$desid = intval($desid);
+		$tourid = intval($tourid);
+
+
+		$sql = "select Id from tour2dest where UserId=$userid and TourId=$tourid and DestId=$desid";
+		$idQuery = mysql_query($sql);
+		$row = (mysql_fetch_array($idQuery));
+
+		if ($row["Id"]>0)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+
+
+
+
+	/***************************************2009-6-17*********************************************************/
+
+
+	/**
+	 *
+	 *insert tour_invitation tour massage
+	 *@param $tourid tour_invitation tourid
+	 *@param $guestid tour_invitation guestid
+	 *@param $userid tour_invitation userid
+	 *
+	 *return success or unsuccess
+	 **/
+	function addtour_invitation($tourid,$guestid,$userid,$thisMemberInfo=NULL)
+	{
+		$tourid = intval($tourid);
+		$guestid = intval($guestid);
+		$userid =intval($userid);
+		$status = 0;
+		$thisTime=date("Y-m-d");
+		if($thisMemberInfo) $status = $thisMemberInfo["status"];
+		if($status==0)
+		$sql = ("INSERT INTO tour_invitation (`tourid`,`userid`,`guestid`,`status`,`requestTime`) VALUES('$tourid','$userid','$guestid','".intval($status)."','$thisTime')");
+		else $sql = ("UPDATE tour_invitation SET `status`=0,`requestTime`='$thisTime' WHERE guestid =$guestid and tourid=$tourid and userid=$userid");
+		
+		
+		$ins1 = mysql_query($sql);
+		
+		if ($ins1)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	/**
+	 *
+	 *whether guestid  esists and inset data
+	 *@param int $tourid tour_invitation tourid
+	 *@param int $guestid tour_invitation guestid
+	 *@return success or unsuccess
+	 **/
+	function getRowByTourid($tourid,$guestid)
+	{
+
+		$tourid = intval($tourid);
+		$set1 = mysql_query("SELECT  userId FROM tour WHERE Id =$tourid");
+		$myrow = mysql_fetch_row($set1);
+		$set = $myrow[0];
+		
+		
+		$thisMemberInfo=mysql_query("SELECT * FROM tour_invitation WHERE tourId = $tourid AND guestId=$guestid order by status");
+		if(is_array($thisMemberInfo)){
+			$thisMemberInfo=mysql_fetch_array($thisMemberInfo);
+		}
+		
+		
+		$Getcount = mysql_query("SELECT count(tourid) cnt FROM tour_invitation WHERE guestid =$guestid and tourid=$tourid and userid=".$set);
+		$myrow = mysql_fetch_row($Getcount);
+		if($myrow["cnt"]>0){
+			return false;
+		} else{
+			if($this->addtour_invitation($tourid,$guestid,$set,$thisMemberInfo)){
+				return true;
+			}else{
+				return false;
+			}
+		}
+		return false;
+	}
+
+	/************************************************************************************************/
+
+	/**
+	 * Delete a tour
+	 *
+	 * @param int $id tour ID
+	 * @return bool
+	 */
+	function del($id)
+	{
+		$id = intval($id);
+		
+		$res = mysql_query("delete from tour2dest where TourId=$id");
+		$res = mysql_query("delete from tour_invitation where tourId=$id");
+
+		$del = mysql_query("DELETE FROM tour WHERE Id = $id");
+		if ($del)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+		/**
+	 * Get a Tour Detail
+	 *
+	 * @param int $tourid Tour ID
+	 * @return array $Tour
+	 */
+	function getTour($tourid)
+	{
+		$id = intval($tourid);
+
+		$interestlist=array();
+		$sel = mysql_query("SELECT t.*,u.LogonAlias,u.ImageFileLocation,u.realname,u.showRealname,u.UserType FROM tour t,user u,destination d WHERE t.Id = $id and u.Id=t.userId");
+		$tour = mysql_fetch_array($sel);
+		if($tour["UserType"]!="Member")
+		{
+			$t=array();
+			$sel2 = mysql_query("SELECT logoImageFileLocation FROM destination WHERE uid = ".$tour["userId"]);
+			while($r=mysql_fetch_array($sel2))
+			{
+				array_push($t,$r);
+			}
+			$tour["ImageFileLocation"]=$t[0]["logoImageFileLocation"];
+			if(!isset($tour["ImageFileLocation"])||!file_exists($tour["ImageFileLocation"]))
+            $tour["ImageFileLocation"] = "./templates/images/missing_logo1.jpg";
+		}
+		else
+		{
+		if(!isset($tour["ImageFileLocation"])||!file_exists($tour["ImageFileLocation"]))
+            $tour["ImageFileLocation"] = "./templates/images/user.gif";
+		}
+        /*$sql="select u.TravelInterestId,t.Name as tname from user_travelinterests u,travelinterests t where u.UserId=".$tour["userId"]." and t.Id=u.TravelInterestId";
+        $q = mysql_query($sql);
+        if($q)
+        {
+		while($r = mysql_fetch_array($q))
+		array_push($interestlist,$r);
+        }*/
+        $interestlist["tname"]=array();
+		$typearr = explode("|",$tour["Type"]);
+	    foreach($typearr as $type)
+	    {
+			array_push($interestlist["tname"],$type);
+	    }	
+		$tour["interest"]=$interestlist;
+		$tour["Name"]=stripslashes($tour["Name"]);
+		$tour["Name"]=htmlentities($tour["Name"]);
+		$tour["description"]=stripslashes($tour["description"]);
+		$tour["description"]=htmlentities($tour["description"]);
+		return $tour;
+	}
+	function getUserId($tourId){
+		$sel = mysql_query("SELECT userId FROM tour WHERE Id=$tourId");
+		
+		if($sel){
+			$result = mysql_fetch_array($sel);
+			return $result["userId"];
+		}
+		return false;
+	}
+
+	function getTourDesList($tourId,$userId=0,$orderby="SeqId",$page_size=25){
+		$tourId = intval($tourId);
+		$userId = intval($userId);
+
+		$condition = "";
+		if($userId>0){
+			$condition = " and UserId=".$userId;
+		}
+
+		$sel = mysql_query("SELECT count(*) from tour2dest WHERE TourId = ".$tourId.$condition); 
+        $num = mysql_fetch_row($sel);
+        $num =$num[0];
+		SmartyPaginate::connect();
+         //set items per page
+         //var_dump($sel);exit;
+        SmartyPaginate::setLimit($page_size);
+        SmartyPaginate::setTotal($num);
+   		$start = SmartyPaginate::getCurrentIndex();
+		$lim_condition = " LIMIT $start,$page_size";
+		
+		$desIds = array();
+		$sel = mysql_query("SELECT * FROM tour2dest WHERE TourId = ".$tourId.$condition." order by ".$orderby.$lim_condition);
+
+		while ($desId = mysql_fetch_array($sel))
+		{
+			array_push($desIds, $desId);
+		}
+
+		return $desIds;
+	}
+	function getTourDestinationsLocation($tourId){
+		$tourId = intval($tourId);
+		$sel = mysql_query("SELECT DestId from tour2dest WHERE TourId = $tourId order by SeqId"); 
+		$location = array();
+		
+		while($desId = mysql_fetch_array($sel)){
+			$desId = intval($desId["DestId"]);
+			$temp_location = mysql_query("SELECT city,state FROM destination WHERE Id=$desId");
+			$temp_location = mysql_fetch_array($temp_location);
+			array_push($location,$temp_location["city"].",".$temp_location["state"]);
+		}
+		if(empty($location))array_push($location,"No Destination");
+		return $location;
+	}
+	/**
+	 * Returns tour
+	 *
+	 * @param int $lim Limit
+	 * @return array $tour
+	 */
+	function gettourList($lim = 10,$uid=0)
+	{
+		$lim = intval($lim);
+		$uid = intval($uid);
+		$condition = " where user.Id=tour.userId";
+
+
+		if($uid>0){
+			$condition.= " and userId=".$uid;
+		}
+
+
+
+		$sel = mysql_query("SELECT COUNT(*) FROM `tour`,`user`".$condition);
+		$num = mysql_fetch_row($sel);
+		$num = $num[0];
+		SmartyPaginate::connect();
+		// set items per page
+		SmartyPaginate::setLimit($lim);
+		SmartyPaginate::setTotal($num);
+
+		$start = SmartyPaginate::getCurrentIndex();
+		$lim = SmartyPaginate::getLimit();
+
+		$sel2 = mysql_query("SELECT tour.*,user.LogonAlias,user.LastName,user.FirstName,user.imageFileLocation,user.UserType FROM `tour`,`user` ".$condition." ORDER BY tour.Id DESC LIMIT $start,$lim");
+        
+		$tours = array();
+		while ($tour = mysql_fetch_array($sel2))
+		{
+			$interestlist=array();
+			if($tour["UserType"]!="Member")
+			{
+				$t=array();
+				$sel3 = mysql_query("SELECT logoImageFileLocation FROM destination WHERE uid = ".$tour["userId"]);
+				if($sel3){
+					$r=mysql_fetch_array($sel3);
+				}
+				$tour["ImageFileLocation"] = $r["logoImageFileLocation"];
+				if(!isset($tour["ImageFileLocation"])||!file_exists($tour["ImageFileLocation"]))
+	            	$tour["ImageFileLocation"] = "./templates/images/missing_logo1.jpg";
+			}
+			else
+			{
+				$tour["ImageFileLocation"] = $tour["imageFileLocation"];
+				if(!isset($tour["imageFileLocation"])||!file_exists($tour["imageFileLocation"]))
+            		$tour["ImageFileLocation"] = "./templates/images/user.gif";
+				
+			}
+            /*$sql="select TravelInterestId from user_travelinterests where UserId=".$tour["userId"];
+			$q = mysql_query($sql);
+			while($rr = mysql_fetch_array($q))
+			array_push($interestlist,$rr);*/
+            $interestlist["tname"]=array();
+			$typearr = explode("|",$tour["Type"]);
+	        foreach($typearr as $type)
+	        {
+	        	array_push($interestlist["tname"],$type);
+	        }	
+			$tour["interest"]=$interestlist;
+			$tour["Name"]=stripslashes($tour["Name"]);
+			$tour["Name"]=htmlentities($tour["Name"]);
+			$tour["description"]=stripslashes($tour["description"]);
+			$tour["description"]=htmlentities($tour["description"]);
+			if($tour["userId"]==$_SESSION["userid"])
+				$tour["tourOwner"]="yes";
+			$sel4=mysql_query("select count(distinct i.Id) from industry_specails i,tour2dest td where td.TourId=".$tour["Id"]." and td.DestId=i.desId");
+			$r=mysql_fetch_array($sel4);
+			$tour["spnum"]=$r[0];
+			$tourMemberCount = mysql_query("select count(*) from tour_invitation where tourId=".$tour["Id"]." AND status=1");
+			$tourMemberCount = mysql_fetch_array($tourMemberCount);
+			$tourMemberCount = $tourMemberCount[0];
+			$tour["memberCount"] = $tourMemberCount;
+			
+			array_push($tours, $tour);
+		}//exit;
+
+		if (!empty($tours))
+		{
+			return $tours;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	/**
+	 * Returns tour
+	 *
+	 * @param int $lim Limit
+	 * @return array $tour
+	 */
+	function gettourListByDesId($lim = 10,$desIdList)
+	{
+		$lim = intval($lim);
+		$desId = intval($desId);
+
+		$sel = mysql_query("SELECT COUNT(*) FROM tour2dest where `DestId` in ($desIdList)");
+		$num = mysql_fetch_row($sel);
+		$num = $num[0];
+		SmartyPaginate::connect();
+		// set items per page
+		SmartyPaginate::setLimit($lim);
+		SmartyPaginate::setTotal($num);
+
+		$start = SmartyPaginate::getCurrentIndex();
+		$lim = SmartyPaginate::getLimit();
+
+		$sel2 = mysql_query("SELECT t.*,user.imageFileLocation,user.UserType from tour t,tour2dest t2d,user where t2d.DestId in ($desIdList) and t2d.TourId=t.Id and user.Id=t.userId order by t.Id desc LIMIT $start,$lim");
+
+		$tours = array();
+		while ($tour = mysql_fetch_array($sel2))
+		{
+			$interestlist=array();
+			if($tour["UserType"]!="Member")
+			{
+				$t=array();
+				$sel3 = mysql_query("SELECT logoImageFileLocation FROM destination WHERE uid = ".$tour["userId"]);
+				while($r=mysql_fetch_array($sel3))
+				{
+					array_push($t,$r);
+				}
+				$tour["ImageFileLocation"]=$t[0]["logoImageFileLocation"];
+				if(!isset($tour["ImageFileLocation"])||!file_exists($tour["ImageFileLocation"]))
+	            $tour["ImageFileLocation"] = "./templates/images/missing_logo1.jpg";
+			}
+			else
+			{
+				$tour["ImageFileLocation"] = $tour["imageFileLocation"];
+				if(!isset($tour["imageFileLocation"])||!file_exists($tour["imageFileLocation"]))
+            		$tour["ImageFileLocation"] = "./templates/images/user.gif";
+			}
+            /*$sql="select TravelInterestId from user_travelinterests where UserId=".$tour["userId"];
+			$q = mysql_query($sql);
+			while($rr = mysql_fetch_array($q))
+			array_push($interestlist,$rr);*/
+            $interestlist["tname"]=array();
+			$typearr = explode("|",$tour["Type"]);
+	        foreach($typearr as $type)
+	        {
+	        	array_push($interestlist["tname"],$type);
+	        }	
+			$tour["interest"]=$interestlist;
+			$tour["Name"]=stripslashes($tour["Name"]);
+			$tour["Name"]=htmlentities($tour["Name"]);
+			$tour["description"]=stripslashes($tour["description"]);
+			$tour["description"]=htmlentities($tour["description"]);
+			$tourMemberCount = mysql_query("select count(*) from tour_invitation where tourId=".$tour["Id"]." AND 
+			status=1");
+			$tourMemberCount = mysql_fetch_array($tourMemberCount);
+			$tourMemberCount = $tourMemberCount[0];
+			$tour["memberCount"] = $tourMemberCount;			
+			array_push($tours, $tour);
+		}
+
+		if (!empty($tours))
+		{
+			return $tours;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	function getTourInvitationList($userid,$pagesize=10){
+
+
+		$userid = intval($userid);
+		$pagesize = intval($pagesize);
+
+		$sel = mysql_query("SELECT COUNT(*) FROM tour_invitation where (`guestId` = $userid OR `userId` = $userid) AND status=3");
+		
+		$num = mysql_fetch_row($sel); 
+		$num = $num[0];
+		SmartyPaginate::connect();
+		// set items per page
+		SmartyPaginate::setLimit($pagesize);
+		SmartyPaginate::setTotal($num);
+
+		$start = SmartyPaginate::getCurrentIndex();
+		$lim = SmartyPaginate::getLimit();
+
+		$sel2 = mysql_query("SELECT * from tour_invitation  where (`guestId` = $userid OR `userId` = $userid) AND status=3 order by requestTime desc LIMIT $start,$lim");
+		$tours_invitation = array();
+		while ($tour = mysql_fetch_array($sel2))
+		{
+			array_push($tours_invitation, $tour);
+		}
+		if (!empty($tours_invitation))
+		{
+			return $tours_invitation;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	function findTours($offers,$keywords="",$stateId="",$date="",$lim,$country)
+	{
+		/*$sql="select DestId from tour2dest,tour where TourId=tour.Id";
+		$sel=mysql_query($sql);
+		$String="0";
+		while($List = mysql_fetch_array($sel)){
+		    
+        	$String=$String.",".$List[0];
+        }*/
+
+		//		SELECT * FROM tour t where ( select count(*) from destination d where d.Id in
+		//		(select DestId from tour2dest where TourId=9) and d.StateId=1 and d.Name like '%Belle%' ) > 0
+
+		$querySql = "SELECT distinct tour.*,user.ImageFileLocation,user.UserType FROM `tour`,`user`";
+		$querySqlCnt = "SELECT count(distinct tour.Id) FROM tour,user";
+
+		$index = 0;
+		$condition = " where tour.userId=user.Id ";
+		if(isset($offers))
+		{
+		foreach ($offers as $offer)
+		{
+			if($index == 0)
+			{
+				$condition .= " AND ( tour.type LIKE '%$offer%' ";
+			}
+			else
+			$condition .= " OR tour.type LIKE '%$offer%' ";
+
+			$index += 1;
+		}
+		if($index > 0)
+		$condition .= ")";
+		}
+
+		//Keywords Query
+		$index = 0;
+		if($keywords != "")
+		{
+			$keywordArr = explode(",",$keywords);
+			
+			$condition .= $this->GenerateKeyWordsSQL ("tour.name",$keywordArr,"AND");
+			$condition .= $this->GenerateKeyWordsSQL ("tour.description",$keywordArr,"OR");
+			
+			
+			//$condition .= " OR ( d.StateId=$stateId and d.Id=td.DestId and td.TourId=tour.Id)";
+						
+			$index1 = 0;
+			if($keywords != "")
+			{
+				$keywordArr = explode(",",$keywords);
+				$querySql.=",`destination` d ";
+				$querySqlCnt.=",`destination` d ";
+				$condition .= $this->GenerateKeyWordsSQL ("d.name",$keywordArr,"OR");
+				$condition .= $this->GenerateKeyWordsSQL ("d.city",$keywordArr,"OR");
+				$condition .= $this->GenerateKeyWordsSQL ("d.description",$keywordArr,"OR");
+				//$condition .= " ) ";
+			}
+			//$condition .=  " ) > 0 ";
+			$condition .= " ) ";
+		}
+		
+		//to check state
+		if($stateId!=""  && $stateId!="all")
+		{
+			if($keywords != "")$querySql.=",`tour2dest` td ";
+			else$querySql.=",`destination` d ,`tour2dest` td ";
+			if($keywords != "")$querySqlCnt.=",`tour2dest` td ";
+			else$querySqlCnt.=",`destination` d ,`tour2dest` td ";
+			$condition.=" and d.StateId=$stateId and d.Id=td.DestId and td.TourId=tour.Id";
+			//$condition .= " AND ( select count(*) from destination d where d.Id in ".$String." AND d.StateId=" . $stateId;
+			//$condition .=  " ) > 0 ";
+		}
+
+		if($date!="")
+		{
+			$condition.=" and DATE(tour.beginDateTime)='$date'";
+		}
+		
+		if($country!="")
+		{
+			if($stateId!=""  && $stateId!="all");
+			else
+			{
+				if($keywords != "")$querySql.=",`tour2dest` td ";
+				else$querySql.=",`destination` d ,`tour2dest` td ";
+				if($keywords != "")$querySqlCnt.=",`tour2dest` td ";
+				else$querySqlCnt.=",`destination` d ,`tour2dest` td ";
+			}
+			$condition.=" and d.country='$country' and d.Id=td.DestId and td.TourId=tour.Id";
+		}
+
+		/*
+			page navigation
+			**/
+//echo $querySqlCnt.$condition;exit;
+		$sel = mysql_query($querySqlCnt.$condition);
+		$num = mysql_fetch_row($sel);
+		$num = $num[0];
+		SmartyPaginate::connect();
+		// set items per page
+		SmartyPaginate::setLimit($lim);
+		SmartyPaginate::setTotal($num);
+
+		$start = SmartyPaginate::getCurrentIndex();
+		$lim = SmartyPaginate::getLimit();
+		/***/
+
+			
+		$lists = array();
+
+		$result=mysql_query($querySql.$condition." order by tour.Id LIMIT $start,$lim");
+
+		while ($tour = mysql_fetch_array($result))
+		{
+			$interestlist=array();
+			if($tour["UserType"]!="Member")
+			{
+				$t=array();
+				$sel2 = mysql_query("SELECT logoImageFileLocation FROM destination WHERE uid = ".$tour["userId"]);
+				while($r=mysql_fetch_array($sel2))
+				{
+					array_push($t,$r);
+				}
+				$tour["ImageFileLocation"]=$t[0]["logoImageFileLocation"];
+				if(!isset($tour["ImageFileLocation"])||!file_exists($tour["ImageFileLocation"]))
+	            $tour["ImageFileLocation"] = "./templates/images/missing_logo1.jpg";
+			}
+			else
+			{
+			if(!isset($tour["ImageFileLocation"])||!file_exists($tour["ImageFileLocation"]))
+            	$tour["ImageFileLocation"] = "./templates/images/user.gif";
+			}
+            /*$sql="select TravelInterestId from user_travelinterests where UserId=".$tour["userId"];
+			$q = mysql_query($sql);
+			while($rr = mysql_fetch_array($q))
+			array_push($interestlist,$rr);*/
+            $interestlist["tname"]=array();
+			$typearr = explode("|",$tour["Type"]);
+	        foreach($typearr as $type)
+	        {
+	        	array_push($interestlist["tname"],$type);
+	        }
+			$tour["interest"]=$interestlist;
+			$tour["Name"]=stripslashes($tour["Name"]);
+			$tour["Name"]=htmlentities($tour["Name"]);
+			$tour["description"]=stripslashes($tour["description"]);
+			$tour["description"]=htmlentities($tour["description"]);
+			array_push($lists, $tour);
+		}
+
+		if (!empty($lists))
+		{
+			return $lists;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	function GenerateKeyWordsSQL ($field,$keywordArr,$AndOr)
+	{
+		$keywordSql = "";
+		$index = 0;
+
+		foreach ($keywordArr as &$key)
+		{
+			$trimKey = trim($key);
+			if(trim($key) != "")
+			{
+				if($index == 0)
+				{
+					$firstField = $AndOr=="AND" ? "(" : "";
+					$keywordSql .= " $AndOr $firstField  $field like '%$trimKey%'  ";
+				}
+				else
+				$keywordSql .= " OR $field like '%$trimKey%' ";
+			}
+			$index += 1;
+		}
+			
+
+
+		return $keywordSql;
+	}
+	
+	/**
+	 * Returns affect rows
+	 *
+	 * @param int $userid $rec_id: the table record id
+	 */
+	function delete_tour($userid,$rec_id,$userType=""){
+		$uid = intval($userid);
+		$rec_id = intval($rec_id);
+		if($userType=="Admin")
+			$querySql = "delete from tour where Id=$rec_id";
+		else
+			$querySql = "delete from tour where userId=$uid and Id=$rec_id";
+		$result=mysql_query($querySql);
+		return mysql_affected_rows();
+	}
+
+	/**
+	 * Returns affect rows
+	 *
+	 * @param int $userid $rec_id: the table record id
+	 */
+	function delete_detination_from_tour($userid,$rec_id){
+		$uid = intval($userid);
+		$rec_id = intval($rec_id);
+		$querySql = "delete from tour2dest where UserId=$uid and Id=$rec_id";
+		$result=mysql_query($querySql);
+		return mysql_affected_rows();
+	}
+
+	function changeDestinationSequence($userId,$tourId,$destId,$changedSeqId,$changeType)
+	{
+		$updateSql = "";
+		$updateSql2 = "";
+		$CurrentSeqId = mysql_real_escape_string($changedSeqId);
+		$TourId = mysql_real_escape_string($tourId);
+		$UserId = mysql_real_escape_string($userId);
+		$DestId = mysql_real_escape_string($destId);
+
+		if($changeType == "up")
+		{
+			$updateSql = "UPDATE tour2dest SET SeqId=SeqId-1 WHERE DestId=$DestId AND  UserId=$UserId AND TourId=$TourId AND  SeqId = $CurrentSeqId";
+			$ToChangeId = mysql_real_escape_string($changedSeqId-1);
+			$updateSql2 = "UPDATE tour2dest SET SeqId=$CurrentSeqId WHERE UserId=$UserId AND TourId=$TourId AND SeqId = $ToChangeId";
+		}
+		else if($changeType == "down")
+		{
+			$updateSql = "UPDATE tour2dest SET SeqId=SeqId+1 WHERE DestId=$DestId AND  UserId=$UserId AND TourId=$TourId AND  SeqId = $CurrentSeqId";
+			$ToChangeId = mysql_real_escape_string($changedSeqId+1);
+			$updateSql2 = "UPDATE tour2dest SET SeqId=$CurrentSeqId WHERE UserId=$UserId AND TourId=$TourId AND SeqId = $ToChangeId";
+		}
+		else
+		return false;
+			
+			
+		$changeOrders_2 = mysql_query($updateSql2);
+		$changeOrders = mysql_query($updateSql);
+
+
+		if($changeOrders)
+		return true;
+		else
+		return false;
+
+
+	}
+	function getJoinMemberOfTour($tourID)
+	{
+		$joinMembers = array();
+		$tourID = intval($tourID);
+		$result = mysql_query("SELECT * FROM tour_invitation WHERE tourId = $tourID order by status");
+	
+		while($joinMember = mysql_fetch_array($result))
+		{
+			array_push($joinMembers, $joinMember);
+		}
+		return $joinMembers;
+	}
+	function getJoinMemberOfTourSmartyPaginate($tourID,$page_size)
+	{
+		$tourID = intval($tourID);
+	//	$sel = mysql_query("SELECT count(*)  FROM tour_invitation t WHERE tourId = $tourID AND status='1'"); 
+	//	$num = mysql_fetch_row($sel);
+    //    $num =$num[0];
+    //    SmartyPaginate::connect();
+	//	SmartyPaginate::setLimit($page_size);
+    //   SmartyPaginate::setTotal($num);
+    //    $start = SmartyPaginate::getCurrentIndex();
+    //    $lim = SmartyPaginate::getLimit();
+		$joinMembers = array();
+	$result = mysql_query("SELECT * FROM tour_invitation WHERE tourId = $tourID AND status='1'");	
+	//	$result = mysql_query("SELECT * FROM tour_invitation WHERE tourId = $tourID AND status='1' limit //$start,$lim");
+		//echo "SELECT * FROM tour_invitation WHERE tourId = $tourID AND status='1' limit $start,$lim";
+		//exit;
+		while($joinMember = mysql_fetch_array($result))
+		{
+			array_push($joinMembers, $joinMember);
+		}
+		
+		return $joinMembers;
+
+	}
+	function getThisMemberOfTour($tourId,$guestId)
+	{
+		$tourID = intval($tourId);
+		$guestId= intval($guestId);
+		$result = mysql_query("SELECT * FROM tour_invitation WHERE tourId = $tourId AND guestId=$guestId AND status!='3' order by status");
+		$ThisMember = mysql_fetch_array($result);
+
+		return $ThisMember;
+	}
+	/*
+	 *select about tour for userid
+	 *@param userid
+	 */
+	function getTourByUserID($userid)
+	{
+		$userid = intval($userid); //if exits int
+		$sqlstr="SELECT * FROM tour WHERE userId=".$userid; //sql
+		$total=array();
+		while($result = mysql_query($sqlstr))
+		{
+			$result["ID"] =$result["ID"];
+			$result["Type"] = $result["Type"];
+			$result["Name"]=$result["Name"];
+			$result["description"]=$result["description"];
+			$result["saveTimed"]=$result["saveTimed"];
+			array_push($total,$result);
+		}
+		if(!empty($total))
+		{
+			return $total;
+		}
+		else{
+			return false;
+		}
+
+	}
+	function editTourToCurrentTour($tourId,$requesterId)
+	{
+		$tourId=intval($tourId);
+		$requesterId=intval($requesterId);
+		if(!$requesterId)return false;
+
+		if($result=mysql_query("SELECT * FROM tour2dest WHERE TourId=$tourId ORDER BY SeqId"))
+		{
+			mysql_query("DELETE  FROM tour2dest WHERE UserId=$requesterId AND TourId=0 ");
+			$tourInfos=array();
+			while($tourInfo=mysql_fetch_array($result))
+			{
+				array_push($tourInfos,$tourInfo);
+			}
+			$i=0;
+			foreach($tourInfos as $value)
+			{
+				$i=++$i;
+				$destId=$value["DestId"];
+				mysql_query("INSERT INTO tour2dest (TourId,UserId,DestId,SeqId) VALUES ('0','$requesterId','$destId','$i')");
+			}
+			return true;
+		}
+		else return false;
+	}
+
+	function addUserToInviteList($hostid,$guestid,$tourid,$status=0){
+
+		$hostid=intval($hostid);
+		$guestid=intval($guestid);
+		$tourid=intval($tourid);
+		$status=intval($status);
+		$thisTime=date("Y-m-d");
+		$ins = mysql_query("INSERT INTO tour_invitation (`tourId`,`userId`,`guestId`,`status`,`requestTime`,`operationTime`) VALUES('$tourid','$hostid','$guestid','".intval($status)."','$thisTime','$thisTime')");
+		if($ins)
+			return true;
+		return false;
+	}
+	function deletetourInvitation($tourId,$userId){
+
+		$tourId=intval($tourId);
+		$userId=intval($userId);
+		$ins = mysql_query("DELETE FROM tour_invitation WHERE `tourId` = $tourId AND `guestId` = $userId AND status = 3");
+		if($ins)
+			return true;
+		return false;
+	}
+	function accepttourInvitation($tourId,$userId){
+
+		$tourId=intval($tourId);
+		$userId=intval($userId);
+		$ins = mysql_query("UPDATE tour_invitation set status = 1 WHERE `tourId` = $tourId AND `guestId` = $userId AND status = 3");
+		if($ins)
+			return true;
+		return false;
+	}
+	
+	function getSpNum($tourId)
+	{
+		$sel=mysql_query("select count(distinct i.Id) from industry_specails i,tour2dest td where td.TourId=$tourId and td.DestId=i.desId");
+		$r=mysql_fetch_array($sel);
+		return $r[0];
+	}
+}
+
+
+
+?>

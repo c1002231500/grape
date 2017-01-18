@@ -1,0 +1,114 @@
+<?php
+/**
+ * Provides methods to interact with tour
+ *
+ * @author YongJun
+ * @name tour
+ */
+class destwintype
+{
+
+	/**
+	 * Konstruktor
+	 * Initialisiert den Eventlog
+	 */
+	function __construct()
+	{
+	}
+
+	/**
+	 * Add destination to a tour
+	 *
+	 * @return bool
+	 */
+
+
+	function adddest_wintype($destid,$wintypeid)
+	{
+		$destid = intval($destid);
+		$wintypeid =intval($wintypeid);	
+		//var_dump($wintypeid);exit;	
+		$ins1 = mysql_query("INSERT INTO destination_winerytype (`DestinationId`,`WineryTypeId`) VALUES('$destid','$wintypeid')");	
+		//var_dump("INSERT INTO destination_winerytype (`DestinationId`,`WineryTypeId`) VALUES('$destid','$wintypeid')");exit;	
+		
+		if ($ins1)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	
+	function getwinerytype($userid,$destname){
+		$destname=mysql_real_escape_string($destname);
+	    $sel = mysql_query("select winerytype.Name from destination,destination_winerytype, winerytype where  destination.Id=destination_winerytype.DestinationId and destination_winerytype.WineryTypeId=winerytype.wineryTypeId and destination.uid=$userid  and destination.name='$destname'");
+        //var_dump("select winerytype.Name from destination,destination_winerytype, winerytype where  destination.Id=destination_winerytype.DestinationId and destination_winerytype.WineryTypeId=winerytype.wineryTypeId and destination.uid=$userid  and destination.name='$destname'");exit ;	      
+        $results = array();
+         //var_dump("select winerytype.Name from destination,destination_winerytype, winerytype wherer destination.uid=$userid and destination.Id=desstination_winerytype.DestinationId and desstination_winerytype.WinerytypeId=winerytype.winerytpyeId ");exit ;	 
+        while ($temp = mysql_fetch_array($sel))
+        {
+            $temp["Name"] = $temp["Name"];
+            array_push($results, $temp);
+        }
+      //var_dump($results);exit ;	      
+        if (!empty($results))
+        {
+            return $results;
+        }
+        else
+        {
+            return false;
+        }            
+	}
+	
+	/**
+	*
+	*whether guestid  esists and inset data
+	*@param int $tourid tour_invitation tourid
+	*@param int $guestid tour_invitation guestid
+	*@return success or unsuccess
+	**/
+	
+
+	/************************************************************************************************/
+
+	/**
+	 * Delete a tour
+	 *
+	 * @param int $id tour ID
+	 * @return bool
+	 */
+	function del($id)
+	{
+		$id = intval($id);
+
+		$del = mysql_query("DELETE FROM destination_winerytype WHERE Id = $id");
+		//var_dump("DELETE FROM destination_winerytype WHERE Id = $id");exit;
+		if ($del)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	function delbeforeadd($desId)
+	{
+		$desId = intval($desId);
+		$sel=mysql_query("DELETE FROM destination_winerytype WHERE DestinationId = $desId");
+		//var_dump("select Id FROM destination_winerytype WHERE DestinationId = $desId");exit;
+	    $affect = mysql_affected_rows();
+		if($affect>0){
+			return true;
+		}else{
+			return false;
+		}
+	}
+}
+
+	
+
+?>

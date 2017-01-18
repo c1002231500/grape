@@ -1,0 +1,73 @@
+﻿<{include file="grape/header.html"}>
+    <link type="text/css" rel="stylesheet" href="templates/grape/css/blog.css"> 
+    
+	<div class="top">
+        	<div class="sp1"> YOYO' S BLOG</div>
+            <div class="sp2"> YOYO' S BLOG</div>
+    </div>
+    
+    <div class="left">
+        	<img src="templates/grape/images/b_left.jpg" width="158" height="192" />
+    </div>
+	
+	<div class="right">
+    
+    <{section name=sec1 loop=$flist}>
+    
+        <div class="blog">
+        	
+            <div class="b1">
+            	<div class="img"><img src="templates/grape/images/y11.jpg" /><img src="templates/grape/images/d27.jpg" /></div>
+            	<div class="tit">
+                	<p align=left style="margin-top:12px;"><a href="#"><{$flist[sec1].x_title}></a></p>
+                    <p align=left> 标签：<span><{$flist[sec1].x_keyword}></span></p>
+                </div>
+                
+            </div>
+            
+            <div class="b2">
+            	<img src="/templates/grape/images/blogwine.jpg" width="722px" height="250px;"  />
+                <div class="imabg"></div>
+            </div>
+            <div class="b3">
+ 				<{substr str=$flist[sec1].x_content end=200}>
+        		<div align="right" style=" font-size:16px; background:url(/templates/grape/images/sanjiao.jpg) right center no-repeat; " > <a href="#">阅读全文</a></div>
+            	<br /><div class="line"></div>
+            </div>
+        
+        </div>	
+		
+        <{/section}>
+			<div class="blog">
+        	
+            <div class="b1">
+            	<div class="img"><img src="templates/grape/images/y11.jpg" /><img src="templates/grape/images/d27.jpg" /></div>
+            	<div class="tit">
+                	<p align=left style="margin-top:12px;"><a href="#">品位红酒，浪漫之约！</a></p>
+                    <p align=left> 标签：<span>红酒</span><span>热爱生活</span><span>品位</span><span>享受生活</span><span>高脚杯</span></p>
+                </div>
+                
+            </div>
+            
+            <div class="b2">
+            	<img src="/templates/grape/images/blogwine.jpg" width="722px" height="250px;"  />
+                <div class="imabg"></div>
+            </div>
+            <div class="b3">
+ 				<p align="left">喜欢红酒，喜欢摇曳在高脚杯里的浪漫情怀，红酒与女人一样，都需要你慢慢品味，温柔的相待，细心的呵护。有品味的红酒越久越有感觉.透亮的高脚杯里，轻轻的晃着，心都醉了...</p>
+	<br /><br />
+				<p align="left">优版的姐妹们一直是一群热爱生活，热爱学习的朋友们，恰逢机会邀请到一位穿梭于法国波尔多地区酒庄和南京喜欢红酒，喜欢摇曳在高脚杯里的浪漫情怀，红酒与女人一样，都需要你慢慢品味，温柔的相待，细心的呵护。有品味的红酒越久越有感觉.透亮的高脚杯里，轻轻的晃着，心都醉了...</p>
+        		<p align="right" style=" font-size:16px; background:url(/templates/grape/images/sanjiao.jpg) right center no-repeat; " > <a href="#">阅读全文</a></p>
+            	<br /><div class="line"></div>
+            </div>
+        
+        </div>	
+			
+    </div>
+	
+	      <{include file="grape/footer.html"}>    	
+</div>
+</center>
+</body>
+</html>
+	

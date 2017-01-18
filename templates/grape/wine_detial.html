@@ -1,0 +1,50 @@
+<{include file="grape/header.html"}>
+    	
+    <link type="text/css" rel="stylesheet" href="templates/grape/css/wine_detial.css"> 
+   
+    <div class="top">
+        	<div class="sp1"> 商品介绍 Products</div>
+            <div class="sp2"> 首页>产品介绍>Wine CLUB系列1</div>
+    </div>
+    
+    <div class="left">
+        	<img src="templates/grape/images/left.jpg" width="160" height="292" />
+    </div>
+    <div class="right">
+    	<div class="name">
+      	 <p><{$wine[0].w_chname}> <span><{$wine[0].w_enname}></span></p>
+        </div>
+        
+        <div class="detial">
+			<div style="float:left; margin-top:30px; margin-left:20px;">
+				<img src="templates/grape/images/winedetial.jpg" width="263" height="391" />
+			</div>
+            <div class="descript">
+            	<ul>
+                	<li>种类:<span> <{$wine[0].w_genteral}></span>　<{if $wine[0].w_color eq '1' }><img src="templates/grape/images/red1.jpg" width="15" height="15" />
+                        <{elseif $wine[0].w_color.w_color eq '2'}><img src="templates/grape/images/white.jpg" width="15" height="15" />
+                        <{/if}>
+					</li>
+                    <li>年份:<span>　<{substr str=$wine[0].w_year end=4}></span></li>
+                    <li>容量:<span>　<{$wine[0].w_descript}></span></li>
+                    <li>出产地:<span>　<{$wine[0].w_country}></span>　<img src="templates/grape/images/flag.jpg" width="15" height="15" /></li>
+                    <li>单/套选择:<span><{if $wine[0].w_single eq 1}>单品
+						<{elseif $wine[0].w_single eq 2}>  套装<{/if}>
+						</span></li>
+                    <li>库存:<span> <{$wine[0].w_reserve}></span></li>
+                    <li>参考价格:<span>　<{$wine[0].w_price}></span></li>
+
+                 </ul>
+                 <{$wine[0].w_content}>
+            </div>
+        </div>
+    
+    </div>
+    
+   
+        
+      <{include file="grape/footer.html"}>    	
+</div>
+</center>
+</body>
+</html>

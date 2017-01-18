@@ -1,0 +1,85 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>新闻列表</title>
+    <link href="/templates/Content/regiester/style.css" rel="stylesheet" type="text/css">
+    <link href="<{$public}>css/page.css" rel="stylesheet" type="text/css">
+ <script type="text/javascript" src="<{$calendar}>jquery-1.4.3.js"></script>
+</head>
+<body>
+<br/>
+<br/>
+<br/>
+<table id="friendlink" width="98%" height="60" cellpadding="1"
+	cellspacing="1" bordercolor="#B9C2E1" bgcolor="#FFFFFF">
+	<tr>
+		<td width="100px" height="24" align="center" valign="middle"
+			bordercolor="#D6E9EB" bgcolor="#73A0D2">编号</td>
+					<td width="380px" align="center" valign="middle" bordercolor="#D6E9EB"
+			bgcolor="#73A0D2">logo</td>
+		<td width="380px" align="center" valign="middle" bordercolor="#D6E9EB"
+			bgcolor="#73A0D2">中文名</td>
+		<td width="150px" align="center" valign="middle" bordercolor="#D6E9EB"
+			bgcolor="#73A0D2">英文名</td>
+		<td width="150px" align="center" valign="middle" bordercolor="#D6E9EB"
+			bgcolor="#73A0D2">日文名</td>
+		<td width="50px" align="center" valign="middle" bordercolor="#D6E9EB"
+			bgcolor="#73A0D2">状态</td>
+		<td colspan="2" align="center" valign="middle" bordercolor="#D6E9EB"
+			bgcolor="#73A0D2">操作</td>
+	</tr>
+
+	<{section name=sec1 loop=$flist}>
+	<tr style="border-bottom: 1px solid #d6e9eb;"
+		onmousemove='this.style.backgroundColor="#E2E9ED"'
+		onmouseout='this.style.backgroundColor="#ffffff"'>
+		<td height="31" align="center" valign="middle" bordercolor="#D6E9EB"><{$flist[sec1].b_id}></td>
+		<td align="left" style="text-align: center;" bordercolor="#D6E9EB">
+			 <{if $flist[sec1].b_logo neq ''}> <img
+				src="include/Public/Brand/<{$flist[sec1].b_logo}>" width="50"
+				height="50" />
+			<{/if}>
+		</td>
+		<td align="left"  style="text-align: center;" bordercolor="#D6E9EB">
+		<div><{$flist[sec1].b_cname}></div>
+		</td>
+	<td align="left" style="text-align: center;"bordercolor="#D6E9EB">
+		<div><{$flist[sec1].b_ename}></div>
+		</td>
+		<td width="100px" align="center" valign="middle" bordercolor="#D6E9EB">
+		<{$flist[sec1].b_jname}></td>
+		<td align="center" valign="middle" bordercolor="#D6E9EB">
+		<div><{if $flist[sec1].b_static eq 1}>显示 <{else}>不显示 <{/if}></div>
+		</td>
+		<td width="5%" align="center" valign="middle" bordercolor="#D6E9EB">
+		<div><a
+			href="/admin.php?bid=<{$flist[sec1].b_id}>&action=Brand_Edit">编辑</a></div>
+		</td>
+		<td width="6%" align="center" valign="middle" bordercolor="#D6E9EB">
+		<div><a href="javascript:new_del('<{$flist[sec1].b_id}>')">删除</a></div>
+		</td>
+	</tr>
+	<{/section}>
+</table>
+<br />
+<div style="width: 100%; text-align: left;padding-left: 10px">
+<{$page}>
+    </div>
+<script type="text/javascript">
+    function  new_del(id){
+        if(confirm("确定要删除该数据？删除后数据并无法恢复！")){
+        $.ajax({
+           type: "POST",
+           url: "/admin.php",
+           data: "action=deletesBrand&bid="+id,
+           success: function(msg){
+           //    alert(msg);
+            window.location.reload();
+           }
+        });
+      }
+    }
+</script>
+</body>
+</html>

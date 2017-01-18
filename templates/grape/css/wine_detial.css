@@ -1,0 +1,18 @@
+
+
+.top{ position:reltive; width:935px; height:49px; background:url(/templates/grape/images/topbg.jpg) repeat;}
+.sp1{float:left;color:#59493F; margin-top:10px;margin-left:20px;font-family:"微软雅黑"; font-size:20px; height:30px;}
+.sp2{ float:right;color:#59493F;margin-top:12px;margin-right:20px;}
+
+
+.left{ float:left; width:160px; height:292px;} 
+.right{float:left; width:741px; height:525px; margin-left:30px;margin-bottom:50px \9; margin-bottom:100px;}
+.name{ height:40px; width:741px; background:url(/templates/grape/images/bgname.jpg) repeat; overflow:hidden; font-family:"微软雅黑";}
+.name p{font-size:20px; float:left; margin-left:90px; margin-top:11px;}
+.name span{font-size:13px; font-weight:700px;}
+.detial{ width:742px; height:558px; background: url(/templates/grape/images/bgdetail.jpg) no-repeat; overflow:hidden;float:right;}
+.descript{ margin-top:30px; width:330px;height:391px;font-size:15px; font-family:"微软雅黑"; font-weight:900;letter-spacing:1px;margin-left:28px; float:left;}
+.descript li{ margin-bottom:15px; text-align:left;font-weight:900;}
+.descript span{ font-weight:100; color:#665D53;}
+.descript p{ width:265px; height:150px; font-size:12px; color:#764F52;}
+

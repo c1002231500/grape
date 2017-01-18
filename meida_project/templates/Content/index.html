@@ -1,0 +1,181 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>新闻首页</title>
+<link rel="stylesheet" type="text/css" href="<{$public}>Public/css/style.css"/>
+    <style type="text/css">
+
+-->
+    </style>
+</head>
+
+<body>
+<div id="con">
+    <div id="content" style="background: #d7d7d7">
+
+        <div style="width: 1038px;margin:0 auto; background: url(<{$public}>images/bs.jpg) repeat-y">
+    	<div id="center"  style="background: #ffffff">
+            <div id="head" style="width:1004px; height: 250px;padding-left: 4px;">
+                <{include file="head.html"}>
+            </div>
+        	<!--左侧-->
+        	<div id="left">
+            	<!--第一个内容-->
+            	<div class="w100 marginbottom">
+                    <div class="w100 leftCenterImg">
+                    	<div class="context">
+                            <div id="lleft" style="margin-top: -10px">
+                                <{section name=sec1 loop=$list}>
+                                <{if  $list[sec1].n_smpicture neq 'AD&SP'}>
+                                   <div style="width:300px;padding: 10px 0px 10px; padding-bottom:20px; margin-bottom:20px; border-bottom: 1px #E0E0E0 solid">
+                                       <{if $list[sec1].n_bigpicture neq ''}>
+                                       <img style="float: left;" src="<{$ipath}><{$list[sec1].n_bigpicture}>" alt="<{$list[sec1].n_pictitle}>" title="<{$list[sec1].n_pictitle}>" width="300">
+
+                                       <{else}>
+                                       <img  src="<{$ipath}><{$list[sec1].n_smpicture}>" style="float: left; " alt="<{$list[sec1].n_pictitle}>" title="<{$list[sec1].n_pictitle}>" width="50">
+                                       <{/if}>
+                                        <{if $list[sec1].n_bigpicture eq ''}>
+                                       <div style="width: 300px;float: left;padding-top: 10px;"><h3 style="font-size: 120%;"><{$list[sec1].n_title}></h3></div>
+                                       <{else}>
+                                        <font style="font-size: 14px;" color="black"><h3 style="font-size: 120%;"><{$list[sec1].n_title}></h3></font>
+                                       <{/if}>
+                                      <div style=" margin:10px; text-align:right;"> <font color="#666666" size="2"> <{$list[sec1].n_systime|date_format:"%Y/%m/%d"}></font></div>
+                                       
+                                       <font color="#333333"  style="font-size: 14px; line-height:1.5;"> <{$list[sec1].n_detail}></font>
+                                   </div>
+                                <{/if}>
+                                <{/section}>
+
+                            </div>
+                            <div id="lright">
+                                <{section name=sec1 loop=$flist}>
+                                <{if  $flist[sec1].n_smpicture neq 'AD&SP'}>
+                                   <div style="width:300px;padding: 10px 0px 10px; padding-bottom:20px; margin-bottom:20px; border-bottom: 1px #E0E0E0 solid">
+                                       <{if $flist[sec1].n_smpicture neq ''}>
+                                       <img  src="<{$ipath}><{$flist[sec1].n_smpicture}>" alt="<{$flist[sec1].n_pictitle}>" title="<{$flist[sec1].n_pictitle}>" width="50" style=" float:left;">
+                                       <{else}>
+                                       <img style="float: left;" src="<{$ipath}><{$flist[sec1].n_bigpicture}>" alt="<{$flist[sec1].n_pictitle}>" title="<{$flist[sec1].n_pictitle}>" width="300">
+                                       <{/if}>
+                                        <{if $flist[sec1].n_smpicture eq ''}>
+                                       <div style="width: 300px; float:left; padding-top: 10px;"><h3 style="font-size: 120%;"><{$flist[sec1].n_title}></h3></div>
+                                       <{else}>
+                                        <font style="font-size: 14px;" color="black"><h3 style="font-size: 120%;"><{$flist[sec1].n_title}></h3></font>
+                                       <{/if}>
+                                     <div style="margin:10px; text-align:right;">   <font color="#666666" size="2"> <{$flist[sec1].n_systime|date_format:"%Y/%m/%d"}></font></div>
+                                       
+                                       <font color="#333333"  style="font-size: 14px; line-height:1.5;"> <{$flist[sec1].n_detail}></font>
+
+                                   </div>
+                                <{/if}>
+                                <{/section}>
+                            </div>
+                            <div style="clear: both"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--右侧-->
+            <div id="right">
+                <!--虚线-->
+                <div class="w100" id="rightrow">
+	                <!--渐变-->
+                	<div id="context">
+                        <div class="title">
+                           <h4>AD&SP 広告モニタリング</h4>
+                        </div>
+                          <div id="contop">
+                           <ul style="width: 280px;">
+                               <{section name=sec1 loop=$ad}>
+                                <li style="padding-left: 10px">
+                                    <a href="#">
+                                       <{if $ad[sec1].n_smpicture neq ''}>
+                                       <img  src="<{$ipath}><{$ad[sec1].n_smpicture}>"  width="50">
+                                       <{else}>
+                                       <img style="float: left;" src="<{$ipath}><{$ad[sec1].n_bigpicture}>" alt="<{$ad[sec1].n_pictitle}>" title="<{$ad[sec1].n_pictitle}>" width="50">
+                                       <{/if}>
+                                   </a>
+                                    <div style="width: 180px; float: left;margin-left: 10px;font-size:14px; ">
+                                     <h4><{$ad[sec1].n_title}></h4>
+                                     </div>
+                                    <div style="clear: both;"></div>
+                                </li>
+                                <{/section}>
+                           </ul>
+                        </div>
+                        <br/>
+                    </div>
+                	<div id="context1"  style="height: 900px">
+                       <div class="title">
+                            <h4>HOT 記事ランキング</h4>
+                        </div>
+                        <div style="width: 290px">
+                            
+                        </div>
+
+                         <div id="contop1" style="height: 900px; background: #f9f9f9">
+                           <ul style="width: 290px;">
+                               <{section name=sec1 loop=$count}>
+                                <li>
+                                    <div style="float: left; width: 40px; text-align: center;">
+                                         <img src="<{$public}>images/0<{$count[sec1].0}>.gif">
+                                     </div>
+                                    <a href="#">
+                                       <{if $count[sec1].n_smpicture neq ''}>
+                                       <img  src="<{$ipath}><{$count[sec1].n_smpicture}>" width="50">
+                                       <{else}>
+                                       <img style="float: left;" src="<{$ipath}><{$count[sec1].n_bigpicture}>" alt="<{$count[sec1].n_pictitle}>" title="<{$count[sec1].n_pictitle}>" width="50">
+                                       <{/if}>
+                                   </a>
+                                    <div style="width: 180px; float: left;margin-left: 10px; font-size: 14px;">
+                                     <h4><{substr str= $count[sec1].n_title end=40}></h4>
+                                     </div>
+                                    <div style="clear: both;"></div>
+                                </li>
+                                <{/section}>
+                           </ul>
+                        </div>
+                    </div>
+                </div>
+                <div style="clear:both;"></div>
+            </div>
+            <div style="clear: both;"></div>
+        </div>
+         <{include file="foot.html"}>
+        <div style="clear: both;"></div>
+      </div>
+    </div>
+</div>
+</body>
+<script>
+$(document).ready(function() {
+$("#contop ul li").addClass('odd');
+$('#contop ul li:even').addClass('even'); //奇偶变色，添加样式
+
+});
+
+$(function(){
+var scrtime;
+$("#contop").hover(function(){
+clearInterval(scrtime);
+
+},function(){
+
+scrtime = setInterval(function(){
+var $ul = $("#contop ul");
+var liHeight = $ul.find("li:last").height();
+$ul.animate({marginTop : liHeight+40 +"px"},1000,function(){
+
+$ul.find("li:last").prependTo($ul)
+$ul.find("li:first").hide();
+$ul.css({marginTop:0});
+$ul.find("li:first").fadeIn(1000);
+});
+},3000);
+
+}).trigger("mouseleave");
+
+
+});
+</script>
+</html>

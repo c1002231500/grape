@@ -1,0 +1,20 @@
+.top{ position:reltive; width:935px; height:49px; background:url(/templates/grape/images/topbg.jpg) repeat;}
+.sp1{float:left; color:#59493F;margin-top:10px;margin-left:20px;font-family:"Î¢ÈíÑÅºÚ"; font-size:20px; height:30px;}
+.sp2{ float:right;margin-top:12px;color:#59493F;margin-right:20px;}
+
+
+.left{ float:left; width:160px; height:292px;} 
+.right{float:left;  width:720px; margin-left:52px;margin-bottom:50px \9; margin-bottom:100px; }
+
+.blog{ width:720px; height:532px; overflow:hidden;}
+.blog .b1{height:72px; margin-bottom:20px;}
+.img{ float:left; width:72px; height:72px; margin-right: 20px;}
+.tit{ float:left; height:71px;}
+
+.tit p a{color:#924603; font-size:22px; font-weight:500; font-family:"Î¢ÈíÑÅºÚ";}
+.tit p span{ margin-right:20px; line-height:30px; color:#5f5f5f;}
+.b2 {  height:290px;}
+.b2 .imabg{ height:40px; background:#ddd;}
+.b3 a{ margin-right:15px; color:#F00}
+.b3 p {text-align:left;}
+.line{width:720px;height:4px; background:url(/templates/grape/images/line.jpg)}

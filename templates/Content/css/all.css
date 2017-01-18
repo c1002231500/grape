@@ -1,0 +1,114 @@
+@CHARSET "utf-8";
+
+* {
+	margin: 0px;
+	padding: 0px;
+	font-family: "メイリオ", "ＭＳ Ｐゴシック", "Hiragino Kaku Gothic Pro",
+		"sans-serif";
+	font-size: 14px;
+}
+
+
+/*pagination
+	
+.pagination {
+margin-top:10px;
+float:left;
+font-family:Arial;
+height:25px;
+left:50%;
+_left:30%;
+padding:15px 0 20px 0;
+position:relative;
+clear:both;
+}
+
+
+.pagination .page-prev{
+	background:url(arrow_blue_above.gif) no-repeat 4px 7px;}
+	
+.pagination .page-next{
+	background:url(arrow_blue_next.gif) no-repeat 44px 7px;}
+
+
+.pagination a:hover{
+	border:1px solid #50A1CC;
+	text-decoration:underline;}
+	
+	
+.pagination a, .page-break, .page-skip, .page-cur {
+float:left;
+font-family:Arial,SimSun;
+font-size:13px;
+height:23px;
+line-height:23px;
+margin-right:5px;
+min-width:15px;
+_width:15px;
+padding:0 5px;
+text-align:center;
+white-space:nowrap;
+
+}
+
+.page-bottom {
+left:-50%;
+position:relative;
+}
+
+.pagination .page-prev {
+background-position:-6px -925px;
+padding-left:16px;
+}
+
+.pagination .page-prev, .pagination .page-next {
+font-size:12px;
+width:auto;
+}
+
+.pagination a {
+border:1px solid #CCCCCC;
+text-decoration:none;
+color:#666;
+}
+
+.pagination a, .page-break, .page-skip, .page-cur {
+float:left;
+font-family:Arial,SimSun;
+font-size:13px;
+height:23px;
+line-height:23px;
+margin-right:5px;
+min-width:15px;
+padding:0 5px;
+text-align:center;
+white-space:nowrap;
+}
+
+.pagination .page-cur {
+border:1px solid #CCCCCC;
+color:#fff;
+font-weight:700;
+background:#ccc;
+}
+
+.pagination .page-prev {
+background-position:-6px -925px;
+padding-left:16px;
+}
+
+.pagination .page-prev, .pagination .page-next {
+font-size:12px;
+width:auto;
+}
+
+.pagination .page-next {
+background-position:35px -943px;
+padding-right:16px;
+}
+
+.pagination .page-skip {
+color:#999999;
+width:auto;
+}
+*/

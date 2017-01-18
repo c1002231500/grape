@@ -1,0 +1,97 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>新闻管理</title>
+<link type="text/css" rel="stylesheet" href="/templates/newadmin/css/common.css" />
+<script type="text/javascript" src="<{$calendar}>jquery-1.4.3.js"></script>
+<script type="text/javascript" src="<{$calendar}>Js/calendar.js"></script>
+
+<link type="text/css" rel="stylesheet" href="<{$calendar}>Css/calendar.css" />
+</head>
+
+<body>
+<div align="center">
+	<{include file="newadmin/head.html"}>
+
+	<div class="block">
+    	<div class="left">
+        	<{include file="newadmin/left.html"}>
+        </div>
+        
+        <div class="right">
+        	<div class="add">
+        	<div style="float:left;"><b><font color="#e50000">新闻管理</font></b></div>
+        	</div>
+            
+           <div class="country">
+            <div style="width:759px; height:40px; line-height:40px; color:#3333333; text-align:right;"><b></b></div> 
+                <div style="width:798px;height:auto;">
+					
+                    	<table width="100%" border="0"  style="border-bottom:1px solid #d6d6d6; border-top:1px solid #d6d6d6; background:#e8e7e7" cellpadding="0" cellspacing="0">
+                          <tr>
+                            <td height="30" align="center" width="10%">ID:</td>
+							<td align="center" width="10%">logo</td>
+                            <td align="center" width="30%">标题</td>
+                            <td align="center" width="10%">发布时间</td>
+                            <td align="center" width="10%">活动时间</td>
+                            
+                            <td colspan="2" align="center" valign="middle" width="20%">操作</td>
+                          </tr>
+						  
+						</table>
+
+						<div>
+                        	<table width="100%" border="0" cellpadding="0" cellspacing="0">
+                        	<{section name=sec1 loop=$flist}>
+                          	  <tr>
+                                    <td height="60" align="center" width="10%"><{$flist[sec1].x_id}></td>
+                                    <td align="center" width="10%"> 
+										<{if $flist[sec1].x_pic neq '' }><img src="include/Public/Xinwen/<{$flist[sec1].x_pic}>" width="50" height="50" />
+                                        <{elseif $flist[sec1].x_pic eq ''}><img src="include/Public/Xinwen/none.jpg" width="50" height="50" />
+                                        <{/if}>
+									</td>
+                                    <td align="center" width="30%"><{$flist[sec1].x_title}></td>									
+									<td align="center" width="10%"><{substr str=$flist[sec1].x_starttime end=10 }></td>
+									<td align="center" width="10%"><{substr str=$flist[sec1].x_acttime end=10 }></td>
+                                    
+									
+									<td width="10%" align="center" valign="middle" bordercolor="#D6E9EB">
+										<div><a href="/admin.php?xid=<{$flist[sec1].x_id}>&action=Xinwen_Edit"><img src="/templates/newadmin/image/htbj.jpg" width="30" height="15"></a></div>
+									</td>
+									
+									<td width="10%" align="center" valign="middle" bordercolor="#D6E9EB">
+										<div><a href="javascript:new_del('<{$flist[sec1].x_id}>')"><img src="/templates/newadmin/image/htsc.jpg" width="30" height="15"></a></div>
+									</td>
+                              </tr>
+                          	<{/section}>
+                          		<tr>
+                            		<td height="60" colspan="7" align="center"><div style="margin-left:5px;"><{$page}></div></td>
+                          		</tr>
+                            </table>
+                        </div>
+
+                    <div style="width:798px; height:30px; margin-top:10px; clear:both"></div>
+                </div>
+            </div>
+            <div style="margin-bottom:40px ;width:800px; height:1px;"></div>
+        </div>
+	</div>
+</div>
+</body>
+</html>
+<script type="text/javascript">
+    function  new_del(id){
+        if(confirm("确定要删除该数据？删除后数据并无法恢复！")){
+        $.ajax({
+           type: "POST",
+           url: "/admin.php",
+           data: "action=deleteXinwen&xid="+id,
+           success: function(msg){
+           //    alert(msg);
+            window.location.reload();
+           }
+        });
+      }
+    }
+</script>

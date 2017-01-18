@@ -1,0 +1,36 @@
+<?php
+session_start();
+Header("Content-type:image/png");
+$identifyCode = '';
+$identifyString = 'abcdefghijkmnpqrstuvwxyz1234567890';
+$identifyLength = strlen($identifyString); 
+for($i=1;$i<=4;$i++)
+{
+   $num=rand(0,$identifyLength-1);
+   $identifyCode.= $identifyString[$num];
+}
+$_SESSION['identifyCode'] = $identifyCode;
+srand((double)microtime()*1000000);
+$identifyImage = imagecreate(80,40);//图片宽与高;
+//$black = ImageColorAllocate($identifyImage, 0,0,0);
+$white = ImageColorAllocate($identifyImage, 255,255,255);
+$gray = ImageColorAllocate($identifyImage, 200,200,200);
+$red = ImageColorAllocate($identifyImage,56,6,19);
+//imagefill($identifyImage,68,30,$gray);
+$dicturbLineColor = ImageColorAllocate($identifyImage, 220,220,220);
+for($i=0;$i<3;$i++)
+{
+   //加入3条干扰线;也可以不要;视情况而定，因为可能影响用户输入;
+   imageline($identifyImage,rand(0,30),rand(0,21),rand(20,40),rand(0,21),$dicturbLineColor);
+}
+//字符在图片的位置;
+//imagestring($identifyImage, 20, 10,5, $identifyCode, $red);
+//$font = 'arial.ttf';
+imagettftext($identifyImage, 20, 0, 10, 25, $red, "fonts/arial.ttf", $identifyCode);
+for($i=0;$i<90;$i++)
+{//加入干扰象素
+   imagesetpixel($identifyImage, rand()%80 , rand()%40 , $gray);
+}
+ImagePNG($identifyImage);
+ImageDestroy($identifyImage);
+?>
